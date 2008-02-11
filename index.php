@@ -24,11 +24,7 @@ declare(encoding = 'utf-8');
  * @license		http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 
-if (DIRECTORY_SEPARATOR == '/') {
-	define('TYPO3_PATH_ROOT', dirname(__FILE__) . '/');
-} else {
-	define('TYPO3_PATH_ROOT', str_replace('\\', '/', dirname(__FILE__)) . '/');
-}
+define('TYPO3_PATH_ROOT', str_replace(DIRECTORY_SEPARATOR, '/', dirname(__FILE__)) . '/');
 require_once(TYPO3_PATH_ROOT . 'Packages/FLOW3/Classes/T3_FLOW3.php');
 
 $framework = new T3_FLOW3();
