@@ -17,15 +17,19 @@ declare(encoding = 'utf-8');
 /**
  * Bootstrap for the FLOW3 Framework
  *
- * @package		TYPO3
- * @version 	$Id$
- * @author		Robert Lemke <robert@typo3.org>
- * @copyright	Copyright belongs to the respective authors
- * @license		http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
+ * @package FLOW3
+ * @version $Id$
+ * @author Robert Lemke <robert@typo3.org>
+ * @copyright Copyright belongs to the respective authors
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 
-define('TYPO3_PATH_ROOT', str_replace(DIRECTORY_SEPARATOR, '/', dirname(__FILE__)) . '/');
-require_once(TYPO3_PATH_ROOT . 'Packages/FLOW3/Classes/T3_FLOW3.php');
+if (DIRECTORY_SEPARATOR == '/') {
+	define('FLOW3_PATH_ROOT', dirname(__FILE__) . '/');
+} else {
+	define('FLOW3_PATH_ROOT', str_replace('\\', '/', dirname(__FILE__)) . '/');
+}
+require_once(FLOW3_PATH_ROOT . 'Packages/FLOW3/Classes/T3_FLOW3.php');
 
 $framework = new T3_FLOW3();
 $framework->run();
