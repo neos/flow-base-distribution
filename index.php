@@ -15,7 +15,12 @@ declare(encoding = 'utf-8');
  *                                                                        */
 
 /**
- * Bootstrap for the FLOW3 Framework
+ * Fallback Bootstrap for the FLOW3 Framework.
+ *
+ * This file only becomes active in setups which don't allow for moving files
+ * to outside the web root directory. While the preferred method is to make
+ * only the "Public/" directory publicly available, it is also possible use
+ * this index.php as the root script.
  *
  * @package FLOW3
  * @version $Id$
@@ -24,13 +29,5 @@ declare(encoding = 'utf-8');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 
-if (DIRECTORY_SEPARATOR == '/') {
-	define('FLOW3_PATH_ROOT', dirname(__FILE__) . '/');
-} else {
-	define('FLOW3_PATH_ROOT', str_replace('\\', '/', dirname(__FILE__)) . '/');
-}
-require_once(FLOW3_PATH_ROOT . 'Packages/FLOW3/Classes/T3_FLOW3.php');
-
-$framework = new T3_FLOW3();
-$framework->run();
+require_once('Public/index.php');
 ?>
