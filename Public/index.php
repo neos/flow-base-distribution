@@ -25,8 +25,8 @@ declare(encoding = 'utf-8');
  */
 
 define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', dirname(__FILE__)) . '/');
-require_once(FLOW3_PATH_PUBLIC . '../Packages/FLOW3/Classes/T3_FLOW3.php');
+require_once(FLOW3_PATH_PUBLIC . '../Packages/FLOW3/Classes/F3_FLOW3.php');
 
-$framework = new T3_FLOW3();
+$framework = new F3_FLOW3();
 $framework->run();
 ?>
