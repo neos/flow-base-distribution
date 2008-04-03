@@ -29,5 +29,5 @@ declare(encoding = 'utf-8');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 
-require_once('Public/index.php');
+require_once('Public/index_dev.php');
 ?>

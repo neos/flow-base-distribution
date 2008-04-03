@@ -2,12 +2,13 @@
 declare(ENCODING="utf-8");
 
 /*                                                                        *
- * Configuration for the FLOW3 Framework                                  *
+ * Settings                                                               *
  *                                                                        *
- * This file contains additions to the base configuration for the FLOW3   *
- * Framework. Just rename this file to "FLOW3.php" and add your own       *
- * modifications as necessary.                                            *
+ * This file contains settings for various parts of the application.      *
+ * Just add your own modifications as necessary.                          *
  *                                                                        *
- * Please refer to the default configuration file or the FLOW3 manual for *
+ * Please refer to the default settings file(s) or the manuals for        *
  * possible configuration options.                                        *
  *                                                                        */
+
+?>

@@ -2,12 +2,10 @@
 declare(ENCODING="utf-8");
 
 /*                                                                        *
- * Additional component configuration                                     *
+ * Routes configuration                                                   *
  *                                                                        *
- * This file contains additions to the component configuration. It is     *
- * loaded at the component initialization stage during the FLOW3 initiali-*
- * zation sequence. Just rename this file to "Componentss.php" and add    *
-   your own modifications as necessary.                                   *
+ * This file contains the configuration for the MVC router.               *
+ * Just add your own modifications as necessary.                          *
  *                                                                        *
  * Please refer to the FLOW3 manual for possible configuration options.   *
  *                                                                        */
