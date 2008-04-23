@@ -17,7 +17,6 @@ declare(ENCODING="utf-8");
  */
 $c->component->configurationCache->enable = FALSE;
 
-
 /**
  * Use the more meaningful debug exception handler.
  */
