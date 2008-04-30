@@ -13,9 +13,14 @@ declare(ENCODING="utf-8");
  *                                                                        */
 
 /**
- * Disable  the component configuration cache.
+ * Disable the component configuration cache.
  */
 $c->component->configurationCache->enable = FALSE;
+
+/**
+ * Disable the proxy class cache.
+ */
+$c->aop->proxyCache->enable = FALSE;
 
 /**
  * Use the more meaningful debug exception handler.
