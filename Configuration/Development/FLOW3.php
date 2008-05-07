@@ -32,4 +32,9 @@ $c->exceptionHandler->className = 'F3_FLOW3_Error_DebugExceptionHandler';
  */
 $c->errorHandler->exceptionalErrors = array(E_ERROR, E_RECOVERABLE_ERROR, E_WARNING, E_NOTICE, E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE);
 
+/**
+ * Cache each resource file with check for modification time.
+ */
+$c->resource->cache->strategy = F3_FLOW3_Resource_Manager::CACHE_STRATEGY_FILE;
+
 ?>
