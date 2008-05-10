@@ -11,4 +11,6 @@ declare(ENCODING="utf-8");
  * Please refer to the FLOW3 manual for possible configuration options.   *
  *                                                                        */
 
+$c->F3_TYPO3CR_StorageAccessInterface->constructorArguments[1] = 'sqlite:/tmp/FLOW3/TYPO3CR.db';
+
 ?>
