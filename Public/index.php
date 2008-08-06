@@ -23,7 +23,7 @@ declare(ENCODING = 'utf-8');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 
-define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', dirname(__FILE__)) . '/');
+define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', __DIR__) . '/');
 require_once(FLOW3_PATH_PUBLIC . '../Packages/FLOW3/Classes/F3_FLOW3.php');
 
 $framework = new F3_FLOW3();
