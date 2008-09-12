@@ -20,7 +20,7 @@ $c->component->configurationCache->enable = FALSE;
 /**
  * Use the more meaningful debug exception handler.
  */
-$c->exceptionHandler->className = 'F3_FLOW3_Error_DebugExceptionHandler';
+$c->exceptionHandler->className = 'F3::FLOW3::Error::DebugExceptionHandler';
 
 /**
  * All errors should result in exceptions.

@@ -25,7 +25,7 @@ $c->aop->proxyCache->enable = FALSE;
 /**
  * Use the more meaningful debug exception handler.
  */
-$c->exceptionHandler->className = 'F3_FLOW3_Error_DebugExceptionHandler';
+$c->exceptionHandler->className = 'F3::FLOW3::Error::DebugExceptionHandler';
 
 /**
  * All errors should result in exceptions.
@@ -35,6 +35,6 @@ $c->errorHandler->exceptionalErrors = array(E_ERROR, E_RECOVERABLE_ERROR, E_WARN
 /**
  * Cache each resource file with check for modification time.
  */
-$c->resource->cache->strategy = F3_FLOW3_Resource_Manager::CACHE_STRATEGY_FILE;
+$c->resource->cache->strategy = F3::FLOW3::Resource::Manager::CACHE_STRATEGY_FILE;
 
 ?>
