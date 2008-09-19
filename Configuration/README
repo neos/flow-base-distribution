@@ -7,9 +7,6 @@ application based on it.The configuration files only contain additions and
 modifications of the original configuration and therefore don't contain all
 possible configuration options.
 
-Note that the files are delivered with a ".dist" file name extension in the
-standard distribution - just copy them and strip the ".dist" off the file name.
-
 The following files play a role in the configuration system:
 
    FLOW3.php        Contains important base options which are needed by the

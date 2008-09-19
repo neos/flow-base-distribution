@@ -11,4 +11,7 @@ declare(ENCODING="utf-8");
  * possible configuration options.                                        *
  *                                                                        */
 
+$c->persistence->enable = TRUE;
+
+
 ?>
