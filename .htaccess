@@ -1,6 +1,6 @@
 RewriteEngine on
 
-RewriteRule ^(FileCache|favicon\.ico)/ - [L]
+RewriteRule ^(Resources|favicon\.ico)/ - [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
