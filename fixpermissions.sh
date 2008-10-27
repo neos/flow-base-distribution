@@ -30,3 +30,4 @@ find Public/* -type d -exec chmod 775 {} \;
 find Public/* -type f -exec chmod 664 {} \;
 
 chown -R $WEBSERVER_USER Public/Resources/
+chown -R $WEBSERVER_USER:$WEBSERVER_GROUP Data/

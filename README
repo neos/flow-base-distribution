@@ -1,11 +1,14 @@
-Some hints on unit testing and install.sh
+You do NOT need to use install.sh if you just want to use the distribution. It
+contains everything preconfigured.
+
+== Some hints on unit testing and install.sh ==
 
 install.sh allows to set up the production database as well as databases for
 unit testing. It should be self-explanatory.
 
 Additionally there is helper script - mostly used by the unit tests - that
 allows some look into the databases, it is at
- Packages/TYPO3CR/Tests/Fixtures/testdb.sh
+Packages/TYPO3CR/Tests/Fixtures/testdb.sh
 
 If unit tests for other databases than SQLite are not configured, they will
 be skipped.
