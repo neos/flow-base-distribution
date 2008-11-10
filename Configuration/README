@@ -9,19 +9,19 @@ possible configuration options.
 
 The following files play a role in the configuration system:
 
-   FLOW3.php        Contains important base options which are needed by the
+   FLOW3.yaml       Contains important base options which are needed by the
                     FLOW3 framework at startup time.
 
-   Packages.php     May contain additional configuration options (typically
+   Packages.yaml    May contain additional configuration options (typically
                     class loaders etc.) which become active during package
                     initialization.
 
-   Components.php   Additional components configuration, overriding the
+   Components.yaml  Additional components configuration, overriding the
                     configuration which was defined in the various packages.
 
-   Routes.php       Provides the routing configuration for the MVC framework.
+   Routes.yaml      Provides the routing configuration for the MVC framework.
 
-   Settings.php     Various application-level settings can be set in this file.
+   Settings.yaml    Various application-level settings can be set in this file.
 
 All of these files become active in any application context if they reside
 in the main Configuration directory (the same directory where this README is
