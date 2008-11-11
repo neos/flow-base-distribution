@@ -9,4 +9,4 @@
 #                                                                        #
 
 persistence:
-enable: y
+  enable: y

@@ -22,7 +22,7 @@ exceptionHandler:className: 'F3::FLOW3::Error::DebugExceptionHandler'
 
 ##
 # All errors should result in exceptions.
-errorHandler:exceptionalErrors: [%E_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_ERROR%, %E_USER_WARNING%, %E_USER_NOTICE%]
+errorHandler:exceptionalErrors: [%E_ERROR%, %E_PARSE%, %E_CORE_ERROR%, %E_COMPILE_ERROR%, %E_USER_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_CORE_WARNING%, %E_COMPILE_WARNING%, %E_USER_WARNING%, %E_USER_NOTICE%, %E_STRICT%]
 
 ##
 # Cache each resource file with check for modification time.
