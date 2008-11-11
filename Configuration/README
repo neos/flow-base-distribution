@@ -16,7 +16,7 @@ The following files play a role in the configuration system:
                     class loaders etc.) which become active during package
                     initialization.
 
-   Components.yaml  Additional components configuration, overriding the
+   Objects.yaml     Additional objects configuration, overriding the
                     configuration which was defined in the various packages.
 
    Routes.yaml      Provides the routing configuration for the MVC framework.
