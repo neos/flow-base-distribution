@@ -8,22 +8,21 @@
 # possible configuration options.                                        #
 #                                                                        #
 
-##
-# Disable the object configuration cache.
-object:configurationCache:enable: no
+error:
+  ##
+  # Use the more meaningful debug exception handler.
+  exceptionHandler:className: 'F3::FLOW3::Error::DebugExceptionHandler'
 
-##
-# Disable the proxy class cache.
-aop:proxyCache:enable: no
+  ##
+  # All errors should result in exceptions.
+  errorHandler:exceptionalErrors: [%E_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_ERROR%, %E_USER_WARNING%, %E_USER_NOTICE%]
 
-##
-# Use the more meaningful debug exception handler.
-error:exceptionHandler:className: 'F3::FLOW3::Error::DebugExceptionHandler'
+resource:
+  ##
+  # Cache each resource file with check for modification time.
+  cache:strategy: file
 
-##
-# All errors should result in exceptions.
-error:errorHandler:exceptionalErrors: [%E_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_ERROR%, %E_USER_WARNING%, %E_USER_NOTICE%]
-
-##
-# Cache each resource file with check for modification time.
-resource:cache:strategy: file
+cache:
+  ##
+  # Enable the Class Alteration Monitoring
+  classAlterationMonitoring:enable: y
