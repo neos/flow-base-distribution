@@ -11,7 +11,7 @@
 error:
   ##
   # Use the more meaningful debug exception handler.
-  exceptionHandler:className: 'F3::FLOW3::Error::DebugExceptionHandler'
+  exceptionHandler:className: 'F3\FLOW3\Error\DebugExceptionHandler'
 
   ##
   # All errors should result in exceptions.
