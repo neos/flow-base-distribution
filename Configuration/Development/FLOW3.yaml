@@ -26,3 +26,6 @@ cache:
   ##
   # Enable the Class Alteration Monitoring
   classAlterationMonitoring:enable: y
+
+reflection:
+  cache:detectClassAlterations: y
