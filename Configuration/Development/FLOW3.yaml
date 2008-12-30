@@ -24,8 +24,8 @@ resource:
 
 cache:
   ##
-  # Enable the Class Alteration Monitoring
-  classAlterationMonitoring:enable: y
+  # Enable the File Alteration Monitoring
+  fileAlterationMonitoring:enable: y
 
 reflection:
   cache:detectClassAlterations: y
