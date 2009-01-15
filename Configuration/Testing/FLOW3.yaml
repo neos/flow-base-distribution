@@ -9,23 +9,11 @@
 # possible configuration options.                                        #
 #                                                                        #
 
-##
-# Disable the object configuration cache.
-object:configurationCache:enable: no
-
 error:
   ##
   # Use the more meaningful debug exception handler.
-  exceptionHandler:className: 'F3\FLOW3\Error\DebugExceptionHandler'
+  exceptionHandler: className: 'F3\FLOW3\Error\DebugExceptionHandler'
 
   ##
   # All errors should result in exceptions.
-  errorHandler:exceptionalErrors: [%E_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_ERROR%, %E_USER_WARNING%, %E_USER_NOTICE%]
-
-cache:
-  ##
-  # Enable the File Alteration Monitoring
-  fileAlterationMonitoring:enable: y
-
-reflection:
-  cache:detectClassAlterations: y
+  errorHandler: exceptionalErrors: [%E_ERROR%, %E_USER_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_CORE_WARNING%, %E_COMPILE_WARNING%, %E_USER_WARNING%, %E_USER_NOTICE%, %E_STRICT%]
