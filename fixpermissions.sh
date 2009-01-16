@@ -19,8 +19,6 @@ fi
 WEBSERVER_USER="$1"
 WEBSERVER_GROUP="$2"
 
-chown -R :$WEBSERVER_GROUP ./*
-
 chmod 775 Data
 find Data/* -type d -exec chmod 775 {} \;
 find Data/* -type f -exec chmod 664 {} \;

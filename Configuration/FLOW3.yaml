@@ -8,4 +8,5 @@
 # possible configuration options.                                        #
 #                                                                        #
 
-persistence:enable: yes
+persistence:
+  enable: yes

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "If you have read the README and are sure you need this script, remove the next line!";
+exit 0;
+
+
 realpath() {
 	local p=$1
 	if [ "$(echo $p | sed -e 's/^\(.\).*$/\1/')" != "/" ]; then
@@ -24,7 +28,7 @@ show_existing_config() {
 
 	show_option CONFIG_WEBSERVER_USER "Webserver user"
 	show_option CONFIG_WEBSERVER_GROUP "Webserver group"
-	show_option CONFIG_WEB_TYPO3_PUBLIC "URL for TYPO3 Public directory"
+	show_option CONFIG_WEB_TYPO3_PUBLIC "URL for FLOW3 Public directory"
 
 	echo
 	echo "Production database:"
@@ -205,7 +209,7 @@ reconfigure() {
 		reconfigure_text_option CONFIG_WEBSERVER_USER "Name of your webserver user" "apache"
 		reconfigure_text_option CONFIG_WEBSERVER_GROUP "Name of your webserver group" "apache"
 	fi
-	reconfigure_text_option CONFIG_WEB_TYPO3_PUBLIC "URL to the TYPO3 Public directory"
+	reconfigure_text_option CONFIG_WEB_TYPO3_PUBLIC "URL to the FLOW3 Public directory"
 
 	reconfigure_multiple_choice_option CONFIG_PRODUCTION_DB_TYPE "Production database type" "sqlite sqlite" "postgres PostgreSQL" "mysql MySQL"
 
@@ -276,7 +280,7 @@ check_current_config() {
 	test -z "$CONFIG_WEBSERVER_USER" && echo "Webserver user not set " && failed="yes"
 	test -z "$CONFIG_WEBSERVER_GROUP" && echo "Webserver group not set " && failed="yes"
 
-	test -z "$CONFIG_WEB_TYPO3_PUBLIC" && echo "URL to TYPO3 Public directory not set " && fialed="yes"
+	test -z "$CONFIG_WEB_TYPO3_PUBLIC" && echo "URL to FLOW3 Public directory not set " && fialed="yes"
 
 	test -z "$CONFIG_PRODUCTION_DB_TYPE" && echo "Production database type not set " && failed="yes"
 	if [ "$CONFIG_PRODUCTION_DB_TYPE" = "sqlite" ]; then
@@ -383,12 +387,12 @@ EOF
 
 disable_persistence() {
 	echo "Disabling persistence layer to setup database..."
-	sed -i -e 's/$c->persistence->enable = TRUE;/$c->persistence->enable = FALSE;/' Configuration/FLOW3.php
+	sed -i -e 's/  enable: yes/  enable: no/' Configuration/FLOW3.yaml
 }
 
 enable_persistence() {
 	echo "Enabling persistence layer..."
-	sed -i -e 's/$c->persistence->enable = FALSE;/$c->persistence->enable = TRUE;/' Configuration/FLOW3.php
+	sed -i -e 's/  enable: no/  enable: yes/' Configuration/FLOW3.yaml
 }
 
 setup_sqlite_production_db() {
@@ -406,15 +410,24 @@ setup_sqlite_production_db() {
 	sudo php Public/index.php typo3cr admin setup setup --dsn="sqlite:$CONFIG_PRODUCTION_DB_PATH" --indexlocation="$CONFIG_LUCENE_INDEX_LOCATION"
 	echo
 	enable_persistence
-	echo "Writing Configuration/Settings.php..."
-	dbpath="$CONFIG_PRODUCTION_DB_PATH" perl -pi -e 'undef $/;s/\$c->TYPO3CR->storage->backendOptions[^;]*\);/\$c->TYPO3CR->storage->backendOptions = array(\n\t'\''dataSourceName'\'' => '\''sqlite:$ENV{'\''dbpath'\''}'\'',\n\t'\''username'\'' => NULL,\n\t'\''password'\'' => NULL\n);/ms' Configuration/Settings.php
-	cat Configuration/Settings.php | sed -e "/\\\$c->TYPO3CR->storage->backendOptions/i\\
-	\$c->TYPO3CR->storage->backendOptions = array(\
-		'dataSourceName' => 'sqlite:$CONFIG_PRODUCTION_DB_PATH',\
-		'username' => NULL,\
-		'password' => NULL\
-	);" -e '/\$c->TYPO3CR->storage->backendOptions/,/;/d' > Configuration/Settings_new.php
-	mv -f Configuration/Settings_new.php Configuration/Settings.php
+	echo "Writing Configuration/Settings.yaml..."
+	(cat <<EOF
+TYPO3CR:
+  # The storage backend configuration
+  storage:
+    backend: 'F3\TYPO3CR\Storage\Backend\PDO'
+    backendOptions:
+      dataSourceName: 'sqlite:$CONFIG_PRODUCTION_DB_PATH'
+      username: 
+      password: 
+
+  # The indexing/search backend configuration
+  search:
+    backend: 'F3\TYPO3CR\Storage\Search\Lucene'
+    backendOptions:
+      indexLocation: '$CONFIG_LUCENE_INDEX_LOCATION'
+EOF
+	) >> Configuration/Settings.yaml
 }
 
 setup_postgres_production_db() {
@@ -459,8 +472,24 @@ setup_postgres_production_db() {
 	php Public/index.php typo3cr admin setup setup --dsn="pgsql:dbname=$CONFIG_PRODUCTION_DB_NAME" --userid="$CONFIG_PRODUCTION_DB_USER" --password="$CONFIG_PRODUCTION_DB_PASS" --indexlocation="$CONFIG_LUCENE_INDEX_LOCATION"
 	echo
 	enable_persistence
-	echo "Writing Configuration/Settings.php..."
-	dbname="$CONFIG_PRODUCTION_DB_NAME" dbuser="$CONFIG_PRODUCTION_DB_USER" dbpass="$CONFIG_PRODUCTION_DB_PASS" perl -pi -e 'undef $/;s/\$c->TYPO3CR->storage->backendOptions[^;]*\);/\$c->TYPO3CR->storage->backendOptions = array(\n\t'\''dataSourceName'\'' => '\''pgsql:dbname=$ENV{'\''dbname'\''}'\'',\n\t'\''username'\'' => '\''$ENV{'\''dbuser'\''}'\'',\n\t'\''password'\'' => '\''$ENV{'\''dbpass'\''}'\''\n);/ms' Configuration/Settings.php
+	echo "Writing Configuration/Settings.yaml..."
+	(cat <<EOF
+TYPO3CR:
+  # The storage backend configuration
+  storage:
+    backend: 'F3\TYPO3CR\Storage\Backend\PDO'
+    backendOptions:
+      dataSourceName: 'pgsql:dbname=$CONFIG_PRODUCTION_DB_NAME'
+      username: '$CONFIG_PRODUCTION_DB_USER'
+      password: '$CONFIG_PRODUCTION_DB_PASS'
+
+  # The indexing/search backend configuration
+  search:
+    backend: 'F3\TYPO3CR\Storage\Search\Lucene'
+    backendOptions:
+      indexLocation: '$CONFIG_LUCENE_INDEX_LOCATION'
+EOF
+	) >> Configuration/Settings.yaml
 }
 
 setup_mysql_production_db() {
@@ -514,8 +543,24 @@ setup_mysql_production_db() {
 	php Public/index.php typo3cr admin setup setup --dsn="mysql:dbname=$CONFIG_PRODUCTION_DB_NAME" --userid="$CONFIG_PRODUCTION_DB_USER" --password="$CONFIG_PRODUCTION_DB_PASS" --indexlocation="$CONFIG_LUCENE_INDEX_LOCATION"
 	echo
 	enable_persistence
-	echo "Writing Configuration/Settings.php..."
-	dbname="$CONFIG_PRODUCTION_DB_NAME" dbuser="$CONFIG_PRODUCTION_DB_USER" dbpass="$CONFIG_PRODUCTION_DB_PASS" perl -pi -e 'undef $/;s/\$c->TYPO3CR->storage->backendOptions[^;]*\);/\$c->TYPO3CR->storage->backendOptions = array(\n\t'\''dataSourceName'\'' => '\''mysql:dbname=$ENV{'\''dbname'\''}'\'',\n\t'\''username'\'' => '\''$ENV{'\''dbuser'\''}'\'',\n\t'\''password'\'' => '\''$ENV{'\''dbpass'\''}'\''\n);/ms' Configuration/Settings.php
+	echo "Writing Configuration/Settings.yaml..."
+	(cat <<EOF
+TYPO3CR:
+  # The storage backend configuration
+  storage:
+    backend: 'F3\TYPO3CR\Storage\Backend\PDO'
+    backendOptions:
+      dataSourceName: 'mysql:dbname=$CONFIG_PRODUCTION_DB_NAME'
+      username: '$CONFIG_PRODUCTION_DB_USER'
+      password: '$CONFIG_PRODUCTION_DB_PASS'
+
+  # The indexing/search backend configuration
+  search:
+    backend: 'F3\TYPO3CR\Storage\Search\Lucene'
+    backendOptions:
+      indexLocation: '$CONFIG_LUCENE_INDEX_LOCATION'
+EOF
+	) >> Configuration/Settings.yaml
 }
 
 fix_permissions() {
@@ -573,7 +618,7 @@ setup_typo3() {
 	TESTDBCONF=$T3BASEDIR/Packages/TYPO3CR/Tests/Fixtures/testdb.conf
 	chmod +x "$TESTDB"
 	chmod 660 "$TESTDBCONF"
-	chown :$CONFIG_WEBSERVER_GROUP "$TESTDBCONF"
+	sudo chown :$CONFIG_WEBSERVER_GROUP "$TESTDBCONF"
 	echo "Writing testdb.sh config file $TESTDBCONF"
 	(cat <<EOF
 SQLITE3="$CONFIG_BIN_SQLITE3"
@@ -617,12 +662,9 @@ EOF
 		esac
 	done
 
-	echo "Writing Configuration/Settings.php (Lucene index location)..."
-	indexlocation="$CONFIG_LUCENE_INDEX_LOCATION" perl -pi -e 'undef $/;s/\$c->TYPO3CR->search->backendOptions[^;]*\);/\$c->TYPO3CR->search->backendOptions = array(\n\t'\''indexLocation'\'' => '\''$ENV{'\''indexlocation'\''}'\''\n);/ms' Configuration/Settings.php
-
 	fix_permissions
 
-	echo "TYPO3 Setup complete..."
+	echo "FLOW3 Setup complete..."
 }
 
 T3BASEDIR=$(dirname $(realpath $0))
