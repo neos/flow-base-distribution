@@ -1,0 +1,176 @@
+#!/bin/sh
+###############################################################################
+#
+# This script belongs to the FLOW3 framework.
+#
+# It is free software; you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# This script is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHAN-
+# TABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+# General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with the script.
+# If not, see http://www.gnu.org/licenses/lgpl.html
+#
+# The TYPO3 project - inspiring people to share!
+#
+###############################################################################
+
+##
+#
+# @package FLOW3
+# @author Tobias Liebig <mail_typo3@etobi.de>
+# @version $Id$
+# @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+#
+
+# Configuration
+PHP='/usr/bin/env php'
+BOOTSTRAP='Public/index.php'
+BOOTSTRAPDEV='Public/index_dev.php'
+
+
+printUsage () {
+	echo 'FLOW3 Command Line Interface'
+	echo 'WARNING! THIS TOOL IS PRE-ALPHA. USING IT MIGHT LEAD TO UNEXPECTED RESULTS!'
+	echo ''
+	echo 'usage: flow3 <options> <command>'
+	echo ''
+	echo 'Options:'
+	echo ''
+	echo '  -h, --help      - print this message'
+	echo '  -d, --dev       - execute in development context'
+	echo ''
+	echo 'Available commands:'
+	echo ''
+	echo '  package create <package-key>     - create a new package'
+	echo '  package activate <package-key>   - activate a package'
+	echo '  package deactivate <package-key> - deactivate a package'
+	echo '  package delete <package-key>     - delete a package'
+	echo ''
+	echo '  cache flush                      - flush all caches'
+	echo ''
+	echo '  testing <package-key> <output-directory> [<testcaseClassName> [<coverage-directory>]] '
+	echo '                                   - run unit tests'
+	echo '                                     <package-key> Package to test (mandatory)'
+	echo '                                     <output-directory> path to write the logfile.xml (mandatory)'
+	echo '                                     <testcaseClassName> only run this testcase (optional)'
+	echo '                                     <coverage-directory> path to write the clover.xml (optional)'
+	echo ''
+	exit 1
+}
+
+# check minimum argument count
+if [ $# -lt 2 ]; then
+	printUsage
+fi
+
+PACKAGE=''
+SUBPACKAGES=''
+CONTROLLER=''
+ACTION=''
+ARGUMENTS=''
+
+
+# parse argument list
+while [ $# -ge 1 ]; do
+	case $1 in
+	help|--help|-h)
+		printUsage
+		;;
+
+	--dev|-d)
+		BOOTSTRAP=$BOOTSTRAPDEV
+		;;
+
+	package)
+		PACKAGE='FLOW3'
+		SUBPACKAGES='Package'
+		CONTROLLER='Manager'
+		shift
+		case $1 in
+		create|activate|deactivate|delete)
+			if [ $# -ne 2 ]; then
+				echo 'Please specify a package-key'
+				echo
+				printUsage
+			else
+				ACTION=$1
+				shift
+				ARGUMENTS="--package-key=$1"
+			fi
+		esac
+		;;
+
+	testing)
+		PACKAGE='Testing'
+		CONTROLLER='CLI'
+		ACTION='run'
+		shift
+		if [ $# -lt 2 ]; then
+			echo 'Please specify a package-key and output-directory'
+			echo
+			printUsage
+		else
+			ARGUMENTS="package-key=$1"
+			shift
+			ARGUMENTS="$ARGUMENTS output-directory=$1"
+
+			if [ $# -gt 1 ]; then
+				shift
+				ARGUMENTS="$ARGUMENTS testcaseClassName=$1"
+			fi
+			if [ $# -gt 1 ]; then
+				shift
+				ARGUMENTS="$ARGUMENTS coverage-directory=$1"
+			fi
+		fi
+		;;
+
+	cache)
+		shift
+		if [ $# -lt 1 ]; then
+			echo 'Please specify a subcommand'
+			echo
+			printUsage
+		else
+			if [ "$1" = 'flush' ]; then
+				PACKAGE='FLOW3'
+				CONTROLLER='Cache'
+				ACTION='flush'
+			fi
+		fi
+		;;
+
+	*)
+		PACKAGE=''
+		CONTROLLER=''
+		ACTION=''
+		ARGUMENTS=''
+		;;
+
+	esac
+	shift
+done
+
+
+
+if [ "$PACKAGE" = '' -o "$CONTROLLER" = '' -o "$ACTION" = '' ]; then
+	printUsage
+fi
+
+
+# echo P $PACKAGE
+# echo S $SUBPACKAGES
+# echo C $CONTROLLER
+# echo A $ACTION
+# echo A $ARGUMENTS
+
+# execute the command
+echo $BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
+$PHP $BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
