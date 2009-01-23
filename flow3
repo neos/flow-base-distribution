@@ -56,11 +56,11 @@ printUsage () {
 	echo ''
 	echo '  cache flush                      - flush all caches'
 	echo ''
-	echo '  testing <package-key> <output-directory> [<testcaseClassName> [<coverage-directory>]] '
+	echo '  testing <package-key> <output-directory> [<testcase> [<coverage-directory>]] '
 	echo '                                   - run unit tests'
 	echo '                                     <package-key> Package to test (mandatory)'
 	echo '                                     <output-directory> path to write the logfile.xml (mandatory)'
-	echo '                                     <testcaseClassName> only run this testcase (optional)'
+	echo '                                     <testcase> only run this testcase (optional)'
 	echo '                                     <coverage-directory> path to write the clover.xml (optional)'
 	echo ''
 	exit 1
@@ -118,17 +118,17 @@ while [ $# -ge 1 ]; do
 			echo
 			printUsage
 		else
-			ARGUMENTS="package-key=$1"
+			ARGUMENTS="--package-key=$1"
 			shift
-			ARGUMENTS="$ARGUMENTS output-directory=$1"
+			ARGUMENTS="$ARGUMENTS --output-directory=$1"
 
 			if [ $# -gt 1 ]; then
 				shift
-				ARGUMENTS="$ARGUMENTS testcaseClassName=$1"
+				ARGUMENTS="$ARGUMENTS --testcase=$1"
 			fi
 			if [ $# -gt 1 ]; then
 				shift
-				ARGUMENTS="$ARGUMENTS coverage-directory=$1"
+				ARGUMENTS="$ARGUMENTS --coverage-directory=$1"
 			fi
 		fi
 		;;
