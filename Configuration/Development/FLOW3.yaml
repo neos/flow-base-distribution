@@ -32,5 +32,5 @@ reflection:
 
 log:
   systemLogger:
-    backend: F3\FLOW3\Log\Backend\File
+    backend: F3\FLOW3\Log\Backend\FileBackend
     backendOptions: { logFileURL: %FLOW3_PATH_DATA%Log/FLOW3_Development.log }
