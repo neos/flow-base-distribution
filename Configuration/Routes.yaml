@@ -7,7 +7,7 @@
 # Please refer to the FLOW3 manual for possible configuration options.   #
 #                                                                        #
 
-# $Id: $
+# $Id$
 
 ##
 # Fallback route
@@ -65,12 +65,11 @@ FLOW3_Login
 ##
 # TYPO3CR route with optional controller
 
-TYPO3CR_Default:
-  uriPattern: 'typo3cr/({@controller})'
-  controllerObjectNamePattern: 'F3\@package\Admin\Controller\@controllerController'
-  viewObjectNamePattern: 'F3\@package\Admin\View\@controller@action@format'
+TYPO3CR:
+  uriPattern: 'typo3cr(/{@controller})'
+  controllerObjectNamePattern: 'F3\TYPO3CR\Admin\Controller\@controllerController'
+  viewObjectNamePattern: 'F3\TYPO3CR\Admin\View\@controller@action@format'
   defaults:
-    @package:    'TYPO3CR'
     @controller: 'Default'
     @action:     'index'
     @format:     'html'
@@ -78,8 +77,8 @@ TYPO3CR_Default:
 ##
 # TYPO3CR route with controller and optional action
 
-TYPO3CR_WithController:
-  uriPattern: 'typo3cr/{@controller}/({@action})'
+TYPO3CR_WithControllerAndOptionalAction:
+  uriPattern: 'typo3cr/{@controller}(/{@action})'
   controllerObjectNamePattern: 'F3\@package\Admin\Controller\@controllerController'
   viewObjectNamePattern: 'F3\@package\Admin\View\@controller@action@format'
   defaults:
@@ -90,7 +89,7 @@ TYPO3CR_WithController:
 ##
 # Routes definitions for the services
 
-TYPO3CR_ServiceWithControllerOnly:
+TYPO3CR_ServiceWithController:
   uriPattern: 'typo3cr/service/v1/{@controller}'
   controllerObjectNamePattern: 'F3\@package\Admin\Service\Controller\@controllerController'
   viewObjectNamePattern: 'F3\@package\Admin\Service\View\@controller\@action@format'
@@ -105,17 +104,10 @@ TYPO3CR_ServiceWithControllerAndFormat:
   defaults: 
     @package:    'TYPO3CR'
 
-TYPO3CR_ServiceWithControllerAndId:
-  uriPattern: 'typo3cr/service/v1/{@controller}/{id}'
+TYPO3CR_ServiceWithControllerAndIdAndOptionalFormat:
+  uriPattern: 'typo3cr/service/v1/{@controller}/{id}(.{@format})'
   controllerObjectNamePattern: 'F3\@package\Admin\Service\Controller\@controllerController'
   viewObjectNamePattern: 'F3\@package\Admin\Service\View\@controller\@action@format'
   defaults: 
     @package:    'TYPO3CR'
     @format:     'json'
-
-TYPO3CR_ServiceWithControllerAndIdAndFormat:
-  uriPattern: 'typo3cr/service/v1/{@controller}/{id}.{@format}'
-  controllerObjectNamePattern: 'F3\@package\Admin\Service\Controller\@controllerController'
-  viewObjectNamePattern: 'F3\@package\Admin\Service\View\@controller\@action@format'
-  defaults: 
-    @package:    'TYPO3CR'
