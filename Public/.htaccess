@@ -3,27 +3,30 @@
 #
 
 SetEnv FLOW3_CONTEXT Production
-# SetEnv FLOW3_CONTEXT Development
+#SetEnv FLOW3_CONTEXT Development
 
 #
 # mod_rewrite configuration
 #
+<IfModule mod_rewrite.c>
 
-# Enable URL rewriting
-RewriteEngine On
+	# Enable URL rewriting
+	RewriteEngine On
 
-# You will have to change this path if your installation is located
-# in a subdirectory of the website root.
-RewriteBase /
+	# You will have to change this path if your installation is located
+	# in a subdirectory of the website root.
+	RewriteBase /
 
-# Stop rewrite processing if it is useless
-RewriteRule ^(Resources|robots\.txt|favicon\.ico)/ - [L]
+	# Stop rewrite processing if it is useless
+	RewriteRule ^(Resources|robots\.txt|favicon\.ico)/ - [L]
 
-# Continue only if the file/symlink/directory does not exist
-RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-l
+	# Continue only if the file/symlink/directory does not exist
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteCond %{SCRIPT_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-l
 
-# Bang-for-the-buck
-RewriteRule ^index\.php - [E=FLOW3_CONTEXT:%{REDIRECT_FLOW3_CONTEXT},L]
-RewriteRule .* index.php
+	# Bang-for-the-buck
+	RewriteRule ^index\.php - [E=FLOW3_CONTEXT:%{REDIRECT_FLOW3_CONTEXT},L]
+	RewriteRule .* index.php
+
+</IfModule>
