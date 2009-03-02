@@ -18,15 +18,12 @@ SetEnv FLOW3_CONTEXT Production
 	RewriteBase /
 
 	# Stop rewrite processing if it is useless
-	RewriteRule ^(Resources|robots\.txt|favicon\.ico)/ - [L]
+	RewriteRule ^(Resources/|robots\.txt|favicon\.ico) - [L]
 
 	# Continue only if the file/symlink/directory does not exist
-	RewriteCond %{SCRIPT_FILENAME} !-f
-	RewriteCond %{SCRIPT_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-l
-
-	# Bang-for-the-buck
-	RewriteRule ^index\.php - [E=FLOW3_CONTEXT:%{REDIRECT_FLOW3_CONTEXT},L]
 	RewriteRule .* index.php
 
 </IfModule>
