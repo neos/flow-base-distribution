@@ -13,10 +13,3 @@ persistence:
 
 security:
   enable: yes
-
-  authentication:
-    providers:
-      -
-        type: RSAUsernamePassword
-        requestPatterns:
-         controllerObjectName: F3\FLOW3\Security\.*
