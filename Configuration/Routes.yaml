@@ -17,7 +17,7 @@ FLOW3_Fallback:
   defaults:
     @package:    'FLOW3'
     @subpackage: 'MVC'
-    @controller: 'Default'
+    @controller: 'Standard'
     @action:     'index'
     @format:     'html'
 
@@ -27,7 +27,7 @@ FLOW3_Fallback:
 FLOW3_DefaultWithPackage:
   uriPattern: '{@package}'
   defaults:
-    @controller: 'Default'
+    @controller: 'Standard'
     @action:     'index'
     @format:     'html'
 
@@ -71,7 +71,7 @@ TYPO3CR:
   defaults:
     @package:    'TYPO3CR'
     @subpackage: 'Admin'
-    @controller: 'Default'
+    @controller: 'Standard'
     @action:     'index'
     @format:     'html'
 
