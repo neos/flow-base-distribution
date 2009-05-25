@@ -10,21 +10,55 @@
 # $Id$
 
 ##
-# Fallback route
+# FLOW3 subroutes
 
-FLOW3_Fallback:
-  uriPattern: ''
+--
+  name: 'FLOW3'
+  uriPattern: 'flow3<FLOW3Subroutes>(.{@format})'
   defaults:
-    @package:    'FLOW3'
-    @subpackage: 'MVC'
-    @controller: 'Standard'
+    @format: 'html'
+  subRoutes:
+    FLOW3Subroutes:
+      package: FLOW3
+
+##
+# TYPO3CR subroutes
+
+--
+  name: 'TYPO3CR'
+  uriPattern: 'typo3cr<TYPO3CRSubroutes>(.{@format})'
+  defaults:
+    @format: 'html'
+  subRoutes:
+    TYPO3CRSubroutes:
+      package: TYPO3CR
+
+##
+# Default route to map the first three URL segments to package, controller and action 
+# including optional format-suffix
+
+--
+  name: 'default with action and format'
+  uriPattern: '{@package}/{@controller}/{@action}(.{@format})'
+  defaults:
+    @format:     'html'
+
+##
+# Default route to map the first two URL segments to package and controller
+# optional third URL segment is mapped to action
+
+--
+  name: 'default'
+  uriPattern: '{@package}/{@controller}(/{@action})'
+  defaults:
     @action:     'index'
     @format:     'html'
 
 ##
 # Default route with just the package
 
-FLOW3_DefaultWithPackage:
+--
+  name: 'default with package'
   uriPattern: '{@package}'
   defaults:
     @controller: 'Standard'
@@ -32,79 +66,14 @@ FLOW3_DefaultWithPackage:
     @format:     'html'
 
 ##
-# Default route to map the first two URL segments to package and controller
-# optional third URL segment is mapped to action
+# Fallback route
 
-FLOW3_Default:
-  uriPattern: '{@package}/{@controller}(/{@action})'
-  defaults:
-    @action:     'index'
-    @format:     'html'
-
-##
-# Default route to map the first three URL segments to package, controller and action 
-# including optional format-suffix
-
-FLOW3_DefaultWithActionAndFormat:
-  uriPattern: '{@package}/{@controller}/{@action}(.{@format})'
-  defaults:
-    @format:     'html'
-
-##
-# Default route to the FLOW3 Login Controller
-
-FLOW3_Login
-  uriPattern: 'flow3/login(/{@action})'
+Test:
+  name: 'fallback'
+  uriPattern: ''
   defaults:
     @package:    'FLOW3'
-    @subpackage: 'Security'
-    @controller: 'Login'
-    @action:     'index'
-    @format:     'html'
-
-
-##
-# TYPO3CR route with optional controller
-
-TYPO3CR:
-  uriPattern: 'typo3cr(/{@controller})'
-  defaults:
-    @package:    'TYPO3CR'
-    @subpackage: 'Admin'
+    @subpackage: 'MVC'
     @controller: 'Standard'
     @action:     'index'
     @format:     'html'
-
-##
-# TYPO3CR route with controller and optional action
-
-TYPO3CR_WithControllerAndOptionalAction:
-  uriPattern: 'typo3cr/{@controller}(/{@action})'
-  defaults:
-    @package:    'TYPO3CR'
-    @subpackage: 'Admin'
-    @action:     'index'
-    @format:     'html'
-
-##
-# Routes definitions for the services
-
-TYPO3CR_ServiceWithController:
-  uriPattern: 'typo3cr/service/v1/{@controller}'
-  defaults: 
-    @package:    'TYPO3CR'
-    @subpackage: 'Admin\Service'
-    @format:     'json'
-
-TYPO3CR_ServiceWithControllerAndFormat:
-  uriPattern: 'typo3cr/service/v1/{@controller}.{@format}'
-  defaults: 
-    @package:    'TYPO3CR'
-    @subpackage: 'Admin\Service'
-
-TYPO3CR_ServiceWithControllerAndIdAndOptionalFormat:
-  uriPattern: 'typo3cr/service/v1/{@controller}/{id}(.{@format})'
-  defaults: 
-    @package:    'TYPO3CR'
-    @subpackage: 'Admin\Service'
-    @format:     'json'
