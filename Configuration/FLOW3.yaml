@@ -7,9 +7,3 @@
 # Please refer to the default configuration file or the FLOW3 manual for #
 # possible configuration options.                                        #
 #                                                                        #
-
-persistence:
-  enable: yes
-
-security:
-  enable: yes
