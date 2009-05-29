@@ -35,6 +35,17 @@
       package: Welcome
 
 ##
+# Subroutes from the DocumentationBrowser package.
+#
+
+--
+  name: 'Documentation Browser'
+  uriPattern: '<DocumentationBrowserSubroutes>'
+  subRoutes:
+    DocumentationBrowserSubroutes:
+      package: DocumentationBrowser
+
+##
 # FLOW3 subroutes
 
 --
