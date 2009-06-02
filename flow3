@@ -38,7 +38,6 @@ FLOW3BASEDIR="$(dirname "$(test -L "$0" && readlink "$0" || echo "$0")")"
 
 printUsage () {
 	echo 'FLOW3 Command Line Interface'
-	echo 'WARNING! THIS TOOL IS PRE-ALPHA. USING IT MIGHT LEAD TO UNEXPECTED RESULTS!'
 	echo ''
 	echo 'usage: flow3 <options> <command>'
 	echo ''
