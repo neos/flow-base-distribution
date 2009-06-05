@@ -154,7 +154,7 @@ while [ $# -ge 1 ]; do
 
 	kickstart)
 		PACKAGE='Kickstart'
-		CONTROLLER='Kickstart'
+		CONTROLLER='Generator'
 		shift
 		if [ $# -lt 2 ]; then
 			echo 'Please specify a package-key'
@@ -163,7 +163,7 @@ while [ $# -ge 1 ]; do
 		else
 			if [ "$1" = 'controller' ]; then
 				shift
-				ACTION='controller'
+				ACTION='generateController'
 				ARGUMENTS="--package-key=$1"
 				if [ $# -gt 1 ]; then
 					shift
