@@ -1,0 +1,23 @@
+#
+# Package states
+#
+
+---
+DocumentationBrowser: 
+  state: active
+ExtJS: 
+  state: active
+Fluid: 
+  state: active
+Kickstart: 
+  state: active
+PHPCR: 
+  state: active
+PHPUnit: 
+  state: active
+Testing: 
+  state: active
+TYPO3CR: 
+  state: active
+Welcome: 
+  state: active
