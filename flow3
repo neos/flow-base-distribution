@@ -32,7 +32,6 @@
 # Configuration
 PHP='/usr/bin/env php'
 BOOTSTRAP='Public/index.php'
-BOOTSTRAPDEV='Public/index_dev.php'
 
 FLOW3BASEDIR="$(dirname "$(test -L "$0" && readlink "$0" || echo "$0")")"
 
@@ -48,6 +47,8 @@ printUsage () {
 	echo ''
 	echo 'Available commands:'
 	echo ''
+	echo '  package list available           - list available packages'
+	echo '  package list active              - list active packages'
 	echo '  package create <package-key>     - create a new package'
 	echo '  package activate <package-key>   - activate a package'
 	echo '  package deactivate <package-key> - deactivate a package'
@@ -75,6 +76,7 @@ if [ $# -lt 2 ]; then
 	printUsage
 fi
 
+CONTEXT='Production'
 PACKAGE=''
 SUBPACKAGES=''
 CONTROLLER=''
@@ -90,7 +92,7 @@ while [ $# -ge 1 ]; do
 		;;
 
 	--dev|-d)
-		BOOTSTRAP=$BOOTSTRAPDEV
+		CONTEXT='Development'
 		;;
 
 	package)
@@ -109,6 +111,10 @@ while [ $# -ge 1 ]; do
 				shift
 				ARGUMENTS="--package-key=$1"
 			fi
+			;;
+		list)
+			shift
+			ACTION="list$1"
 		esac
 		;;
 
@@ -198,5 +204,5 @@ fi
 # echo A $ARGUMENTS
 
 # execute the command
-echo $FLOW3BASEDIR/$BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
-$PHP "$FLOW3BASEDIR/$BOOTSTRAP" $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
+echo FLOW3_CONTEXT=$CONTEXT $PHP $FLOW3BASEDIR/$BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
+FLOW3_CONTEXT=$CONTEXT $PHP "$FLOW3BASEDIR/$BOOTSTRAP" $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
