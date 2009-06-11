@@ -11,6 +11,8 @@ Fluid:
   state: active
 Kickstart: 
   state: active
+PHP6: 
+  state: active
 PHPCR: 
   state: active
 PHPUnit: 
