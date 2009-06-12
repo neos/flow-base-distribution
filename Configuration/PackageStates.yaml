@@ -8,7 +8,7 @@
 # Please refer to the FLOW3 manual for possible configuration options.   #
 #                                                                        #
 
-# $Id: PackageStates.yaml  $
+# $Id$
 
 ---
 DocumentationBrowser: 
