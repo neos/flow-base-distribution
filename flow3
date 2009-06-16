@@ -176,6 +176,19 @@ while [ $# -ge 1 ]; do
 					ARGUMENTS="$ARGUMENTS --controller-name=$1"
 				fi
 			fi
+			if [ "$1" = 'model' ]; then
+				shift
+				ACTION='generateModel'
+				ARGUMENTS="--package-key=$1"
+				if [ $# -gt 1 ]; then
+					shift
+					ARGUMENTS="$ARGUMENTS --model-name=$1"
+					while [ $# -ge 1 ]; do
+						shift
+						ARGUMENTS="$ARGUMENTS $1"
+					done
+				fi
+			fi
 		fi
 		;;
 
