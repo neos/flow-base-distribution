@@ -25,7 +25,6 @@ resource:
 monitor:
   fileMonitor:
     enable: y
-    changeDetectionStrategy: F3\FLOW3\Monitor\ChangeDetectionStrategy\ModificationTime
 
 reflection:
   detectClassChanges: y

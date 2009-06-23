@@ -2,7 +2,7 @@
 # FLOW3 context setting
 #
 
-SetEnv FLOW3_CONTEXT Production
+#SetEnv FLOW3_CONTEXT Production
 #SetEnv FLOW3_CONTEXT Development
 
 #

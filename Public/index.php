@@ -31,15 +31,10 @@ declare(ENCODING = 'utf-8');
  */
 
 define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', __DIR__) . '/');
-require(FLOW3_PATH_PUBLIC . '../Packages/Global/FLOW3/Classes/FLOW3.php');
+require(FLOW3_PATH_PUBLIC . '../Packages/Global/FLOW3/Classes/Core/Bootstrap.php');
 
-	// determine context
-if (strlen(getenv('FLOW3_CONTEXT'))) {
-	$framework = new F3\FLOW3\FLOW3(getenv('FLOW3_CONTEXT'));
-} else {
-	$framework = new F3\FLOW3\FLOW3();
-}
+$flow3 = new \F3\FLOW3\Core\Bootstrap(getenv('FLOW3_CONTEXT'));
+$flow3->initialize();
+$flow3->run();
 
-$framework->initialize();
-$framework->run();
 ?>
