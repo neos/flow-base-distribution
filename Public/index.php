@@ -30,6 +30,10 @@ declare(ENCODING = 'utf-8');
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser Public License, version 3 or later
  */
 
+if (version_compare(phpversion(), '5.3.0RC2', '<')) {
+	die('Because FLOW3 uses namespaces, it requires at least PHP 5.3.0, you have ' . phpversion() . ' (Error #1246258365)');
+}
+
 define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', __DIR__) . '/');
 require(FLOW3_PATH_PUBLIC . '../Packages/Global/FLOW3/Classes/Core/Bootstrap.php');
 

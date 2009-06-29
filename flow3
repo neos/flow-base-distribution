@@ -42,8 +42,8 @@ printUsage () {
 	echo ''
 	echo 'Options:'
 	echo ''
-	echo '  -h, --help      - print this message'
-	echo '  -d, --dev       - execute in development context'
+	echo '  -h, --help        - print this message'
+	echo '  -p, --production  - execute in production context'
 	echo ''
 	echo 'Available commands:'
 	echo ''
@@ -63,6 +63,10 @@ printUsage () {
 	echo '                                     <testcase> only run this testcase (optional)'
 	echo '                                     <coverage-directory> path to write the clover.xml (optional)'
 	echo ''
+	echo '  kickstart package <package-key>'
+	echo '                                   - kickstart a new package, including a standard controller'
+	echo '                                     <package-key> Package for the controller (mandatory)'
+	echo ''
 	echo '  kickstart controller <package-key> [<controller-name>]'
 	echo '                                   - generate a controller'
 	echo '                                     <package-key> Package for the controller (mandatory)'
@@ -76,7 +80,7 @@ if [ $# -lt 2 ]; then
 	printUsage
 fi
 
-CONTEXT='Production'
+CONTEXT='Development'
 PACKAGE=''
 SUBPACKAGES=''
 CONTROLLER=''
@@ -91,8 +95,8 @@ while [ $# -ge 1 ]; do
 		printUsage
 		;;
 
-	--dev|-d)
-		CONTEXT='Development'
+	--production|-p)
+		CONTEXT='Production'
 		;;
 
 	package)
@@ -160,13 +164,18 @@ while [ $# -ge 1 ]; do
 
 	kickstart)
 		PACKAGE='Kickstart'
-		CONTROLLER='Generator'
+		CONTROLLER='Kickstart'
 		shift
 		if [ $# -lt 2 ]; then
 			echo 'Please specify a package-key'
 			echo
 			printUsage
 		else
+			if [ "$1" = 'package' ]; then
+				shift
+				ACTION='generatePackage'
+				ARGUMENTS="--package-key=$1"
+			fi
 			if [ "$1" = 'controller' ]; then
 				shift
 				ACTION='generateController'
@@ -217,5 +226,5 @@ fi
 # echo A $ARGUMENTS
 
 # execute the command
-echo FLOW3_CONTEXT=$CONTEXT $PHP $FLOW3BASEDIR/$BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
+# echo FLOW3_CONTEXT=$CONTEXT $PHP $FLOW3BASEDIR/$BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
 FLOW3_CONTEXT=$CONTEXT $PHP "$FLOW3BASEDIR/$BOOTSTRAP" $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
