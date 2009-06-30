@@ -40,6 +40,10 @@ if (version_compare(phpversion(), '5.3.0RC2', '<')) {
 define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', __DIR__) . '/');
 require(FLOW3_PATH_PUBLIC . '../Packages/Global/FLOW3/Classes/Core/Bootstrap.php');
 
-require(FLOW3_PATH_PUBLIC . '../Packages/Global/FLOW3/Resources/Private/Core/initAndRunFLOW3.php');
+	// Need to take this detour because PHP < 5.3.0 would die with a parse error, not displaying our message above
+$bootstrapClassName = '\F3\FLOW3\Core\Bootstrap';
+$flow3 = new $bootstrapClassName(getenv('FLOW3_CONTEXT'));
+$flow3->initialize();
+$flow3->run();
 
 ?>
