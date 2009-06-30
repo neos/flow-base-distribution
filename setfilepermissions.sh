@@ -8,7 +8,7 @@
 
 usage() {
 	echo
-	echo Usage: $0 \<webuser\> \<webgroup\>
+	echo Usage: $0 \<commandlineuser\> \<webgroup\>
 	echo Run as superuser, if needed
 	echo
 	exit 1
@@ -18,24 +18,24 @@ if [ "$#" != "2" ]; then
   usage
 fi
 
-WEBSERVER_USER="$1"
+COMMANDLINE_USER="$1"
 WEBSERVER_GROUP="$2"
 
-find . -type d -exec chmod 755 {} \;
-find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 750 {} \;
+find . -type f -exec chmod 640 {} \;
+find Data . -exec chown $COMMANDLINE_USER:$WEBSERVER_GROUP {} \;
 
-find Data -not -regex '.*[.]svn.*' -not -name 'CLI' -exec chown $WEBSERVER_USER:$WEBSERVER_GROUP {} \;
 chmod 755 Data
-find Data -type d -exec chmod 755 {} \;
-find Data -type f -exec chmod 644 {} \;
-chmod 777 Data/Logs
+find Data -type d -exec chmod 770 {} \;
+find Data -type f -exec chmod 660 {} \;
+chmod 770 Data/Logs
 
-chmod 755 flow3 
-chmod 755 $0
+chmod 770 flow3 
+chmod 770 $0
 
-chmod 755 Public
-chmod 755 Public/index.php
+chmod 750 Public
+chmod 750 Public/index.php
 
-find Public/Resources -type d -exec chmod 755 {} \;
-find Public/Resources -type f -exec chmod 644 {} \;
-find Public/Resources -not -regex '.*[.]svn.*'  -exec chown $WEBSERVER_USER:$WEBSERVER_GROUP {} \;
+find Public/Resources -type d -exec chmod 770 {} \;
+find Public/Resources -type f -exec chmod 660 {} \;
+find Public/Resources -not -regex '.*[.]svn.*'  -exec chown $COMMANDLINE_USER:$WEBSERVER_GROUP {} \;
