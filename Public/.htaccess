@@ -3,7 +3,7 @@
 #
 
 # You can specify a default context by activating this option:
-#SetEnv FLOW3_CONTEXT Development
+SetEnv FLOW3_CONTEXT Development
 
 #
 # mod_rewrite configuration
