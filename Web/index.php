@@ -21,29 +21,6 @@ declare(ENCODING = 'utf-8');
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-/**
- * Bootstrap for the FLOW3 Framework. This file uses some workaround (i.e. using
- * initAndRunFLOW3.php) to be namespace-free. Otherwise we could not check for
- * PHP being 5.3 or later...
- *
- * @package FLOW3
- * @version $Id$
- * @author Robert Lemke <robert@typo3.org>
- * @author Karsten Dambekalns <karsten@typo3.org>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser Public License, version 3 or later
- */
-
-if (version_compare(phpversion(), '5.3.0RC2', '<')) {
-	die('Because FLOW3 uses namespaces, it requires at least PHP 5.3.0, you have ' . phpversion() . ' (Error #1246258365)' . PHP_EOL);
-}
-
-define('FLOW3_PATH_PUBLIC', str_replace('\\', '/', __DIR__) . '/');
-require(FLOW3_PATH_PUBLIC . '../Packages/Distribution/FLOW3/Classes/Core/Bootstrap.php');
-
-	// Need to take this detour because PHP < 5.3.0 would die with a parse error, not displaying our message above
-$bootstrapClassName = '\F3\FLOW3\Core\Bootstrap';
-$flow3 = new $bootstrapClassName(getenv('FLOW3_CONTEXT'));
-$flow3->initialize();
-$flow3->run();
+require(__DIR__ . '/../Packages/Framework/FLOW3/Scripts/FLOW3.php');
 
 ?>

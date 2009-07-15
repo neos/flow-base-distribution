@@ -31,7 +31,7 @@
 
 # Configuration
 PHP='/usr/bin/env php'
-BOOTSTRAP='Public/index.php'
+BOOTSTRAP='Packages/Distribution/FLOW3/Scripts/FLOW3.php'
 
 FLOW3BASEDIR="$(dirname "$(test -L "$0" && readlink "$0" || echo "$0")")"
 
