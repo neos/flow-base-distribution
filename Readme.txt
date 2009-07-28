@@ -4,12 +4,12 @@ FLOW3 1.0.0 SVN
 
 Welcome to FLOW3!
 
-There are a few things you need to know to get started with FLOW3. All necessary steps are explained in the FLOW3 Installation Guide which you find on http://flow3.typo3.org/documentation
+There are a few things you need to know to get started with FLOW3. All necessary steps are explained in the FLOW3 Getting Started tutorial which you find on http://flow3.typo3.org/documentation/tutorials
 
 In short here's what you need to do:
 
-1) Set up a virtual host for your web server and let it point to the Public/ directory of FLOW3.
-2) Adjust the file permissions. On Linux / Mac just run "sudo ./setfilepermissions.sh" from FLOW3's main directory
+1) Set up a virtual host for your web server and let it point to the Web/ directory of FLOW3.
+2) Adjust the file permissions. On Linux / Mac just run "sudo ./Packages/Framework/FLOW3/Scripts/setfilepermissions.sh johndoe wwwuser wwwgroup" from FLOW3's main directory (replace the user names by some matching your system environment!).
 3) Call the URL leading to your virtual host from a browser
 
 Have fun!
