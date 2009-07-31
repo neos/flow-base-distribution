@@ -3,7 +3,11 @@
 #
 
 # You can specify a default context by activating this option:
-#SetEnv FLOW3_CONTEXT Development
+SetEnv FLOW3_CONTEXT Development
+
+# If the root path is not the parent of the Web directory, FLOW3's root path must be
+# specified manually:
+SetEnv FLOW3_ROOTPATH /var/www/dev/flow3/dist/
 
 #
 # mod_rewrite configuration

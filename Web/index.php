@@ -21,6 +21,6 @@ declare(ENCODING = 'utf-8');
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-require(__DIR__ . '/../Packages/Framework/FLOW3/Scripts/FLOW3.php');
+require((isset($_SERVER['FLOW3_ROOTPATH']) ? $_SERVER['FLOW3_ROOTPATH'] : __DIR__ . '/../') . 'Packages/Framework/FLOW3/Scripts/FLOW3.php');
 
 ?>
