@@ -167,7 +167,8 @@ while [ $# -ge 1 ]; do
 		else
 			if [ "$1" = 'flush' ]; then
 				PACKAGE='FLOW3'
-				CONTROLLER='Cache'
+				SUBPACKAGES='Cache'
+				CONTROLLER='Manager'
 				ACTION='flush'
 			fi
 		fi
