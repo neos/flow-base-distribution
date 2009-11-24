@@ -7,3 +7,8 @@
 # Please refer to the default configuration file or the FLOW3 manual for #
 # possible configuration options.                                        #
 #                                                                        #
+
+security:
+  cryptography:
+    HashService:
+      encryptionKey: 'change this to something *really* unique!'
