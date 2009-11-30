@@ -8,3 +8,8 @@
 # possible configuration options.                                        #
 #                                                                        #
 
+FLOW3:
+  security:
+    cryptography:
+      hashService:
+        encryptionKey: 'change this to something *really* unique!'

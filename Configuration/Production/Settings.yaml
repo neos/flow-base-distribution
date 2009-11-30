@@ -8,7 +8,10 @@
 # possible configuration options.                                        #
 #                                                                        #
 
-security:
-  cryptography:
-    hashService:
-      encryptionKey: 'change this to something *really* unique!'
+FLOW3:
+  configuration:
+    compileConfigurationFiles: y
+  
+  log:
+    systemLogger:
+      backendOptions: { logFileURL: %FLOW3_PATH_DATA%Logs/%FLOW3_SAPITYPE%/FLOW3_Production.log, createParentDirectories: y, severityThreshold: %LOG_WARNING% }

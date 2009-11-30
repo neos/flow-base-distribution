@@ -8,8 +8,6 @@
 # Please refer to the FLOW3 manual for possible configuration options.   #
 #                                                                        #
 
-# $Id$
-
 ---
 DocumentationBrowser: 
   state: active
@@ -32,4 +30,6 @@ Testing:
 TYPO3CR: 
   state: active
 Welcome: 
+  state: active
+Blog: 
   state: active
