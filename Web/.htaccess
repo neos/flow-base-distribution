@@ -25,13 +25,22 @@
 	# of the website root.
 #	RewriteBase /
 
-	# Stop rewrite processing if it is useless
-	RewriteRule ^(Resources/|robots\.txt|favicon\.ico) - [L]
+	# Stop rewrite processing no matter if a package resource, robots.txt etc. exists or not
+	RewriteRule ^(_Resources/Packages/|robots\.txt|favicon\.ico) - [L]
+
+	# Stop rewrite process if the path points to a static file anyway
+	RewriteCond %{REQUEST_FILENAME} -f [OR]
+	RewriteCond %{REQUEST_FILENAME} -l [OR]
+	RewriteCond %{REQUEST_FILENAME} -d 
+	RewriteRule .* - [L]
+	
+	# Perform rewriting of persitent resource files
+	RewriteRule ^(_Resources/Persistent/.{40})/.+(\..+) $1$2 [L]
+
+	# Make sure that not existing resources don't execute FLOW3
+	RewriteRule ^_Resources/.* - [L]
 
 	# Continue only if the file/symlink/directory does not exist
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-l
 	RewriteRule (.*) index.php/$1
 
 </IfModule>

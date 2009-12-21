@@ -10,23 +10,17 @@
 
 FLOW3:
   error:
-    ##
-    # Use the more meaningful debug exception handler.
     exceptionHandler: className: 'F3\FLOW3\Error\DebugExceptionHandler'
-  
-    ##
-    # All errors should result in exceptions.
     errorHandler: exceptionalErrors: [%E_USER_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_WARNING%, %E_USER_NOTICE%, %E_STRICT%]
-  
-  resource:
-    ##
-    # Cache each resource file with check for modification time.
-    cache: strategy: file
   
   monitor:
     fileMonitor:
       enable: y
   
+  resource:
+    publishing:
+      detectPackageResourceChanges: y
+
   reflection:
     detectClassChanges: y
   
