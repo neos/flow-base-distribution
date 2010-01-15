@@ -10,20 +10,22 @@
 
 FLOW3:
   error:
-    exceptionHandler: className: 'F3\FLOW3\Error\DebugExceptionHandler'
-    errorHandler: exceptionalErrors: [%E_USER_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_WARNING%, %E_USER_NOTICE%, %E_STRICT%]
-  
+    exceptionHandler:
+      className: 'F3\FLOW3\Error\DebugExceptionHandler'
+    errorHandler:
+      exceptionalErrors: [%E_USER_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_WARNING%, %E_USER_NOTICE%, %E_STRICT%]
+
   monitor:
     fileMonitor:
       enable: y
-  
+
   resource:
     publishing:
       detectPackageResourceChanges: y
 
   reflection:
     detectClassChanges: y
-  
+
   log:
     systemLogger:
       backendOptions: { logFileURL: %FLOW3_PATH_DATA%Logs/%FLOW3_SAPITYPE%/FLOW3_Development.log, createParentDirectories: y, severityThreshold: %LOG_DEBUG% }

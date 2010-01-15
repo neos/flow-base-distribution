@@ -45,6 +45,7 @@ printUsage () {
 	echo ''
 	echo '  -h, --help        - print this message'
 	echo '  -p, --production  - execute in production context'
+	echo '  -s, --setup       - execute in setup context'
 	echo ''
 	echo 'Available commands:'
 	echo ''
@@ -108,6 +109,10 @@ while [ $# -ge 1 ]; do
 
 	--production|-p)
 		CONTEXT='Production'
+		;;
+
+	--setup|-s)
+		CONTEXT='Setup'
 		;;
 
 	package)

@@ -10,13 +10,8 @@
 #                                                                        #
 
 FLOW3:
-  error:
-    ##
-    # Use the more meaningful debug exception handler.
-    exceptionHandler:
-      className: 'F3\FLOW3\Error\DebugExceptionHandler'
+  aop:
+    enable: n
 
-    ##
-    # All errors should result in exceptions.
-    errorHandler:
-      exceptionalErrors: [%E_USER_ERROR%, %E_RECOVERABLE_ERROR%, %E_WARNING%, %E_NOTICE%, %E_USER_WARNING%, %E_USER_NOTICE%, %E_STRICT%]
+  persistence:
+    enable: n

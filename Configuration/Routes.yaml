@@ -12,11 +12,11 @@
 ##
 # TYPO3CR subroutes
 
---
+-
   name: 'TYPO3CR'
   uriPattern: 'typo3cr<TYPO3CRSubroutes>'
   defaults:
-    @format: 'html'
+    '@format': 'html'
   subRoutes:
     TYPO3CRSubroutes:
       package: TYPO3CR
@@ -27,7 +27,7 @@
 # If the package "Welcome" is installed, its fallback route will point to an 
 # informative welcome screen.
 
---
+-
   name: 'Welcome'
   uriPattern: '<WelcomeSubroutes>'
   subRoutes:
@@ -38,7 +38,7 @@
 # Subroutes from the DocumentationBrowser package.
 #
 
---
+-
   name: 'Documentation Browser'
   uriPattern: '<DocumentationBrowserSubroutes>'
   subRoutes:
@@ -48,11 +48,11 @@
 ##
 # FLOW3 subroutes
 
---
+-
   name: 'FLOW3'
   uriPattern: '<FLOW3Subroutes>'
   defaults:
-    @format: 'html'
+    '@format': 'html'
   subRoutes:
     FLOW3Subroutes:
       package: FLOW3
