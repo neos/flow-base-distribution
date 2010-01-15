@@ -83,9 +83,12 @@ printUsage () {
 	echo '                                   - generate a repository'
 	echo '                                     <package-key> Package for the controller (mandatory)'
 	echo '                                     <model-name> Name of the model the repository is for (mandatory)'
-   echo ''
-   echo '  migrate classnames'
-   echo '                                   - migrates use of old class names to those used in 1.0.0 alpha 7'
+	echo ''
+	echo '  migrate classnames'
+	echo '                                   - migrates use of old class names to those used in 1.0.0 alpha 7'
+	echo ''
+	echo '  migrate persistence'
+	echo '                                   - migrates use of TYPO3CR-based persistence to the one used in 1.0.0 alpha 7'
 	echo ''
 	exit 1
 }
@@ -168,33 +171,27 @@ while [ $# -ge 1 ]; do
 
 	cache)
 		shift
-		if [ $# -lt 1 ]; then
-			echo 'Please specify a subcommand'
-			echo
-			printUsage
-		else
-			if [ "$1" = 'flush' ]; then
-				PACKAGE='FLOW3'
-				SUBPACKAGES='Cache'
-				CONTROLLER='Manager'
-				ACTION='flush'
-			fi
+		if [ "$1" = 'flush' ]; then
+			PACKAGE='FLOW3'
+			SUBPACKAGES='Cache'
+			CONTROLLER='Manager'
+			ACTION='flush'
 		fi
 		;;
 
 	migrate)
 		shift
-		if [ $# -lt 1 ]; then
-			echo 'Please specify a subcommand'
-			echo
-			printUsage
-		else
-			if [ "$1" = 'classnames' ]; then
-				PACKAGE='Foo'
-				CONTROLLER='Bar'
-				ACTION='migrate'
-				BOOTSTRAP='Packages/Framework/FLOW3/Scripts/migrateclassnames.php'
-			fi
+		if [ "$1" = 'classnames' ]; then
+			PACKAGE='Foo'
+			CONTROLLER='Bar'
+			ACTION='migrate'
+			BOOTSTRAP='Packages/Framework/FLOW3/Scripts/migrateclassnames.php'
+		fi
+		if [ "$1" = 'persistence' ]; then
+			PACKAGE='Foo'
+			CONTROLLER='Bar'
+			ACTION='migrate'
+			BOOTSTRAP='Packages/Framework/FLOW3/Scripts/migratepersistence.php'
 		fi
 		;;
 
