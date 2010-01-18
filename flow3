@@ -124,7 +124,7 @@ while [ $# -ge 1 ]; do
 	package)
 		PACKAGE='FLOW3'
 		SUBPACKAGES='Package'
-		CONTROLLER='Manager'
+		CONTROLLER='PackageManager'
 		shift
 		case $1 in
 		create|activate|deactivate|delete)
@@ -146,7 +146,7 @@ while [ $# -ge 1 ]; do
 
 	testing)
 		PACKAGE='Testing'
-		CONTROLLER='CLI'
+		CONTROLLER='Cli'
 		ACTION='run'
 		shift
 		if [ $# -lt 2 ]; then
@@ -174,7 +174,7 @@ while [ $# -ge 1 ]; do
 		if [ "$1" = 'flush' ]; then
 			PACKAGE='FLOW3'
 			SUBPACKAGES='Cache'
-			CONTROLLER='Manager'
+			CONTROLLER='CacheManager'
 			ACTION='flush'
 		fi
 		;;
