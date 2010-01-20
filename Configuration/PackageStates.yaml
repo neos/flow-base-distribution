@@ -21,13 +21,9 @@ Party:
   state: active
 PHP6: 
   state: active
-PHPCR: 
-  state: active
 PHPUnit: 
   state: active
 Testing: 
-  state: active
-TYPO3CR: 
   state: active
 Welcome: 
   state: active
