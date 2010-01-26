@@ -19,8 +19,6 @@ Kickstart:
   state: active
 Party: 
   state: active
-PHP6: 
-  state: active
 PHPUnit: 
   state: active
 Testing: 
