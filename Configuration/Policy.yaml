@@ -1,0 +1,13 @@
+#                                                                        #
+# Security policy defintion                                              #
+#                                                                        #
+# This file contains the security policy configuration                   #
+
+# @package FLOW3
+# @version $Id:  $
+
+resources: []
+
+roles: []
+
+acls: []
