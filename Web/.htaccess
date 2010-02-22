@@ -41,7 +41,7 @@
 	RewriteRule ^_Resources/.* - [L]
 
 	# Continue only if the file/symlink/directory does not exist
-	RewriteRule (.*) index.php/$1
+	RewriteRule (.*) index.php
 
 </IfModule>
 
