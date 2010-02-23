@@ -10,18 +10,6 @@
 # $Id$
 
 ##
-# TYPO3CR subroutes
-
--
-  name: 'TYPO3CR'
-  uriPattern: 'typo3cr<TYPO3CRSubroutes>'
-  defaults:
-    '@format': 'html'
-  subRoutes:
-    TYPO3CRSubroutes:
-      package: TYPO3CR
-
-##
 # Subroutes from the Welcome package.
 #
 # If the package "Welcome" is installed, its fallback route will point to an 
@@ -47,6 +35,7 @@
 
 ##
 # FLOW3 subroutes
+#
 
 -
   name: 'FLOW3'
