@@ -21,6 +21,13 @@ declare(ENCODING = 'utf-8');
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-require((isset($_SERVER['FLOW3_ROOTPATH']) ? $_SERVER['FLOW3_ROOTPATH'] : __DIR__ . '/../') . 'Packages/Framework/FLOW3/Scripts/FLOW3.php');
+$rootPath = isset($_SERVER['FLOW3_ROOTPATH']) ? $_SERVER['FLOW3_ROOTPATH'] : FALSE;
+if ($rootPath === FALSE && isset($_SERVER['REDIRECT_FLOW3_ROOTPATH'])) {
+	$rootPath = $_SERVER['REDIRECT_FLOW3_ROOTPATH'];
+}
+if ($rootPath === FALSE) {
+ $rootPath = __DIR__ . '/../';
+}
+require($rootPath . 'Packages/Framework/FLOW3/Scripts/FLOW3.php');
 
 ?>
