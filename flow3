@@ -30,7 +30,7 @@
 #
 
 # Configuration
-PHP='/usr/bin/env php'
+if [ ! "$PHP" ]; then PHP='/usr/bin/env php' ;fi
 BOOTSTRAP='Packages/Framework/FLOW3/Scripts/FLOW3.php'
 
 FLOW3ROOTPATH="$(dirname "$(test -L "$0" && readlink "$0" || echo "$0")")"
