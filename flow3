@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ###############################################################################
 #
 # This script belongs to the FLOW3 framework.
@@ -30,11 +30,33 @@
 #
 
 # Configuration
-if [ ! "$PHP" ]; then PHP='/usr/bin/env php' ;fi
-BOOTSTRAP='Packages/Framework/FLOW3/Scripts/FLOW3.php'
 
-FLOW3ROOTPATH="$(dirname "$(test -L "$0" && readlink "$0" || echo "$0")")"
-FLOW3WEBPATH="$FLOW3ROOTPATH/Web"
+# Absolute path to php executable if not set yet
+PHP=${PHP:="php"};
+
+FLOW3_CONTEXT=${FLOW3_CONTEXT:="Development"};
+
+# Getting root path of FLOW3 if not set yet
+CURRENT_PATH="$(pwd)"
+cd "$(dirname $0)"
+FLOW3_ROOTPATH=${FLOW3_ROOTPATH:="$(pwd)"};
+cd "${CURRENT_PATH}"
+
+FLOW3_WEBPATH="$FLOW3_ROOTPATH/Web";
+
+FLOW3_DEBUG=${FLOW3_DEBUG:=false}
+
+FLOW3_SHELLCONFIGFILE="${FLOW3_ROOTPATH}/Configuration/flow3.sh"
+if [ -f "${FLOW3_SHELLCONFIGFILE}" ]; then
+    . "${FLOW3_SHELLCONFIGFILE}"
+fi
+
+BOOTSTRAP='Packages/Framework/FLOW3/Scripts/FLOW3.php'
+PACKAGE=''
+SUBPACKAGES=''
+CONTROLLER=''
+ACTION=''
+ARGUMENTS=''
 
 printUsage () {
 	echo 'FLOW3 Command Line Interface'
@@ -46,6 +68,14 @@ printUsage () {
 	echo '  -h, --help        - print this message'
 	echo '  -p, --production  - execute in production context'
 	echo '  -s, --setup       - execute in setup context'
+	echo ''
+	echo 'Environment variables used (optional):'
+	echo ''
+	echo '  FLOW3_CONTEXT     - defines the context to use'
+	echo '  FLOW3_ROOTPATH    - defines the FLOW3 root path'
+	echo '  FLOW3_WEBPATH     - defines the FLOW3 web path'
+	echo '  FLOW3_DEBUG       - enable debug mode with "true"'
+	echo '  PHP               - the PHP CLI binary to use'
 	echo ''
 	echo 'Available commands:'
 	echo ''
@@ -95,14 +125,6 @@ if [ $# -lt 2 ]; then
 	printUsage
 fi
 
-CONTEXT='Development'
-PACKAGE=''
-SUBPACKAGES=''
-CONTROLLER=''
-ACTION=''
-ARGUMENTS=''
-
-
 # parse argument list
 while [ $# -ge 1 ]; do
 	case $1 in
@@ -111,11 +133,11 @@ while [ $# -ge 1 ]; do
 		;;
 
 	--production|-p)
-		CONTEXT='Production'
+		FLOW3_CONTEXT='Production'
 		;;
 
 	--setup|-s)
-		CONTEXT='Setup'
+		FLOW3_CONTEXT='Setup'
 		;;
 
 	package)
@@ -255,13 +277,19 @@ if [ "$PACKAGE" = '' -o "$CONTROLLER" = '' -o "$ACTION" = '' ]; then
 	printUsage
 fi
 
+if [ "xtrue" == "x${FLOW3_DEBUG}" ]; then
+    echo "FLOW3_CONTEXT     $FLOW3_CONTEXT"
+    echo "FLOW3_ROOTPATH    $FLOW3_ROOTPATH"
+    echo "FLOW3_WEBPATH     $FLOW3_WEBPATH"
+    echo "PHP               $PHP"
+    echo "PACKAGE           $PACKAGE"
+    echo "SUBPACKAGES       $SUBPACKAGES"
+    echo "CONTROLLER        $CONTROLLER"
+    echo "ACTION            $ACTION"
+    echo "ARGUMENTS         $ARGUMENTS"
+    echo "COMMAND           FLOW3_CONTEXT=$FLOW3_CONTEXT FLOW3_ROOTPATH=$FLOW3_ROOTPATH FLOW3_WEBPATH=$FLOW3_WEBPATH $PHP "${FLOW3_ROOTPATH}/${BOOTSTRAP}" $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS"
+    echo
+    echo
+fi
 
-# echo P $PACKAGE
-# echo S $SUBPACKAGES
-# echo C $CONTROLLER
-# echo A $ACTION
-# echo A $ARGUMENTS
-
-# execute the command
-# echo FLOW3_CONTEXT=$CONTEXT $PHP $FLOW3ROOTPATH/$BOOTSTRAP $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
-FLOW3_CONTEXT=$CONTEXT FLOW3_ROOTPATH=$FLOW3ROOTPATH FLOW3_WEBPATH=$FLOW3WEBPATH $PHP "$FLOW3ROOTPATH/$BOOTSTRAP" $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
+FLOW3_CONTEXT=$FLOW3_CONTEXT FLOW3_ROOTPATH=$FLOW3_ROOTPATH FLOW3_WEBPATH=$FLOW3_WEBPATH $PHP "${FLOW3_ROOTPATH}/${BOOTSTRAP}" $PACKAGE $SUBPACKAGES $CONTROLLER $ACTION $ARGUMENTS
