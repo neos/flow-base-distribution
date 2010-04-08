@@ -62,7 +62,7 @@ phpdepend - included by phpmd
 
 	<!-- umbrella targets -->
 	<target name="lint" depends="lint-php" description="Run all lint targets"/>
-	<target name="metrics" depends="metrics-phpcpd" description="Run all metrics targets"/>
+	<target name="metrics" depends="metrics-phpcpd, metrics-phpmd" description="Run all metrics targets"/>
 	<target name="test" depends="test-phpunit" description="Run all test targets"/>
 	<target name="report" depends="report-phpunit" description="Run all report targets"/>
 
