@@ -2,7 +2,7 @@
 <!--
 To run the targets in this Phing script you need
 
-Phing - obviously required
+Phing - obviously
  pear channel-discover pear.phing.info
  pear install phing/phing
 
@@ -79,52 +79,52 @@ phpdepend - included by phpmd
 	<!-- the taskdef should not be needed... -->
 	<taskdef classname="phing.tasks.ext.phpcpd.PHPCPDTask" name="phpcpd" />
 	<target name="metrics-phpcpd" description="Run copy-and-paste detection on PHP files">
-		<mkdir dir="${project.reportsdir}/Metrics" />
+		<mkdir dir="${project.reportsdir}" />
 		<phpcpd>
 			<fileset refid="files-php"/>
-			<formatter type="pmd" outfile="${project.reportsdir}/Metrics/cpd.xml"/>
+			<formatter type="pmd" outfile="${project.reportsdir}/cpd.xml"/>
 		</phpcpd>
 	</target>
 
 	<!-- the taskdef should not be needed... -->
 	<taskdef classname="phing.tasks.ext.phpmd.PHPMDTask" name="phpmd" />
 	<target name="metrics-phpmd" description="Run mess detection detection on PHP files">
-		<mkdir dir="${project.reportsdir}/Metrics" />
+		<mkdir dir="${project.reportsdir}" />
 		<phpmd>
 			<fileset refid="files-php"/>
-			<formatter type="xml" outfile="${project.reportsdir}/Metrics/pmd.xml"/>
+			<formatter type="xml" outfile="${project.reportsdir}/pmd.xml"/>
 		</phpmd>
 	</target>
 
 	<target name="test-phpunit" description="Run unit tests (XML output)">
-		<delete dir="${project.builddir}/Temporary" />
 		<mkdir dir="${project.builddir}/Temporary" />
+		<mkdir dir="${project.reportsdir}" />
 
 		<coverage-setup database="${project.builddir}/Temporary/coverage.db">
 			<fileset refid="files-php"/>
 		</coverage-setup>
 
 		<phpunit codecoverage="true" haltonfailure="true" printsummary="true" bootstrap="Packages/Framework/Testing/Scripts/Bootstrap.php">
-			<formatter todir="${project.builddir}/Temporary" type="xml"/>
+			<formatter todir="${project.reportsdir}" outfile="unittests.xml" type="xml"/>
 			<batchtest>
 				<fileset refid="files-unittests"/>
 			</batchtest>
 		</phpunit>
 	</target>
 
-	<target name="report-phpunit" depends="test-phpunit" description="Run unit tests with HTML output (Build/PHPUnit/Report/)">
-		<delete dir="${project.reportsdir}/UnitTests" />
-		<delete dir="${project.reportsdir}/CodeCoverage" />
+	<target name="report-phpunit" depends="test-phpunit" description="Run unit tests (HTML output)">
+		<delete dir="${project.reportsdir}/UnitTests" quiet="true"/>
+		<delete dir="${project.reportsdir}/CodeCoverage" quiet="true"/>
 		<mkdir dir="${project.reportsdir}/UnitTests" />
 		<mkdir dir="${project.reportsdir}/CodeCoverage" />
 
-		<phpunitreport infile="${project.builddir}/Temporary/testsuites.xml" format="frames" todir="${project.reportsdir}/UnitTests" styledir="${phing.styledir}"/>
+		<phpunitreport infile="${project.reportsdir}/unittests.xml" format="frames" todir="${project.reportsdir}/UnitTests" styledir="${phing.styledir}"/>
 
 		<!-- we need the class loader for the coverage report -->
 		<adhoc><![CDATA[
 		require_once('Packages/Framework/Testing/Scripts/Bootstrap.php');
 		]]></adhoc>
-		<coverage-report outfile="${project.builddir}/Temporary/coverage.xml">
+		<coverage-report outfile="${project.reportsdir}/coverage.xml">
 			<report todir="${project.reportsdir}/CodeCoverage" styledir="${phing.styledir}"/>
 		</coverage-report>
 	</target>
