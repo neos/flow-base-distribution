@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project name="FileSets">
+
+	<fileset dir="${project.rootdir}" expandsymboliclinks="true" id="files-php">
+		<exclude name="**/.svn"/>
+		<exclude name="**/*.bak"/>
+		<exclude name="**/*~"/>
+		<exclude name="Packages/Framework/Testing/**/*.php"/>
+		<include name="Packages/Framework/*/Classes/**/*.php"/>
+	</fileset>
+
+	<fileset dir="${project.rootdir}" expandsymboliclinks="true" id="files-unittests">
+		<exclude name="**/.svn"/>
+		<exclude name="**/*.bak"/>
+		<exclude name="**/*~"/>
+		<include name="Packages/Framework/*/Tests/Unit/**/*Test.php"/>
+	</fileset>
+
+	<fileset dir="${project.rootdir}/Packages/Framework" expandsymboliclinks="true" id="dirs-packages">
+		<include name="*"/>
+	</fileset>
+
+</project>

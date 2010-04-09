@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-To run the targets in this Phing script you need
+To run the targets in this Phing script you need (the latest versions of):
 
 Phing - obviously
  pear channel-discover pear.phing.info
@@ -19,11 +19,14 @@ phpcpd - for the copy'n'paste detection
 phpmd - for the mess detection target
  pear channel-discover pear.phpmd.org
  pear channel-discover pear.pdepend.org
- pear install <dashdash>alldeps phpmd/PHP_PMD-alpha
+ pear install -a phpmd/PHP_PMD-alpha
 
 phpdepend - included by phpmd
  pear channel-discover pear.pdepend.org
  pear install pdepend/PHP_Depend-beta
+
+PHP_UML - for API documentation rendering
+ pear install PHP_UML
 -->
 <project name="FLOW3" default="help">
 
@@ -42,97 +45,15 @@ phpdepend - included by phpmd
 		</echo>
 	</target>
 
-	<property file="build.properties" />
-
-	<!-- fileset declarations -->
-	<fileset dir="${project.basedir}" id="files-php">
-		<exclude name="**/.svn"/>
-		<exclude name="**/*.bak"/>
-		<exclude name="**/*~"/>
-		<exclude name="Packages/Framework/Testing/**/*.php"/>
-		<include name="Packages/**/Classes/**/*.php"/>
-	</fileset>
-
-	<fileset dir="${project.basedir}" id="files-unittests">
-		<exclude name="**/.svn"/>
-		<exclude name="**/*.bak"/>
-		<exclude name="**/*~"/>
-		<include name="Packages/**/Tests/Unit/**/*Test.php"/>
-	</fileset>
-
-	<!-- umbrella targets -->
-	<target name="lint" depends="lint-php" description="Run all lint targets"/>
-	<target name="metrics" depends="metrics-phpcpd, metrics-phpmd" description="Run all metrics targets"/>
-	<target name="test" depends="test-phpunit" description="Run all test targets"/>
-	<target name="report" depends="report-phpunit" description="Run all report targets"/>
-
-
-
-	<!-- worker targets -->
-	<target name="lint-php" description="Run lint on PHP files">
-		<mkdir dir="${project.reportsdir}" />
-		<phplint haltonfailure="true" level="debug" tofile="${project.reportsdir}/Lint.txt">
-			<fileset refid="files-php"/>
-		</phplint>
-	</target>
+	<property file="Build/Phing.properties" />
 
 	<!-- the taskdef should not be needed... -->
-	<taskdef classname="phing.tasks.ext.phpcpd.PHPCPDTask" name="phpcpd" />
-	<target name="metrics-phpcpd" description="Run copy-and-paste detection on PHP files">
-		<mkdir dir="${project.reportsdir}" />
-		<phpcpd>
-			<fileset refid="files-php"/>
-			<formatter type="pmd" outfile="${project.reportsdir}/cpd.xml"/>
-		</phpcpd>
-	</target>
-
-	<!-- the taskdef should not be needed... -->
-	<taskdef classname="phing.tasks.ext.phpmd.PHPMDTask" name="phpmd" />
-	<target name="metrics-phpmd" description="Run mess detection detection on PHP files">
-		<mkdir dir="${project.reportsdir}" />
-		<phpmd>
-			<fileset refid="files-php"/>
-			<formatter type="xml" outfile="${project.reportsdir}/pmd.xml"/>
-		</phpmd>
-	</target>
-
-	<target name="test-phpunit" description="Run unit tests (XML output)">
-		<mkdir dir="${project.builddir}/Temporary" />
-		<mkdir dir="${project.reportsdir}" />
-
-		<coverage-setup database="${project.builddir}/Temporary/coverage.db">
-			<fileset refid="files-php"/>
-		</coverage-setup>
-
-		<phpunit codecoverage="true" haltonfailure="true" printsummary="true" bootstrap="Packages/Framework/Testing/Scripts/Bootstrap.php">
-			<formatter todir="${project.reportsdir}" outfile="unittests.xml" type="xml"/>
-			<batchtest>
-				<fileset refid="files-unittests"/>
-			</batchtest>
-		</phpunit>
-	</target>
-
-	<target name="report-phpunit" depends="test-phpunit" description="Run unit tests (HTML output)">
-		<delete dir="${project.reportsdir}/UnitTests" quiet="true"/>
-		<delete dir="${project.reportsdir}/CodeCoverage" quiet="true"/>
-		<mkdir dir="${project.reportsdir}/UnitTests" />
-		<mkdir dir="${project.reportsdir}/CodeCoverage" />
-
-		<phpunitreport infile="${project.reportsdir}/unittests.xml" format="frames" todir="${project.reportsdir}/UnitTests" styledir="${phing.styledir}"/>
-
-		<!-- we need the class loader for the coverage report -->
-		<adhoc><![CDATA[
-		require_once('Packages/Framework/Testing/Scripts/Bootstrap.php');
-		]]></adhoc>
-		<coverage-report outfile="${project.reportsdir}/coverage.xml">
-			<report todir="${project.reportsdir}/CodeCoverage" styledir="${phing.styledir}"/>
-		</coverage-report>
-	</target>
-
-	<target name="doc-render-apis" description="Generate API documentation (inside packages)">
-	</target>
-
-	<target name="doc-render-manuals" description="Generate HTML manuals (inside packages)">
-	</target>
+	<taskdef classname="phing.tasks.system.ImportTask" name="import" />
+	<import file="Build/Phing/Buildfiles/FileSets.xml"/>
+	<import file="Build/Phing/Buildfiles/Metrics.xml"/>
+	<import file="Build/Phing/Buildfiles/Tests.xml"/>
+	<import file="Build/Phing/Buildfiles/Reports.xml"/>
+	<import file="Build/Phing/Buildfiles/Documentation.xml"/>
+	<import file="Build/Phing/Buildfiles/Setup.xml"/>
 
 </project>

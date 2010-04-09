@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Setup">
+
+	<target name="setfilepermissions">
+		<input propertyname="cliuser" promptChar="?">CLI user name</input>
+		<input propertyname="webuser" defaultValue="_www" promptChar="?">Webserver user name</input>
+		<input propertyname="webgroup" defaultValue="_www" promptChar="?">Webserver group name</input>
+
+		<chown user="${cliuser}:${webgroup}">
+			<fileset dir="${project.rootdir}">
+				<exclude name="**/.svn"/>
+				<exclude name="**/*.bak"/>
+				<exclude name="**/*~"/>
+				<include name="**"/>
+			</fileset>
+		</chown>
+		<chown user="${webuser}:${webgroup}">
+			<fileset dir="${project.rootdir}">
+				<exclude name="**/.svn"/>
+				<exclude name="**/*.bak"/>
+				<exclude name="**/*~"/>
+				<include name="Web"/>
+				<include name="Web/**"/>
+			</fileset>
+		</chown>
+		<chmod mode="2770">
+			<fileset dir="${project.rootdir}">
+				<exclude name="**/.svn"/>
+				<exclude name="**/*.bak"/>
+				<exclude name="**/*~"/>
+				<include name="**" type="dir"/>
+			</fileset>
+		</chmod>
+		<chmod mode="0660">
+			<fileset dir="${project.rootdir}">
+				<exclude name="**/.svn"/>
+				<exclude name="**/*.bak"/>
+				<exclude name="**/*~"/>
+				<include name="**" type="file"/>
+			</fileset>
+		</chmod>
+		<chmod mode="0770">
+			<fileset dir="${project.rootdir}">
+				<exclude name="**/.svn"/>
+				<exclude name="**/*.bak"/>
+				<exclude name="**/*~"/>
+				<include name="."/>
+				<include name="flow3"/>
+				<include name="Web"/>
+				<include name="Web/index.php"/>
+			</fileset>
+		</chmod>
+	</target>
+
+</project>

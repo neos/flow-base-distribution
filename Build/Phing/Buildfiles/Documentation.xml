@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project name="Documentation">
+
+	<taskdef name="phpuml" classname="PhpUmlTask" classpath="Build/Phing/Tasks"/>
+
+	<target name="doc-render-apis" description="Generate API documentation (inside packages)">
+		<foreach param="package" target="doc-render-api">
+			<fileset refid="dirs-packages"/>
+		</foreach>
+	</target>
+
+	<taskdef classname="phing.tasks.ext.XmlPropertyTask" name="xmlproperty" />
+	<target name="doc-render-api">
+		<available file="${project.rootdir}/Packages/${package}/Classes" property="buildapi" value="true"/>
+		<if>
+			<istrue value="${buildapi}"/>
+			<then>
+				<xmlproperty file="${project.rootdir}/Packages/${package}/Meta/Package.xml"/>
+				<mkdir dir="${project.rootdir}/Packages/${package}/Documentation/API/HTML/en"/>
+				<phpuml
+					input="${project.rootdir}/Packages/${package}/Classes"
+					output="${project.rootdir}/Packages/${package}/Documentation/API/HTML/en"
+					title="${package.title}"/>
+			</then>
+		</if>
+	</target>
+
+	<target name="doc-render-manuals" description="Generate HTML manuals (inside packages)">
+	</target>
+
+</project>

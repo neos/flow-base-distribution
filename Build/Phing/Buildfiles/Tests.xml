@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="Tests">
+
+	<!-- worker targets -->
+	<target name="lint-php" description="Run lint on PHP files">
+		<mkdir dir="${project.reportsdir}" />
+		<phplint haltonfailure="true" level="debug" tofile="${project.reportsdir}/Lint.txt">
+			<fileset refid="files-php"/>
+		</phplint>
+	</target>
+
+	<target name="test-phpunit" description="Run unit tests (XML output)">
+		<mkdir dir="${project.builddir}/Temporary" />
+		<mkdir dir="${project.reportsdir}" />
+
+		<coverage-setup database="${project.builddir}/Temporary/coverage.db">
+			<fileset refid="files-php"/>
+		</coverage-setup>
+
+		<phpunit codecoverage="true" haltonfailure="true" printsummary="true" bootstrap="Packages/Framework/Testing/Scripts/Bootstrap.php">
+			<formatter todir="${project.reportsdir}" outfile="unittests.xml" type="xml"/>
+			<batchtest>
+				<fileset refid="files-unittests"/>
+			</batchtest>
+		</phpunit>
+	</target>
+
+</project>
