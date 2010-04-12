@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="Release">
+
+	<target name="release" depends="release-tagpackages" description="Release FLOW3 to SourceForge and flow3.typo3.org"/>
+
+	<target name="release-tagpackages" description="Tags packages of the distribution with their current version number">
+		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
+		<foreach param="packagekey" target="release-tagpackage">
+			<fileset refid="packagekeys-framework"/>
+		</foreach>
+	</target>
+
+	<target name="release-tagpackage" description="Tags a single package">
+		<exec command="svn delete ${svn.baseuri.packages}${packagekey}/tags/${env.BUILD_NUMBER} -m='Deleting already existing tag ${env.BUILD_NUMBER}'"/>
+		<property name="exists" value="false" />
+		<available file="Packages/Framework/${packagekey}/Classes" property="exists" value="true"/>
+		<if>
+			<istrue value="${exists}"/>
+			<then>
+				<svncopy
+					repositoryurl="${svn.baseuri.packages}${packagekey}/trunk/"
+					todir="${svn.baseuri.packages}${packagekey}/tags/${env.BUILD_NUMBER}"
+					message="Tagged package with build number ${env.BUILD_NUMBER}"
+					/>
+			</then>
+		</if>
+	</target>
+</project>

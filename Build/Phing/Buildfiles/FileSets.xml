@@ -16,8 +16,15 @@
 		<include name="Packages/Framework/*/Tests/Unit/**/*Test.php"/>
 	</fileset>
 
-	<fileset dir="${project.rootdir}/Packages/Framework" expandsymboliclinks="true" id="dirs-packages">
+	<fileset dir="./Packages/Framework/" expandsymboliclinks="true" id="packagekeys-framework">
+		<exclude name="."/>
+		<exclude name=".."/>
 		<include name="*"/>
+		<type type="dir"/>
+	</fileset>
+
+	<fileset dir="." expandsymboliclinks="true" id="paths-packages">
+		<include name="Packages/*/*"/>
 	</fileset>
 
 </project>
