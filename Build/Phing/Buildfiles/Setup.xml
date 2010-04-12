@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Setup">
 
+	<target name="clean-temporary">
+		<delete dir="Data/Temporary" quiet="true"/>
+		<delete dir="Web/_Resources" quiet="true"/>
+	</target>
+
 	<target name="setfilepermissions">
-		<input propertyname="cliuser" promptChar="?">CLI user name</input>
-		<input propertyname="webuser" defaultValue="_www" promptChar="?">Webserver user name</input>
-		<input propertyname="webgroup" defaultValue="_www" promptChar="?">Webserver group name</input>
+		<propertyprompt propertyName="cliuser" promptText="CLI user name (cliuser)" useExistingValue="true"/>
+		<propertyprompt propertyName="webuser" defaultValue="_www" promptText="Webserver user name (webuser)" useExistingValue="true"/>
+		<propertyprompt propertyName="webgroup" defaultValue="_www" promptText="Webserver group name (webgroup)" useExistingValue="true"/>
 
 		<chown user="${cliuser}.${webgroup}">
 			<fileset dir=".">
+				<exclude name="Build"/>
+				<exclude name="Build/**"/>
 				<include name="**"/>
 			</fileset>
 		</chown>
@@ -19,20 +26,23 @@
 		</chown>
 		<chmod mode="2770">
 			<fileset dir=".">
-				<include name="**" type="dir"/>
+				<exclude name="Build"/>
+				<exclude name="Build/**"/>
+				<include name="**"/>
+				<type type="dir"/>
 			</fileset>
 		</chmod>
 		<chmod mode="0660">
 			<fileset dir=".">
-				<include name="**" type="file"/>
+				<exclude name="Build"/>
+				<exclude name="Build/**"/>
+				<include name="**"/>
+				<type type="file"/>
 			</fileset>
 		</chmod>
-		<chmod mode="0770">
+		<chmod mode="0700">
 			<fileset dir=".">
-				<include name="."/>
 				<include name="flow3"/>
-				<include name="Web"/>
-				<include name="Web/index.php"/>
 			</fileset>
 		</chmod>
 	</target>

@@ -16,6 +16,8 @@
 	</target>
 
 	<target name="doc-render-api">
+		<fail unless="package" message="You must set the 'package' property to a package path."/>
+
 		<if>
 			<available file="${package}/Classes" type="dir"/>
 			<then>
@@ -31,6 +33,8 @@
 	</target>
 
 	<target name="doc-render-manual">
+		<fail unless="package" message="You must set the 'package' property to a package path."/>
+
 		<if>
 			<available file="${package}/Documentation/Manual/DocBook/en"/>
 			<then>
