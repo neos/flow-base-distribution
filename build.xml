@@ -47,8 +47,6 @@ PHP_UML - for API documentation rendering
 
 	<property file="Build/Phing.properties" />
 
-	<!-- the taskdef should not be needed... -->
-	<taskdef classname="phing.tasks.system.ImportTask" name="import" />
 	<import file="Build/Phing/Buildfiles/FileSets.xml"/>
 	<import file="Build/Phing/Buildfiles/Metrics.xml"/>
 	<import file="Build/Phing/Buildfiles/Tests.xml"/>

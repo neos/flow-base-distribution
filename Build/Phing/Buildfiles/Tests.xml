@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <project name="Tests">
 
+	<target name="lint" depends="lint-php" description="Run lint on source files"/>
+
 	<!-- worker targets -->
 	<target name="lint-php" description="Run lint on PHP files">
 		<mkdir dir="${project.reportsdir}" />
