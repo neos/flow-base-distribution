@@ -6,44 +6,29 @@
 		<input propertyname="webuser" defaultValue="_www" promptChar="?">Webserver user name</input>
 		<input propertyname="webgroup" defaultValue="_www" promptChar="?">Webserver group name</input>
 
-		<chown user="${cliuser}:${webgroup}">
-			<fileset dir="${project.rootdir}">
-				<exclude name="**/.svn"/>
-				<exclude name="**/*.bak"/>
-				<exclude name="**/*~"/>
+		<chown user="${cliuser}.${webgroup}">
+			<fileset dir=".">
 				<include name="**"/>
 			</fileset>
 		</chown>
-		<chown user="${webuser}:${webgroup}">
-			<fileset dir="${project.rootdir}">
-				<exclude name="**/.svn"/>
-				<exclude name="**/*.bak"/>
-				<exclude name="**/*~"/>
+		<chown user="${webuser}.${webgroup}">
+			<fileset dir=".">
 				<include name="Web"/>
 				<include name="Web/**"/>
 			</fileset>
 		</chown>
 		<chmod mode="2770">
-			<fileset dir="${project.rootdir}">
-				<exclude name="**/.svn"/>
-				<exclude name="**/*.bak"/>
-				<exclude name="**/*~"/>
+			<fileset dir=".">
 				<include name="**" type="dir"/>
 			</fileset>
 		</chmod>
 		<chmod mode="0660">
-			<fileset dir="${project.rootdir}">
-				<exclude name="**/.svn"/>
-				<exclude name="**/*.bak"/>
-				<exclude name="**/*~"/>
+			<fileset dir=".">
 				<include name="**" type="file"/>
 			</fileset>
 		</chmod>
 		<chmod mode="0770">
-			<fileset dir="${project.rootdir}">
-				<exclude name="**/.svn"/>
-				<exclude name="**/*.bak"/>
-				<exclude name="**/*~"/>
+			<fileset dir=".">
 				<include name="."/>
 				<include name="flow3"/>
 				<include name="Web"/>

@@ -1,19 +1,20 @@
 <?xml version="1.0"?>
 <project name="FileSets">
 
-	<fileset dir="${project.rootdir}" expandsymboliclinks="true" id="files-php">
-		<exclude name="**/.svn"/>
-		<exclude name="**/*.bak"/>
-		<exclude name="**/*~"/>
+	<fileset dir="." expandsymboliclinks="true" id="files-php">
 		<exclude name="Packages/Framework/Testing/**/*.php"/>
-		<include name="Packages/Framework/*/Classes/**/*.php"/>
+		<include name="Packages/*/*/Classes/**/*.php"/>
 	</fileset>
 
-	<fileset dir="${project.rootdir}" expandsymboliclinks="true" id="files-unittests">
-		<exclude name="**/.svn"/>
-		<exclude name="**/*.bak"/>
-		<exclude name="**/*~"/>
+	<fileset dir="." expandsymboliclinks="true" id="files-unittests">
 		<include name="Packages/Framework/*/Tests/Unit/**/*Test.php"/>
+	</fileset>
+
+	<fileset dir="." expandsymboliclinks="true" id="paths-packages">
+		<exclude name="."/>
+		<exclude name=".."/>
+		<include name="Packages/*/*"/>
+		<type type="dir"/>
 	</fileset>
 
 	<fileset dir="./Packages/Framework/" expandsymboliclinks="true" id="packagekeys-framework">
@@ -23,8 +24,9 @@
 		<type type="dir"/>
 	</fileset>
 
-	<fileset dir="." expandsymboliclinks="true" id="paths-packages">
-		<include name="Packages/*/*"/>
+	<fileset dir="." expandsymboliclinks="true" id="files-docbook-xml">
+		<include name="Packages/Framework/*/Documentation/Manual/DocBook/**/*.xml"/>
+		<type type="file"/>
 	</fileset>
 
 </project>

@@ -5,26 +5,84 @@
 
 	<target name="doc-render-apis" description="Generate API documentation (inside packages)">
 		<foreach param="package" target="doc-render-api">
-			<fileset refid="dirs-packages"/>
+			<fileset refid="paths-packages"/>
+		</foreach>
+	</target>
+
+	<target name="doc-render-manuals" description="Generate HTML manuals (inside packages)">
+		<foreach param="package" target="doc-render-manual">
+			<fileset refid="paths-packages"/>
 		</foreach>
 	</target>
 
 	<target name="doc-render-api">
-		<available file="${project.rootdir}/Packages/${package}/Classes" property="buildapi" value="true"/>
 		<if>
-			<istrue value="${buildapi}"/>
+			<available file="${package}/Classes" type="dir"/>
 			<then>
-				<xmlproperty file="${project.rootdir}/Packages/${package}/Meta/Package.xml"/>
-				<mkdir dir="${project.rootdir}/Packages/${package}/Documentation/API/HTML/en"/>
+				<xmlproperty file="${package}/Meta/Package.xml"/>
+				<delete dir="${package}/Documentation/API/HTML/en" quiet="true"/>
+				<mkdir dir="${package}/Documentation/API/HTML/en"/>
 				<phpuml
-					input="${project.rootdir}/Packages/${package}/Classes"
-					output="${project.rootdir}/Packages/${package}/Documentation/API/HTML/en"
+					input="${package}/Classes"
+					output="${package}/Documentation/API/HTML/en"
 					title="${package.title}"/>
 			</then>
 		</if>
 	</target>
 
-	<target name="doc-render-manuals" description="Generate HTML manuals (inside packages)">
+	<target name="doc-render-manual">
+		<if>
+			<available file="${package}/Documentation/Manual/DocBook/en"/>
+			<then>
+				<property name="manual.sourcedir" value="${package}/Documentation/Manual/DocBook/en"/>
+				<property name="manual.targetdir" value="${package}/Documentation/Manual/HTML/en"/>
+
+				<delete dir="${manual.targetdir}" quiet="true"/>
+				<mkdir dir="${manual.targetdir}"/>
+
+				<copy file="${project.builddir}/Resources/Manual/Css/TheGuide.css" todir="${manual.targetdir}"/>
+				<copy todir="${manual.targetdir}/images/">
+					<fileset dir="${project.builddir}/Resources/Manual/Xsl/DocBookXSLNS/images">
+						<include name="**"/>
+					</fileset>
+				</copy>
+				<copy todir="${manual.targetdir}">
+					<fileset dir="${manual.sourcedir}">
+						<include name="**/*.png"/>
+						<include name="**/*.jpg"/>
+						<include name="**/*.gif"/>
+						<include name="**/*.svg"/>
+					</fileset>
+				</copy>
+
+				<delete dir="${project.builddir}/Temporary/DocBookRendering" quiet="true"/>
+				<mkdir dir="${project.builddir}/Temporary/DocBookRendering" />
+				<copy todir="${project.builddir}/Temporary/DocBookRendering">
+					<filterchain>
+						<replacetokens begintoken="{" endtoken="}">
+							<token key="DocBookXSLNSPath" value="${project.builddir}Resources/Manual/Xsl/DocBookXSLNS/"/>
+							<token key="outputDirectory" value="${manual.targetdir}"/>
+						</replacetokens>
+					</filterchain>
+					<fileset dir="${project.builddir}/Resources/Manual/Xsl">
+						<include name="html.xsl"/>
+					</fileset>
+				</copy>
+				<copy todir="${project.builddir}/Temporary/DocBookRendering">
+					<filterchain>
+						<xincludefilter basedir="${manual.sourcedir}"/>
+					</filterchain>
+					<fileset dir="${manual.sourcedir}">
+						<include name="Index.xml"/>
+					</fileset>
+				</copy>
+				<xslt todir="${manual.targetdir}" style="${project.builddir}/Temporary/DocBookRendering/html.xsl">
+					<fileset dir="${project.builddir}/Temporary/DocBookRendering">
+						<include name="Index.xml"/>
+					</fileset>
+				</xslt>
+			</then>
+		</if>
 	</target>
 
 </project>
