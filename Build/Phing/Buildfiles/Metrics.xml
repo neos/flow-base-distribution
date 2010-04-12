@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <project name="Metrics">
 
+	<target name="metrics" depends="metrics-phpcpd,metrics-phpmd" description="Run metrics collection on source files"/>
+
 	<target name="metrics-phpcpd" description="Run copy-and-paste detection on PHP files">
 		<mkdir dir="${project.reportsdir}" />
 		<phpcpd>
