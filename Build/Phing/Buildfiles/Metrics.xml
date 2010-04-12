@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <project name="Metrics">
 
-	<!-- the taskdef should not be needed... -->
-	<taskdef classname="phing.tasks.ext.phpcpd.PHPCPDTask" name="phpcpd" />
 	<target name="metrics-phpcpd" description="Run copy-and-paste detection on PHP files">
 		<mkdir dir="${project.reportsdir}" />
 		<phpcpd>
@@ -11,8 +9,6 @@
 		</phpcpd>
 	</target>
 
-	<!-- the taskdef should not be needed... -->
-	<taskdef classname="phing.tasks.ext.phpmd.PHPMDTask" name="phpmd" />
 	<target name="metrics-phpmd" description="Run mess detection detection on PHP files">
 		<mkdir dir="${project.reportsdir}" />
 		<phpmd>

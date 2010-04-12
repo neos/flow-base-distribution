@@ -9,7 +9,6 @@
 		</foreach>
 	</target>
 
-	<taskdef classname="phing.tasks.ext.XmlPropertyTask" name="xmlproperty" />
 	<target name="doc-render-api">
 		<available file="${project.rootdir}/Packages/${package}/Classes" property="buildapi" value="true"/>
 		<if>
