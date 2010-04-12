@@ -23,6 +23,8 @@
 		<mkdir dir="${project.builddir}/Temporary"/>
 		<mkdir dir="${project.reportsdir}"/>
 
+		<includepath classpath="Build/Resources"/>
+
 		<coverage-setup database="${project.builddir}/Temporary/coverage.db">
 			<fileset refid="files-php"/>
 		</coverage-setup>
