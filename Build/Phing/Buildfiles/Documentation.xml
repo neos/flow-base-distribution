@@ -3,43 +3,56 @@
 
 	<taskdef name="phpuml" classname="PhpUmlTask" classpath="Build/Phing/Tasks"/>
 
+	<target name="doc-clean-all" description="Remove all rendered documentation (inside packages)">
+		<foreach param="path.package" target="doc-clean">
+			<fileset refid="paths-packages"/>
+		</foreach>
+	</target>
+
 	<target name="doc-render-apis" description="Generate API documentation (inside packages)">
-		<foreach param="package" target="doc-render-api">
+		<foreach param="path.package" target="doc-render-api">
 			<fileset refid="paths-packages"/>
 		</foreach>
 	</target>
 
 	<target name="doc-render-manuals" description="Generate HTML manuals (inside packages)">
-		<foreach param="package" target="doc-render-manual">
+		<foreach param="path.package" target="doc-render-manual">
 			<fileset refid="paths-packages"/>
 		</foreach>
 	</target>
 
+	<target name="doc-clean">
+		<fail unless="path.package" message="You must set the 'path.package' property to a package path."/>
+
+		<delete dir="${path.package}/Documentation/API/" quiet="true"/>
+		<delete dir="${path.package}/Documentation/Manual/HTML" quiet="true"/>
+	</target>
+
 	<target name="doc-render-api">
-		<fail unless="package" message="You must set the 'package' property to a package path."/>
+		<fail unless="path.package" message="You must set the 'path.package' property to a package path."/>
 
 		<if>
-			<available file="${package}/Classes" type="dir"/>
+			<available file="${path.package}/Classes" type="dir"/>
 			<then>
-				<xmlproperty file="${package}/Meta/Package.xml"/>
-				<delete dir="${package}/Documentation/API/HTML/en" quiet="true"/>
-				<mkdir dir="${package}/Documentation/API/HTML/en"/>
+				<xmlproperty file="${path.package}/Meta/Package.xml" prefix="meta"/>
+				<delete dir="${path.package}/Documentation/API/HTML/en" quiet="true"/>
+				<mkdir dir="${path.package}/Documentation/API/HTML/en"/>
 				<phpuml
-					input="${package}/Classes"
-					output="${package}/Documentation/API/HTML/en"
-					title="${package.title}"/>
+					input="${path.package}/Classes"
+					output="${path.package}/Documentation/API/HTML/en"
+					title="${meta.package.title}"/>
 			</then>
 		</if>
 	</target>
 
 	<target name="doc-render-manual">
-		<fail unless="package" message="You must set the 'package' property to a package path."/>
+		<fail unless="path.package" message="You must set the 'path.package' property to a package path."/>
 
 		<if>
-			<available file="${package}/Documentation/Manual/DocBook/en"/>
+			<available file="${path.package}/Documentation/Manual/DocBook/en"/>
 			<then>
-				<property name="manual.sourcedir" value="${package}/Documentation/Manual/DocBook/en"/>
-				<property name="manual.targetdir" value="${package}/Documentation/Manual/HTML/en"/>
+				<property name="manual.sourcedir" value="${path.package}/Documentation/Manual/DocBook/en"/>
+				<property name="manual.targetdir" value="${path.package}/Documentation/Manual/HTML/en"/>
 
 				<delete dir="${manual.targetdir}" quiet="true"/>
 				<mkdir dir="${manual.targetdir}"/>
