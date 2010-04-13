@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project name="Svn">
+
+	<target name="svn-tagpackage" description="Tags a single package with the given tag">
+		<fail unless="svn.tagpackage.tag" message="You must set the tag before executing this task."/>
+		<fail unless="svn.tagpackage.packagekey" message="You must set the tag before executing this task."/>
+		<exec command="svn delete ${svn.baseuri.packages}${svn.tagpackage.packagekey}/tags/${svn.tagpackage.tag} -m='Deleting already existing tag ${svn.tagpackage.tag}'"/>
+		<if>
+			<available file="Packages/Framework/${packagekey}/Classes"/>
+			<then>
+				<svncopy
+					repositoryurl="${svn.baseuri.packages}${svn.tagpackage.packagekey}/trunk/"
+					todir="${svn.baseuri.packages}${svn.tagpackage.packagekey}/tags/${svn.tagpackage.tag}"
+					message="Tagged package with tag ${svn.tagpackage.tag}"
+					/>
+			</then>
+		</if>
+	</target>
+
+	<target name="svn-tagdistribution" description="Tags the (local working copy of the) distribution with the given tag">
+		<fail unless="svn.tagdistribution.tag" message="You must set the tag before executing this task."/>
+		<exec command="svn delete ${svn.baseuri.distribution}tags/${svn.tagdistribution.tag} -m='Deleting already existing tag ${svn.tagdistribution.tag}'"/>
+		<svncopy
+			repositoryurl="${project.basedir}"
+			todir="${svn.baseuri.distribution}tags/${svn.tagdistribution.tag}"
+			message="Tagged distribution with tag ${svn.tagdistribution.tag}"
+			/>
+	</target>
+</project>

@@ -53,5 +53,7 @@ PHP_UML - for API documentation rendering
 	<import file="Build/Phing/Buildfiles/Reports.xml"/>
 	<import file="Build/Phing/Buildfiles/Documentation.xml"/>
 	<import file="Build/Phing/Buildfiles/Setup.xml"/>
+	<import file="Build/Phing/Buildfiles/Svn.xml"/>
+	<import file="Build/Phing/Buildfiles/Release.xml"/>
 
 </project>

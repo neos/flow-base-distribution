@@ -1,26 +1,23 @@
 <?xml version="1.0"?>
 <project name="Release">
 
-	<target name="release" depends="release-tagpackages" description="Release FLOW3 to SourceForge and flow3.typo3.org"/>
+	<taskdef name="setpackagesexternals" classname="SetPackagesExternalsTask" classpath="Build/Phing/Tasks"/>
 
-	<target name="release-tagpackages" description="Tags packages of the distribution with their current version number">
+	<target name="release" depends="release-tag" description="Release FLOW3 to SourceForge and flow3.typo3.org"/>
+
+	<target name="release-tag" description="Tags the distribution with its current version number and its currently contained packages.">
 		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
-		<foreach param="packagekey" target="release-tagpackage">
-			<fileset refid="packagekeys-framework"/>
-		</foreach>
+		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
+
+		<svnlastrevision workingcopy="${project.basedir}" propertyname="release.workingcopyrevision"/>
+
+		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" workingcopyrevision="${release.workingcopyrevision}" />
+
+		<property name="svn.tagdistribution.tag" value="Foo"/>
+		<phingcall target="svn-tagdistribution"/>
+
+		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" workingcopyrevision="" />
+
 	</target>
 
-	<target name="release-tagpackage" description="Tags a single package">
-		<exec command="svn delete ${svn.baseuri.packages}${packagekey}/tags/${env.BUILD_NUMBER} -m='Deleting already existing tag ${env.BUILD_NUMBER}'"/>
-		<if>
-			<available file="Packages/Framework/${packagekey}/Classes"/>
-			<then>
-				<svncopy
-					repositoryurl="${svn.baseuri.packages}${packagekey}/trunk/"
-					todir="${svn.baseuri.packages}${packagekey}/tags/${env.BUILD_NUMBER}"
-					message="Tagged package with build number ${env.BUILD_NUMBER}"
-					/>
-			</then>
-		</if>
-	</target>
 </project>
