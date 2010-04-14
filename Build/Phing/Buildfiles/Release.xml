@@ -9,15 +9,12 @@
 		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
 
-		<svnlastrevision workingcopy="${project.basedir}" propertyname="release.workingcopyrevision"/>
-
-		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" workingcopyrevision="${release.workingcopyrevision}" />
+		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="true" />
 
 		<property name="svn.tagdistribution.tag" value="Foo"/>
 		<phingcall target="svn-tagdistribution"/>
 
-		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" workingcopyrevision="" />
-
+		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="false" />
 	</target>
 
 </project>

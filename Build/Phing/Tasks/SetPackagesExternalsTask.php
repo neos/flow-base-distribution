@@ -9,11 +9,27 @@ class SetPackagesExternalsTask extends SvnBaseTask {
 		$this->packagesPath = $packagesPath;
 	}
 
-	public function setWorkingCopyRevision($workingCopyRevision) {
-		$this->workingCopyRevision = $workingCopyRevision;
+	public function setFixRevision($fixRevision) {
+		$this->fixRevision = $fixRevision;
 	}
 
 	public function main() {
+		$latestPackageRevisions = array();
+
+		if ($this->fixRevision) {
+			foreach (new DirectoryIterator($this->packagesPath) as $file) {
+				$filename = $file->getFilename();
+				if ($file->isDir() && $filename[0] !== '.') {
+					$this->setup('info');
+					$xml = simplexml_load_string($this->run(array($file->getPathName(), '--xml')));
+					if ($xml === FALSE) {
+						throw new BuildException('svn info returned no parseable xml.');
+					}
+					$latestPackageRevisions[$filename] = (integer)$xml->entry->commit['revision'];
+				}
+			}
+		}
+
 		$this->setup('propget');
 		$existingExternals = $this->run(array('svn:externals', $this->packagesPath));
 		$newExternals = '';
@@ -23,9 +39,10 @@ class SetPackagesExternalsTask extends SvnBaseTask {
 				$line = preg_replace('/\-r[0-9]+/', '', $line);
 				$line = preg_replace('/ +/', ' ', $line);
 				list($packageKey, $uri) = explode(' ', $line);
+
 				$newExternals .=
 					str_pad($packageKey, 50) .
-					((int)$this->workingCopyRevision > 0 ? str_pad(('-r' . $this->workingCopyRevision), 10) : '') .
+					($this->fixRevision ? str_pad(('-r' . $latestPackageRevisions[$packageKey]), 10) : '') .
 					trim($uri) . chr(10);
 			}
 		}
