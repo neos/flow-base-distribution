@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <project name="FileSets">
 
+	<fileset dir="${project.basedir}" id="files-for-release-archive">
+		<exclude name="Build**"/>
+		<exclude name="build.xml"/>
+		<include name="**"/>
+	</fileset>
+
 	<fileset dir="." expandsymboliclinks="true" id="files-php">
 		<exclude name="Packages/Framework/Testing/**/*.php"/>
 		<include name="Packages/*/*/Classes/**/*.php"/>

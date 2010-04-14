@@ -1,50 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Setup">
 
-	<target name="clean-temporary">
-		<delete dir="Data/Temporary" quiet="true"/>
-		<delete dir="Web/_Resources" quiet="true"/>
-	</target>
-
 	<target name="setfilepermissions">
 		<propertyprompt propertyName="cliuser" promptText="CLI user name (cliuser)" useExistingValue="true"/>
 		<propertyprompt propertyName="webuser" defaultValue="_www" promptText="Webserver user name (webuser)" useExistingValue="true"/>
 		<propertyprompt propertyName="webgroup" defaultValue="_www" promptText="Webserver group name (webgroup)" useExistingValue="true"/>
 
-		<chown user="${cliuser}.${webgroup}">
+		<echo message="Setting ownership..."/>
+		<chown user="${cliuser}.${webgroup}" verbose="false">
 			<fileset dir=".">
-				<exclude name="Build"/>
-				<exclude name="Build/**"/>
+				<exclude name="Build**"/>
 				<include name="**"/>
 			</fileset>
 		</chown>
-		<chown user="${webuser}.${webgroup}">
+		<chown user="${webuser}.${webgroup}" verbose="false">
 			<fileset dir=".">
-				<include name="Web"/>
-				<include name="Web/**"/>
+				<include name="Web**"/>
 			</fileset>
 		</chown>
-		<chmod mode="2770">
+
+		<echo message="Setting directory permissions..."/>
+		<chmod mode="2770" verbose="false">
 			<fileset dir=".">
-				<exclude name="Build"/>
-				<exclude name="Build/**"/>
+				<exclude name="Build**"/>
 				<include name="**"/>
 				<type type="dir"/>
 			</fileset>
 		</chmod>
-		<chmod mode="0660">
+		<echo message="Setting file permissions..."/>
+		<chmod mode="0660" verbose="false">
 			<fileset dir=".">
-				<exclude name="Build"/>
-				<exclude name="Build/**"/>
+				<exclude name="Build**"/>
 				<include name="**"/>
 				<type type="file"/>
 			</fileset>
 		</chmod>
-		<chmod mode="0700">
-			<fileset dir=".">
-				<include name="flow3"/>
-			</fileset>
-		</chmod>
+		<chmod mode="0700" file="flow3" verbose="false"/>
+		<chmod mode="0670" file="Web/index.php" verbose="false"/>
 	</target>
 
 </project>

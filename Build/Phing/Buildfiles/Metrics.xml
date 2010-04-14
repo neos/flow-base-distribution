@@ -5,18 +5,18 @@
 
 
 	<target name="metrics-phpcpd" description="Run copy-and-paste detection on PHP files">
-		<mkdir dir="${project.reportsdir}" />
+		<mkdir dir="${project.reportsDirectory}" />
 		<phpcpd>
 			<fileset refid="files-php"/>
-			<formatter type="pmd" outfile="${project.reportsdir}/cpd.xml"/>
+			<formatter type="pmd" outfile="${project.reportsDirectory}/cpd.xml"/>
 		</phpcpd>
 	</target>
 
 	<target name="metrics-phpmd" description="Run mess detection detection on PHP files">
-		<mkdir dir="${project.reportsdir}" />
+		<mkdir dir="${project.reportsDirectory}" />
 		<phpmd>
 			<fileset refid="files-php"/>
-			<formatter type="xml" outfile="${project.reportsdir}/pmd.xml"/>
+			<formatter type="xml" outfile="${project.reportsDirectory}/pmd.xml"/>
 		</phpmd>
 	</target>
 

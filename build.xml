@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 To run the targets in this Phing script you need (the latest versions of):
 
@@ -25,6 +25,9 @@ phpdepend - included by phpmd
  pear channel-discover pear.pdepend.org
  pear install pdepend/PHP_Depend-beta
 
+VersionControl_SVN - for SVN related targets
+ pear install VersionControl_SVN-alpha
+
 PHP_UML - for API documentation rendering
  pear install PHP_UML
 -->
@@ -45,15 +48,20 @@ PHP_UML - for API documentation rendering
 		</echo>
 	</target>
 
-	<property file="Build/Phing.properties" />
+	<property file="Build/Phing/Phing.properties" />
+	<taskdef file="Build/Phing/Tasks.properties"/>
 
 	<import file="Build/Phing/Buildfiles/FileSets.xml"/>
+
 	<import file="Build/Phing/Buildfiles/Metrics.xml"/>
 	<import file="Build/Phing/Buildfiles/Tests.xml"/>
 	<import file="Build/Phing/Buildfiles/Reports.xml"/>
+
 	<import file="Build/Phing/Buildfiles/Documentation.xml"/>
-	<import file="Build/Phing/Buildfiles/Setup.xml"/>
 	<import file="Build/Phing/Buildfiles/Svn.xml"/>
 	<import file="Build/Phing/Buildfiles/Release.xml"/>
+	<import file="Build/Phing/Buildfiles/Publish.xml"/>
+
+	<import file="Build/Phing/Buildfiles/Setup.xml"/>
 
 </project>

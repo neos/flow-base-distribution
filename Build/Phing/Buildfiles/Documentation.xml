@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <project name="Documentation">
 
-	<taskdef name="phpuml" classname="PhpUmlTask" classpath="Build/Phing/Tasks"/>
-
 	<target name="doc-clean-all" description="Remove all rendered documentation (inside packages)">
 		<foreach param="path.package" target="doc-clean">
 			<fileset refid="paths-packages"/>
 		</foreach>
 	</target>
+
+	<target name="doc-render" depends="doc-render-manuals, doc-render-apis"
+		description="Build all documentation (inside packages)"/>
 
 	<target name="doc-render-apis" description="Generate API documentation (inside packages)">
 		<foreach param="path.package" target="doc-render-api">
@@ -34,13 +35,14 @@
 		<if>
 			<available file="${path.package}/Classes" type="dir"/>
 			<then>
-				<xmlproperty file="${path.package}/Meta/Package.xml" prefix="meta"/>
 				<delete dir="${path.package}/Documentation/API/HTML/en" quiet="true"/>
 				<mkdir dir="${path.package}/Documentation/API/HTML/en"/>
+
+				<xmlproperty file="${path.package}/Meta/Package.xml"/>
 				<phpuml
 					input="${path.package}/Classes"
 					output="${path.package}/Documentation/API/HTML/en"
-					title="${meta.package.title}"/>
+					title="${package.title}"/>
 			</then>
 		</if>
 	</target>
@@ -51,20 +53,20 @@
 		<if>
 			<available file="${path.package}/Documentation/Manual/DocBook/en"/>
 			<then>
-				<property name="manual.sourcedir" value="${path.package}/Documentation/Manual/DocBook/en"/>
-				<property name="manual.targetdir" value="${path.package}/Documentation/Manual/HTML/en"/>
+				<property name="manual.sourceDirectory" value="${path.package}/Documentation/Manual/DocBook/en"/>
+				<property name="manual.targetDirectory" value="${path.package}/Documentation/Manual/HTML/en"/>
 
-				<delete dir="${manual.targetdir}" quiet="true"/>
-				<mkdir dir="${manual.targetdir}"/>
+				<delete dir="${manual.targetDirectory}" quiet="true"/>
+				<mkdir dir="${manual.targetDirectory}"/>
 
-				<copy file="${project.builddir}/Resources/Manual/Css/TheGuide.css" todir="${manual.targetdir}"/>
-				<copy todir="${manual.targetdir}/images/">
-					<fileset dir="${project.builddir}/Resources/Manual/Xsl/DocBookXSLNS/images">
+				<copy file="${project.buildDirectory}/Resources/Manual/Css/TheGuide.css" todir="${manual.targetDirectory}"/>
+				<copy todir="${manual.targetDirectory}/images/">
+					<fileset dir="${project.buildDirectory}/Resources/Manual/Xsl/DocBookXSLNS/images">
 						<include name="**"/>
 					</fileset>
 				</copy>
-				<copy todir="${manual.targetdir}">
-					<fileset dir="${manual.sourcedir}">
+				<copy todir="${manual.targetDirectory}">
+					<fileset dir="${manual.sourceDirectory}">
 						<include name="**/*.png"/>
 						<include name="**/*.jpg"/>
 						<include name="**/*.gif"/>
@@ -72,29 +74,29 @@
 					</fileset>
 				</copy>
 
-				<delete dir="${project.builddir}/Temporary/DocBookRendering" quiet="true"/>
-				<mkdir dir="${project.builddir}/Temporary/DocBookRendering" />
-				<copy todir="${project.builddir}/Temporary/DocBookRendering">
+				<delete dir="${project.buildDirectory}/Temporary/DocBookRendering" quiet="true"/>
+				<mkdir dir="${project.buildDirectory}/Temporary/DocBookRendering" />
+				<copy todir="${project.buildDirectory}/Temporary/DocBookRendering">
 					<filterchain>
 						<replacetokens begintoken="{" endtoken="}">
-							<token key="DocBookXSLNSPath" value="${project.builddir}Resources/Manual/Xsl/DocBookXSLNS/"/>
-							<token key="outputDirectory" value="${manual.targetdir}"/>
+							<token key="DocBookXSLNSPath" value="${project.buildDirectory}Resources/Manual/Xsl/DocBookXSLNS/"/>
+							<token key="outputDirectory" value="${manual.targetDirectory}"/>
 						</replacetokens>
 					</filterchain>
-					<fileset dir="${project.builddir}/Resources/Manual/Xsl">
+					<fileset dir="${project.buildDirectory}/Resources/Manual/Xsl">
 						<include name="html.xsl"/>
 					</fileset>
 				</copy>
-				<copy todir="${project.builddir}/Temporary/DocBookRendering">
+				<copy todir="${project.buildDirectory}/Temporary/DocBookRendering">
 					<filterchain>
-						<xincludefilter basedir="${manual.sourcedir}"/>
+						<xincludefilter basedir="${manual.sourceDirectory}"/>
 					</filterchain>
-					<fileset dir="${manual.sourcedir}">
+					<fileset dir="${manual.sourceDirectory}">
 						<include name="Index.xml"/>
 					</fileset>
 				</copy>
-				<xslt todir="${manual.targetdir}" style="${project.builddir}/Temporary/DocBookRendering/html.xsl">
-					<fileset dir="${project.builddir}/Temporary/DocBookRendering">
+				<xslt todir="${manual.targetDirectory}" style="${project.buildDirectory}/Temporary/DocBookRendering/html.xsl">
+					<fileset dir="${project.buildDirectory}/Temporary/DocBookRendering">
 						<include name="Index.xml"/>
 					</fileset>
 				</xslt>

@@ -2,19 +2,19 @@
 <project name="Reports">
 
 	<target name="report-phpunit" depends="test-phpunit" description="Run unit tests (HTML output)">
-		<delete dir="${project.reportsdir}/UnitTests" quiet="true"/>
-		<delete dir="${project.reportsdir}/CodeCoverage" quiet="true"/>
-		<mkdir dir="${project.reportsdir}/UnitTests" />
-		<mkdir dir="${project.reportsdir}/CodeCoverage" />
+		<delete dir="${project.reportsDirectory}/UnitTests" quiet="true"/>
+		<delete dir="${project.reportsDirectory}/CodeCoverage" quiet="true"/>
+		<mkdir dir="${project.reportsDirectory}/UnitTests" />
+		<mkdir dir="${project.reportsDirectory}/CodeCoverage" />
 
-		<phpunitreport infile="${project.reportsdir}/unittests.xml" format="frames" todir="${project.reportsdir}/UnitTests" styledir="${phing.styledir}"/>
+		<phpunitreport infile="${project.reportsDirectory}/unittests.xml" format="frames" todir="${project.reportsDirectory}/UnitTests" styledir="${phing.styleDirectory}"/>
 
 		<!-- we need the class loader for the coverage report -->
 		<adhoc><![CDATA[
 		require_once('Packages/Framework/Testing/Scripts/Bootstrap.php');
 		]]></adhoc>
-		<coverage-report outfile="${project.reportsdir}/coverage.xml">
-			<report todir="${project.reportsdir}/CodeCoverage" styledir="${phing.styledir}"/>
+		<coverage-report outfile="${project.reportsDirectory}/coverage.xml">
+			<report todir="${project.reportsDirectory}/CodeCoverage" styledir="${phing.styleDirectory}"/>
 		</coverage-report>
 	</target>
 
