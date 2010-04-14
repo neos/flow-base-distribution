@@ -13,3 +13,4 @@ In short here's what you need to do:
 3) Call the URL leading to your virtual host from a browser
 
 Have fun!
+
