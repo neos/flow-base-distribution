@@ -35,6 +35,17 @@
 	<target name="doc-publish-manual">
 		<fail unless="packageKey" message="You must set the 'packageKey' property to a package key."/>
 
+		<if>
+			<not>
+				<available file="Packages/Framework/${packageKey}/Documentation/Manual/HTML/en/index.html" type="file"/>
+			</not>
+			<then>
+				<phingcall target="doc-render-manual">
+					<property name="path.package" value="Packages/Framework/${packageKey}"/>
+				</phingcall>
+			</then>
+		</if>
+
 		<exec command="ssh ${ssh.host.website} rm -rf ${path.manualBase.website}${packageKey}"/>
 		<exec command="ssh ${ssh.host.website} mkdir -p ${path.manualBase.website}${packageKey}"/>
 		<exec dir="Packages/Framework/${packageKey}/Documentation/Manual/HTML/en" command="scp -r * ${ssh.host.website}:${path.manualBase.website}${packageKey}/"/>

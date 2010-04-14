@@ -14,32 +14,49 @@
 	<target name="createarchives">
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
 
-		<delete file="${project.archivesDirectory}/${env.RELEASE_VERSION}.zip" quiet="true"/>
-		<zip destfile="${project.archivesDirectory}/${env.RELEASE_VERSION}.zip">
+		<mkdir dir="${project.archivesDirectory}"/>
+
+		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.zip" quiet="true"/>
+		<zip destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.zip">
 			<fileset refid="files-for-release-archive"/>
 		</zip>
 
-		<delete file="${project.archivesDirectory}/${env.RELEASE_VERSION}.tar.gz" quiet="true"/>
-		<tar destfile="${project.archivesDirectory}/${env.RELEASE_VERSION}.tar.gz" compression="gzip">
+		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.tar.gz" quiet="true"/>
+		<tar destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.tar.gz" compression="gzip">
 			<fileset refid="files-for-release-archive"/>
 		</tar>
 
-		<delete file="${project.archivesDirectory}/${env.RELEASE_VERSION}.tar.bz2" quiet="true"/>
-		<tar destfile="${project.archivesDirectory}/${env.RELEASE_VERSION}.tar.bz2" compression="bzip2">
+		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.tar.bz2" quiet="true"/>
+		<tar destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.tar.bz2" compression="bzip2">
 			<fileset refid="files-for-release-archive"/>
 		</tar>
 
-		<filehash file="${project.archivesDirectory}/${env.RELEASE_VERSION}.zip" propertyname="md5.zip"/>
-		<filehash file="${project.archivesDirectory}/${env.RELEASE_VERSION}.tar.gz" propertyname="md5.targz"/>
-		<filehash file="${project.archivesDirectory}/${env.RELEASE_VERSION}.tar.bz2" propertyname="md5.tarbz2"/>
+		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.zip" propertyname="md5.zip"/>
+		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.tar.gz" propertyname="md5.targz"/>
+		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.tar.bz2" propertyname="md5.tarbz2"/>
 		<echo>MD5 hashes for the generated archives are:</echo>
-		<echo>${md5.zip} ${env.RELEASE_VERSION}.zip</echo>
-		<echo>${md5.targz} ${env.RELEASE_VERSION}.tar.gz</echo>
-		<echo>${md5.tarbz2} ${env.RELEASE_VERSION}.tar.bz2</echo>
+		<echo>${md5.zip} FLOW3-${env.RELEASE_VERSION}.zip</echo>
+		<echo>${md5.targz} FLOW3-${env.RELEASE_VERSION}.tar.gz</echo>
+		<echo>${md5.tarbz2} FLOW3-${env.RELEASE_VERSION}.tar.bz2</echo>
 
 	</target>
 
-	<target name="release" depends="release-tag" description="Release FLOW3 to SourceForge and flow3.typo3.org"/>
+	<target name="release-publish-archives">
+		<exec command="ssh shell.sourceforge.net mkdir /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
+		<exec command="scp -r ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
+	</target>
+
+	<target name="release" depends="release-tag, build, release-publish-archives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
+		<phingcall target="doc-publish-api">
+			<property name="packageKey" value="FLOW3"/>
+		</phingcall>
+		<phingcall target="doc-publish-manual">
+			<property name="packageKey" value="FLOW3"/>
+		</phingcall>
+		<phingcall target="doc-publish-manual">
+			<property name="packageKey" value="Fluid"/>
+		</phingcall>
+	</target>
 
 	<target name="release-tag">
 		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
@@ -51,7 +68,6 @@
 		<phingcall target="svn-tagdistribution"/>
 
 		<svnswitch targetUrl="${svn.baseUri.distribution}tags/${svn.tagDistribution.tag}" dir="${project.basedir}"/>
-		<!--setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="false" /-->
 	</target>
 
 </project>
