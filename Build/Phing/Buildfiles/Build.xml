@@ -42,8 +42,12 @@
 	</target>
 
 	<target name="release-publish-archives">
+		<!-- the only way to create a folder via ssh... -->
+		<exec command="ssh shell.sourceforge.net create"/>
 		<exec command="ssh shell.sourceforge.net mkdir /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
-		<exec command="scp -r ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
+		<exec command="ssh shell.sourceforge.net shutdown"/>
+
+		<exec command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
 	</target>
 
 	<target name="release" depends="release-tag, build, release-publish-archives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
