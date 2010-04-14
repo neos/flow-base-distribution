@@ -1,6 +1,6 @@
 <?php
 declare(ENCODING = 'utf-8');
-namespace F3\Testing;
+namespace F3\Build;
 
 /*                                                                        *
  * This script belongs to the FLOW3 build system.                         *
@@ -46,7 +46,7 @@ function loadClassForTesting($className) {
 	}
 }
 
-spl_autoload_register('F3\Testing\loadClassForTesting');
+spl_autoload_register('F3\Build\loadClassForTesting');
 
 \F3\FLOW3\Core\Bootstrap::defineConstants();
 
