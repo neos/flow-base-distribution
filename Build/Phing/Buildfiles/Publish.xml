@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="Publish">
 
-	<target name="doc-publish-api" description="Publish package API on flow3.typo3.org">
+	<target name="doc-publish-api">
 		<fail unless="packageKey" message="You must set the 'packageKey' property to a package key."/>
 
 		<if>
@@ -32,7 +32,7 @@
 
 	</target>
 
-	<target name="doc-publish-manual" description="Publish package manual on flow3.typo3.org">
+	<target name="doc-publish-manual">
 		<fail unless="packageKey" message="You must set the 'packageKey' property to a package key."/>
 
 		<exec command="ssh ${ssh.host.website} rm -rf ${path.manualBase.website}${packageKey}"/>

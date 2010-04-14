@@ -59,7 +59,7 @@ PHP_UML - for API documentation rendering
 
 	<import file="Build/Phing/Buildfiles/Documentation.xml"/>
 	<import file="Build/Phing/Buildfiles/Svn.xml"/>
-	<import file="Build/Phing/Buildfiles/Release.xml"/>
+	<import file="Build/Phing/Buildfiles/Build.xml"/>
 	<import file="Build/Phing/Buildfiles/Publish.xml"/>
 
 	<import file="Build/Phing/Buildfiles/Setup.xml"/>

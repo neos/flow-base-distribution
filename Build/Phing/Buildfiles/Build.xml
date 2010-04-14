@@ -1,36 +1,15 @@
 <?xml version="1.0"?>
-<project name="Release">
+<project name="Build">
 
-	<target name="release" depends="release-tag" description="Release FLOW3 to SourceForge and flow3.typo3.org"/>
-
-	<target name="release-tag" description="Tags the distribution with its current version number and its currently contained packages.">
-		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
-		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
-
-		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="true" />
-
-		<property name="svn.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
-		<phingcall target="svn-tagdistribution"/>
-
-		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="false" />
-	</target>
+	<target name="build" depends="clean, doc-render, createarchives"/>
 
 	<target name="clean">
 		<delete quiet="true" includeemptydirs="true">
-			<fileset dir=".">
-				<exclude name="Data/Temporary"/>
-				<exclude name="Data/Logs"/>
-				<exclude name="Web/_Resources"/>
-				<include name="Data/Temporary/**"/>
-				<include name="Data/Logs/**"/>
-				<include name="Web/_Resources/**"/>
-			</fileset>
+			<fileset refid="files-temporary"/>
 		</delete>
 	</target>
 
 	<target name="polish" depends="clean, doc-clean-all" description="Clean in a way that removes all build artifacts"/>
-
-	<target name="build" depends="clean, doc-render, createarchives"/>
 
 	<target name="createarchives">
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
@@ -58,6 +37,21 @@
 		<echo>${md5.targz} ${env.RELEASE_VERSION}.tar.gz</echo>
 		<echo>${md5.tarbz2} ${env.RELEASE_VERSION}.tar.bz2</echo>
 
+	</target>
+
+	<target name="release" depends="release-tag" description="Release FLOW3 to SourceForge and flow3.typo3.org"/>
+
+	<target name="release-tag">
+		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
+		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
+
+		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="true" />
+
+		<property name="svn.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
+		<phingcall target="svn-tagdistribution"/>
+
+		<svnswitch targetUrl="${svn.baseUri.distribution}tags/${svn.tagDistribution.tag}" dir="${project.basedir}"/>
+		<!--setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="false" /-->
 	</target>
 
 </project>

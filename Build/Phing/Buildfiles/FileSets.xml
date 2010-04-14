@@ -12,6 +12,15 @@
 		<include name="Packages/*/*/Classes/**/*.php"/>
 	</fileset>
 
+	<fileset dir="." id="files-temporary">
+		<exclude name="Data/Temporary"/>
+		<exclude name="Data/Logs"/>
+		<exclude name="Web/_Resources"/>
+		<include name="Data/Temporary/**"/>
+		<include name="Data/Logs/**"/>
+		<include name="Web/_Resources/**"/>
+	</fileset>
+
 	<fileset dir="." expandsymboliclinks="true" id="files-unittests">
 		<include name="Packages/Framework/*/Tests/Unit/**/*Test.php"/>
 	</fileset>

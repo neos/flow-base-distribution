@@ -19,7 +19,7 @@
 	</target>
 
 
-	<target name="test-phpunit" description="Run unit tests (XML output)">
+	<target name="test-phpunit">
 		<mkdir dir="${project.buildDirectory}/Temporary"/>
 		<mkdir dir="${project.reportsDirectory}"/>
 

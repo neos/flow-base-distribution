@@ -4,7 +4,7 @@
 	<target name="metrics" depends="metrics-phpcpd,metrics-phpmd" description="Run metrics collection on source files"/>
 
 
-	<target name="metrics-phpcpd" description="Run copy-and-paste detection on PHP files">
+	<target name="metrics-phpcpd">
 		<mkdir dir="${project.reportsDirectory}" />
 		<phpcpd>
 			<fileset refid="files-php"/>
@@ -12,7 +12,7 @@
 		</phpcpd>
 	</target>
 
-	<target name="metrics-phpmd" description="Run mess detection detection on PHP files">
+	<target name="metrics-phpmd">
 		<mkdir dir="${project.reportsDirectory}" />
 		<phpmd>
 			<fileset refid="files-php"/>

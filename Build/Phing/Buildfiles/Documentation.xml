@@ -10,13 +10,13 @@
 	<target name="doc-render" depends="doc-render-manuals, doc-render-apis"
 		description="Build all documentation (inside packages)"/>
 
-	<target name="doc-render-apis" description="Generate API documentation (inside packages)">
+	<target name="doc-render-apis">
 		<foreach param="path.package" target="doc-render-api">
 			<fileset refid="paths-packages"/>
 		</foreach>
 	</target>
 
-	<target name="doc-render-manuals" description="Generate HTML manuals (inside packages)">
+	<target name="doc-render-manuals">
 		<foreach param="path.package" target="doc-render-manual">
 			<fileset refid="paths-packages"/>
 		</foreach>
