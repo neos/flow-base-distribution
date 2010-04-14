@@ -3,7 +3,7 @@
 require_once('phing/tasks/ext/svn/SvnBaseTask.php');
 require_once('phing/BuildException.php');
 
-class SvnSwitchTaskTask extends SvnBaseTask {
+class SvnSwitchTask extends SvnBaseTask {
 
 	public function setTargetUrl($targetUrl) {
 		$this->targetUrl = $targetUrl;
