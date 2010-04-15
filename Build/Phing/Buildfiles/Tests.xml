@@ -41,14 +41,14 @@
 
 
 	<target name="test-phpunit">
-		<mkdir dir="${project.buildDirectory}/Temporary"/>
 		<mkdir dir="${project.reportsDirectory}"/>
 
-		<includepath classpath="Build/Resources"/>
+		<includepath classpath="Build/Resources/PHP"/>
 
 		<if>
 			<isset property="codecoverage"/>
 			<then>
+				<mkdir dir="${project.buildDirectory}/Temporary"/>
 				<coverage-setup database="${project.buildDirectory}/Temporary/coverage.db">
 					<fileset refid="files-php"/>
 				</coverage-setup>
@@ -62,7 +62,8 @@
 		<setenvironment name="FLOW3_ROOTPATH" value="${project.basedir}"/>
 		<setenvironment name="FLOW3_WEBPATH" value="${project.basedir}/Web"/>
 
-		<phpunit codecoverage="${codecoverage}" haltonerror="true" haltonfailure="true" haltonincomplete="true" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
+		<property name="fail" value="true"/>
+		<phpunit codecoverage="${codecoverage}" haltonerror="${fail}" haltonfailure="${fail}" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
 			<formatter todir="${project.reportsDirectory}" outfile="unittests.xml" type="xml"/>
 			<batchtest>
 				<fileset refid="files-unittests"/>
