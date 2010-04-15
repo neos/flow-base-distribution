@@ -32,6 +32,31 @@
 
 	<target name="polish" depends="clean, doc-clean-all" description="Clean in a way that removes all build artifacts"/>
 
+	<target name="release" depends="lint, test, release-tag, build, release-publish-archives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
+		<phingcall target="doc-publish-api">
+			<property name="packageKey" value="FLOW3"/>
+		</phingcall>
+		<phingcall target="doc-publish-manual">
+			<property name="packageKey" value="FLOW3"/>
+		</phingcall>
+		<phingcall target="doc-publish-manual">
+			<property name="packageKey" value="Fluid"/>
+		</phingcall>
+		<phingcall target="release-publish-on-website"/>
+	</target>
+
+	<target name="release-tag">
+		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
+		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
+
+		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="true" />
+
+		<property name="svn.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
+		<phingcall target="svn-tagdistribution"/>
+
+		<svnswitch targetUrl="${svn.baseUri.distribution}tags/${svn.tagDistribution.tag}" dir="${project.basedir}"/>
+	</target>
+
 	<target name="createarchives">
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
 
@@ -71,28 +96,21 @@
 		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
 	</target>
 
-	<target name="release" depends="lint, test, release-tag, build, release-publish-archives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
-		<phingcall target="doc-publish-api">
-			<property name="packageKey" value="FLOW3"/>
-		</phingcall>
-		<phingcall target="doc-publish-manual">
-			<property name="packageKey" value="FLOW3"/>
-		</phingcall>
-		<phingcall target="doc-publish-manual">
-			<property name="packageKey" value="Fluid"/>
-		</phingcall>
-	</target>
+	<target name="release-publish-on-website">
+		<echo file="${project.archivesDirectory}Release-${env.RELEASE_VERSION}.xml" append="true"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<release>
+	<build number="${env.BUILD_NUMBER}"/>
+	<version>${env.RELEASE_VERSION}</version>
+	<files>
+		<file md5="${md5.zip}">FLOW3-${env.RELEASE_VERSION}.zip</file>
+		<file md5="${md5.targz}">FLOW3-${env.RELEASE_VERSION}.tar.gz</file>
+		<file md5="${md5.tarbz2}">FLOW3-${env.RELEASE_VERSION}.tar.bz2</file>
+	</files>
+</release>]]>
+		</echo>
 
-	<target name="release-tag">
-		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
-		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
-
-		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="true" />
-
-		<property name="svn.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
-		<phingcall target="svn-tagdistribution"/>
-
-		<svnswitch targetUrl="${svn.baseUri.distribution}tags/${svn.tagDistribution.tag}" dir="${project.basedir}"/>
+		<exec logoutput="true" checkreturn="true" command="ssh ${ssh.host.website} mkdir ${path.fileadmin.website}Releases"/>
+		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}Release-${env.RELEASE_VERSION}.xml ${ssh.host.website}:${path.fileadmin.website}Releases/"/>
 	</target>
 
 </project>
