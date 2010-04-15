@@ -22,7 +22,10 @@
 -->
 <project name="Reports">
 
-	<target name="report-phpunit" depends="test-phpunit" description="Run unit tests (HTML output)">
+	<target name="report-phpunit" description="Run unit tests (HTML output)">
+		<phingcall target="test-phpunit">
+			<property name="codecoverage" value="true"/>
+		</phingcall>
 		<delete dir="${project.reportsDirectory}/UnitTests" quiet="true"/>
 		<delete dir="${project.reportsDirectory}/CodeCoverage" quiet="true"/>
 		<mkdir dir="${project.reportsDirectory}/UnitTests" />

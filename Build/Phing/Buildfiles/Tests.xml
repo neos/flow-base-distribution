@@ -46,11 +46,20 @@
 
 		<includepath classpath="Build/Resources"/>
 
-		<coverage-setup database="${project.buildDirectory}/Temporary/coverage.db">
-			<fileset refid="files-php"/>
-		</coverage-setup>
+		<if>
+			<isset property="codecoverage"/>
+			<then>
+				<coverage-setup database="${project.buildDirectory}/Temporary/coverage.db">
+					<fileset refid="files-php"/>
+				</coverage-setup>
+			</then>
+			<else>
+				<echo>You can set the "codecoverage" property to check, well, code coverage during the tests.</echo>
+				<property name="codecoverage" value="0"/>
+			</else>
+		</if>
 
-		<phpunit codecoverage="true" haltonfailure="true" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
+		<phpunit codecoverage="${codecoverage}" haltonerror="true" haltonfailure="true" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
 			<formatter todir="${project.reportsDirectory}" outfile="unittests.xml" type="xml"/>
 			<batchtest>
 				<fileset refid="files-unittests"/>
