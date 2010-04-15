@@ -46,10 +46,10 @@
 
 	<!-- sadly the ssh2 pecl extension seems broken and/or dead,
 	     so we use exec instead of SshTask and ScpTask -->
-		<exec command="ssh ${ssh.host.website} rm -rf ${path.apiBase.website}${packageKey}*"/>
-		<exec command="ssh ${ssh.host.website} mkdir ${path.apiBase.website}${packageKey}"/>
-		<exec command="scp -r ${project.archivesDirectory}/${packageKey}-API.zip ${ssh.host.website}:${path.apiBase.website}"/>
-		<exec dir="Packages/Framework/${packageKey}/Documentation/API/HTML/en" command="scp -r * ${ssh.host.website}:${path.apiBase.website}${packageKey}/"/>
+		<exec logoutput="true" checkreturn="true" command="ssh ${ssh.host.website} rm -rf ${path.apiBase.website}${packageKey}*"/>
+		<exec logoutput="true" checkreturn="true" command="ssh ${ssh.host.website} mkdir ${path.apiBase.website}${packageKey}"/>
+		<exec logoutput="true" checkreturn="true" command="scp -r ${project.archivesDirectory}/${packageKey}-API.zip ${ssh.host.website}:${path.apiBase.website}"/>
+		<exec logoutput="true" checkreturn="true" dir="Packages/Framework/${packageKey}/Documentation/API/HTML/en" command="scp -r * ${ssh.host.website}:${path.apiBase.website}${packageKey}/"/>
 
 	</target>
 
@@ -67,9 +67,9 @@
 			</then>
 		</if>
 
-		<exec command="ssh ${ssh.host.website} rm -rf ${path.manualBase.website}${packageKey}"/>
-		<exec command="ssh ${ssh.host.website} mkdir -p ${path.manualBase.website}${packageKey}"/>
-		<exec dir="Packages/Framework/${packageKey}/Documentation/Manual/HTML/en" command="scp -r * ${ssh.host.website}:${path.manualBase.website}${packageKey}/"/>
+		<exec logoutput="true" checkreturn="true" command="ssh ${ssh.host.website} rm -rf ${path.manualBase.website}${packageKey}"/>
+		<exec logoutput="true" checkreturn="true" command="ssh ${ssh.host.website} mkdir -p ${path.manualBase.website}${packageKey}"/>
+		<exec logoutput="true" checkreturn="true" dir="Packages/Framework/${packageKey}/Documentation/Manual/HTML/en" command="scp -r * ${ssh.host.website}:${path.manualBase.website}${packageKey}/"/>
 	</target>
 
 </project>

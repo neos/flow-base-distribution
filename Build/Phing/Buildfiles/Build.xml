@@ -64,14 +64,14 @@
 
 	<target name="release-publish-archives">
 		<!-- the only way to create a folder via ssh... -->
-		<exec command="ssh shell.sourceforge.net create"/>
-		<exec command="ssh shell.sourceforge.net mkdir /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
-		<exec command="ssh shell.sourceforge.net shutdown"/>
+		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net create"/>
+		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net mkdir /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
+		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net shutdown"/>
 
-		<exec command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
+		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
 	</target>
 
-	<target name="release" depends="release-tag, build, release-publish-archives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
+	<target name="release" depends="lint, test, release-tag, build, release-publish-archives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
 		<phingcall target="doc-publish-api">
 			<property name="packageKey" value="FLOW3"/>
 		</phingcall>
