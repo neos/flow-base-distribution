@@ -62,7 +62,7 @@
 		<setenvironment name="FLOW3_ROOTPATH" value="${project.basedir}"/>
 		<setenvironment name="FLOW3_WEBPATH" value="${project.basedir}/Web"/>
 
-		<phpunit codecoverage="${codecoverage}" haltonerror="true" haltonfailure="true" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
+		<phpunit codecoverage="${codecoverage}" haltonerror="true" haltonfailure="true" haltonincomplete="true" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
 			<formatter todir="${project.reportsDirectory}" outfile="unittests.xml" type="xml"/>
 			<batchtest>
 				<fileset refid="files-unittests"/>
