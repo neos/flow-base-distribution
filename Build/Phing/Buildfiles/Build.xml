@@ -109,7 +109,6 @@
 </release>]]>
 		</echo>
 
-		<exec logoutput="true" checkreturn="true" command="ssh ${ssh.host.website} mkdir ${path.fileadmin.website}Releases"/>
 		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}Release-${env.RELEASE_VERSION}.xml ${ssh.host.website}:${path.fileadmin.website}Releases/"/>
 	</target>
 
