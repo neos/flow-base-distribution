@@ -90,7 +90,7 @@
 	<target name="release-publish-archives">
 		<!-- the only way to create a folder via ssh... -->
 		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net create"/>
-		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net mkdir /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
+		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net mkdir -p /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
 		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net shutdown"/>
 
 		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
