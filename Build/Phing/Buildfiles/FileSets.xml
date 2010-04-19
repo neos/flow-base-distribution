@@ -23,10 +23,20 @@
 <project name="FileSets">
 
 	<fileset dir="${project.basedir}" id="files-for-release-archive">
-		<exclude name="Build**"/>
-		<exclude name="build.xml"/>
-		<exclude name="dir_conflicts.prej"/>
-		<include name="**"/>
+		<exclude name="**dir_conflicts.prej"/>
+		<exclude name="Configuration/Production/IncludeCachedConfigurations.php"/>
+		<exclude name="Data/Temporary**"/>
+		<exclude name="Data/Logs/**"/>
+		<exclude name="Web/_Resources**"/>
+
+		<include name="Data/Logs"/>
+		<include name="Configuration/**"/>
+		<include name="Data/**"/>
+		<include name="Packages/**"/>
+		<include name="Web/**"/>
+
+		<include name="Readme.txt"/>
+		<include name="flow3"/>
 	</fileset>
 
 	<fileset dir="." expandsymboliclinks="true" id="files-php">
