@@ -25,6 +25,7 @@
 	<fileset dir="${project.basedir}" id="files-for-release-archive">
 		<exclude name="Build**"/>
 		<exclude name="build.xml"/>
+		<exclude name="dir_conflicts.prej"/>
 		<include name="**"/>
 	</fileset>
 
