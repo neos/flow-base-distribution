@@ -62,28 +62,28 @@
 
 		<mkdir dir="${project.archivesDirectory}"/>
 
-		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.zip" quiet="true"/>
-		<zip destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.zip">
+		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.zip" quiet="true"/>
+		<zip destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.zip">
 			<fileset refid="files-for-release-archive"/>
 		</zip>
 
-		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.gz" quiet="true"/>
-		<tar destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.gz" compression="gzip">
+		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.gz" quiet="true"/>
+		<tar destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.gz" compression="gzip">
 			<fileset refid="files-for-release-archive"/>
 		</tar>
 
-		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.bz2" quiet="true"/>
-		<tar destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.bz2" compression="bzip2">
+		<delete file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.bz2" quiet="true"/>
+		<tar destfile="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.bz2" compression="bzip2">
 			<fileset refid="files-for-release-archive"/>
 		</tar>
 
-		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.zip" propertyname="md5.zip"/>
-		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.gz" propertyname="md5.targz"/>
-		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.bz2" propertyname="md5.tarbz2"/>
+		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.zip" propertyname="md5.zip"/>
+		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.gz" propertyname="md5.targz"/>
+		<filehash file="${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.bz2" propertyname="md5.tarbz2"/>
 		<echo>MD5 hashes for the generated archives are:</echo>
-		<echo>${md5.zip} FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.zip</echo>
-		<echo>${md5.targz} FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.gz</echo>
-		<echo>${md5.tarbz2} FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.tar.bz2</echo>
+		<echo>${md5.zip} FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.zip</echo>
+		<echo>${md5.targz} FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.gz</echo>
+		<echo>${md5.tarbz2} FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.tar.bz2</echo>
 
 	</target>
 
@@ -93,7 +93,7 @@
 		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net mkdir -p /home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}"/>
 		<exec logoutput="true" checkreturn="true" command="ssh shell.sourceforge.net shutdown"/>
 
-		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build{env.BUILD_NUMBER}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
+		<exec logoutput="true" checkreturn="true" command="scp ${project.archivesDirectory}/FLOW3-${env.RELEASE_VERSION}-build${env.BUILD_NUMBER}.* frs.sourceforge.net:/home/frs/project/f/fl/flow3/FLOW3/${env.RELEASE_VERSION}/"/>
 	</target>
 
 	<target name="release-publish-on-website">
