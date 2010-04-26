@@ -27,7 +27,7 @@
 		<fail unless="svn.tagPackage.packageKey" message="You must set the packageKey before executing this task."/>
 		<exec command="svn delete ${svn.baseUri.packages}${svn.tagPackage.packageKey}/tags/${svn.tagPackage.tag} -m 'Deleting already existing tag ${svn.tagPackage.tag}'"/>
 		<if>
-			<available file="Packages/Framework/${packageKey}/Classes"/>
+			<available file="Packages/Framework/${packageKey}/Meta/Package.xml"/>
 			<then>
 				<svncopy
 					repositoryurl="${svn.baseUri.packages}${svn.tagPackage.packageKey}/trunk/"
