@@ -33,21 +33,26 @@ namespace F3\Build;
 function loadClassForTesting($className) {
 	$classNameParts = explode('\\', $className);
 	if (is_array($classNameParts) && $classNameParts[0] === 'F3') {
-		$packagesBasePath = dirname(__FILE__) . '/../../Packages/';
-		foreach (array('Framework', 'Application') as $packageCategory) {
-			$classFilePathAndName = $packagesBasePath . $packageCategory . '/' . $classNameParts[1] . '/Classes/';
-			$classFilePathAndName .= implode(array_slice($classNameParts, 2, -1), '/') . '/';
-			$classFilePathAndName .= end($classNameParts) . '.php';
-			if (file_exists($classFilePathAndName)) {
-				require($classFilePathAndName);
-				break;
+		$packagesBasePathIterator = new \DirectoryIterator(dirname(__FILE__) . '/../../Packages/');
+		foreach ($packagesBasePathIterator as $fileInfo) {
+			if ($fileInfo->isDir() && !$fileInfo->isDot()) {
+				$classFilePathAndName = dirname(__FILE__) . '/../../Packages/' . $fileInfo->getFilename() . '/' . $classNameParts[1] . '/Classes/';
+				$classFilePathAndName .= implode(array_slice($classNameParts, 2, -1), '/') . '/';
+				$classFilePathAndName .= end($classNameParts) . '.php';
+				if (file_exists($classFilePathAndName)) {
+					require($classFilePathAndName);
+					break;
+				}
 			}
 		}
 	}
 }
 
 spl_autoload_register('F3\Build\loadClassForTesting');
+set_include_path(get_include_path() . ':' . dirname(__FILE__) . '/../Resources/PHP');
 
+$_SERVER['FLOW3_ROOTPATH'] = dirname(__FILE__) . '/../../';
+$_SERVER['FLOW3_WEBPATH'] = dirname(__FILE__) . '/../../Web/';
 \F3\FLOW3\Core\Bootstrap::defineConstants();
 
 ?>
