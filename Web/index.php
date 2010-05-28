@@ -27,7 +27,10 @@ if ($rootPath === FALSE && isset($_SERVER['REDIRECT_FLOW3_ROOTPATH'])) {
 }
 if ($rootPath === FALSE) {
  $rootPath = dirname(__FILE__) . '/../';
+} elseif (substr($rootPath, -1) !== '/') {
+	$rootPath .= '/';
 }
+
 require($rootPath . 'Packages/Framework/FLOW3/Scripts/FLOW3.php');
 
 ?>
