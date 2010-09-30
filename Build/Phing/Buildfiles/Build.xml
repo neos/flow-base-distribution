@@ -46,15 +46,11 @@
 	</target>
 
 	<target name="release-tag">
-		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
 
-		<setpackagesexternals packagespath="${project.basedir}/Packages/Framework" fixrevision="true" />
-
-		<property name="svn.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
-		<phingcall target="svn-tagdistribution"/>
-
-		<svnswitch targetUrl="${svn.baseUri.distribution}tags/${svn.tagDistribution.tag}" dir="${project.basedir}"/>
+		<property name="git.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
+		<exec logoutput="true" checkreturn="true" command="git tag -f -a -m 'Tag distribution with tag ${git.tagDistribution.tag}' ${git.tagDistribution.tag}" />
+		<exec logoutput="true" checkreturn="true" command="git submodule foreach 'echo Tag distribution with tag ${git.tagDistribution.tag} | git tag -f -a -F - ${git.tagDistribution.tag}'" />
 	</target>
 
 	<target name="createarchives">
