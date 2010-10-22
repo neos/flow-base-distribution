@@ -58,6 +58,10 @@
 		<include name="Packages/Framework/*/Tests/Unit/**/*Test.php"/>
 	</fileset>
 
+	<fileset dir="." expandsymboliclinks="true" id="files-functionaltests">
+		<include name="Packages/Framework/*/Tests/Functional/**/*Test.php"/>
+	</fileset>
+
 	<fileset dir="." expandsymboliclinks="true" id="paths-packages">
 		<exclude name="."/>
 		<exclude name=".."/>

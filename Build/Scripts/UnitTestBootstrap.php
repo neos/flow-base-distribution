@@ -1,6 +1,6 @@
 <?php
 declare(ENCODING = 'utf-8');
-namespace F3\Build;
+namespace F3\FLOW3\Build;
 
 /*                                                                        *
  * This script belongs to the FLOW3 build system.                         *
@@ -24,7 +24,7 @@ namespace F3\Build;
 
 /**
  * A simple class loader that deals with the Framework classes and is intended
- * for use with PHPUnit.
+ * for use with unit tests executed by PHPUnit.
  *
  * PHPUnit offers the possibility to use a "bootstrap" file with every test.
  *
@@ -59,7 +59,7 @@ function loadClassForTesting($className) {
 	}
 }
 
-spl_autoload_register('F3\Build\loadClassForTesting');
+spl_autoload_register('F3\FLOW3\Build\loadClassForTesting');
 set_include_path(get_include_path() . ':' . dirname(__FILE__) . '/../Resources/PHP');
 
 $_SERVER['FLOW3_ROOTPATH'] = dirname(__FILE__) . '/../../';
