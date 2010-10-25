@@ -23,7 +23,7 @@
 <project name="Tests">
 
 	<target name="lint" depends="lint-php" description="Run lint on source files"/>
-	<target name="test" depends="test-phpunit" description="Run lint on source files"/>
+	<target name="test" depends="test-unit,test-functional" description="Run unit, functional and system tests"/>
 
 
 	<target name="lint-php">
@@ -39,8 +39,7 @@
 		</xmllint>
 	</target>
 
-
-	<target name="test-phpunit">
+	<target name="test-unit" description="Run unit tests">
 		<mkdir dir="${project.reportsDirectory}"/>
 
 		<includepath classpath="Build/Resources/PHP"/>
@@ -63,10 +62,39 @@
 		<setenvironment name="FLOW3_WEBPATH" value="${project.basedir}/Web"/>
 
 		<property name="fail" value="true"/>
-		<phpunit codecoverage="${codecoverage}" haltonerror="${fail}" haltonfailure="${fail}" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/Bootstrap.php">
+		<phpunit codecoverage="${codecoverage}" haltonerror="${fail}" haltonfailure="${fail}" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/UnitTestBootstrap.php">
 			<formatter todir="${project.reportsDirectory}" outfile="unittests.xml" type="xml"/>
 			<batchtest>
 				<fileset refid="files-unittests"/>
+			</batchtest>
+		</phpunit>
+	</target>
+
+	<target name="test-functional" description="Run functional test">
+		<mkdir dir="${project.reportsDirectory}"/>
+
+		<if>
+			<isset property="codecoverage"/>
+			<then>
+				<mkdir dir="${project.buildDirectory}/Temporary"/>
+				<coverage-setup database="${project.buildDirectory}/Temporary/coverage.db">
+					<fileset refid="files-php"/>
+				</coverage-setup>
+			</then>
+			<else>
+				<echo>You can set the "codecoverage" property to check code coverage during the tests.</echo>
+				<property name="codecoverage" value="0"/>
+			</else>
+		</if>
+
+		<setenvironment name="FLOW3_ROOTPATH" value="${project.basedir}"/>
+		<setenvironment name="FLOW3_WEBPATH" value="${project.basedir}/Web"/>
+
+		<property name="fail" value="true"/>
+		<phpunit codecoverage="${codecoverage}" haltonerror="${fail}" haltonfailure="${fail}" printsummary="true" bootstrap="${project.buildDirectory}/Scripts/FunctionalTestBootstrap.php">
+			<formatter todir="${project.reportsDirectory}" outfile="unittests.xml" type="xml"/>
+			<batchtest>
+				<fileset refid="files-functionaltests"/>
 			</batchtest>
 		</phpunit>
 	</target>
