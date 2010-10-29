@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-/*                                                                        *
- * This script belongs to the FLOW3 project.                              *
+ * This script belongs to the FLOW3 build system.                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -18,7 +17,6 @@
  * If not, see http://www.gnu.org/licenses/lgpl.html                      *
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
 -->
 <project name="Setup">
 
@@ -29,20 +27,20 @@
 
 		<echo message="Setting ownership..."/>
 		<chown user="${cliuser}.${webgroup}" verbose="false">
-			<fileset dir=".">
+			<fileset dir="${project.basedir}">
 				<exclude name="Build**"/>
 				<include name="**"/>
 			</fileset>
 		</chown>
 		<chown user="${webuser}.${webgroup}" verbose="false">
-			<fileset dir=".">
+			<fileset dir="${project.basedir}">
 				<include name="Web**"/>
 			</fileset>
 		</chown>
 
 		<echo message="Setting directory permissions..."/>
 		<chmod mode="2770" verbose="false">
-			<fileset dir=".">
+			<fileset dir="${project.basedir}">
 				<exclude name="Build**"/>
 				<include name="**"/>
 				<type type="dir"/>
@@ -50,7 +48,7 @@
 		</chmod>
 		<echo message="Setting file permissions..."/>
 		<chmod mode="0660" verbose="false">
-			<fileset dir=".">
+			<fileset dir="${project.basedir}">
 				<exclude name="Build**"/>
 				<include name="**"/>
 				<type type="file"/>

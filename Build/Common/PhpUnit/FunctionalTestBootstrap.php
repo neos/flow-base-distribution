@@ -22,16 +22,13 @@ namespace F3\FLOW3\Build;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-require_once('PHPUnit/Autoload.php');
-@include_once('vfsStream/vfsStreamWrapper.php');
-
+@require_once('vfsStream/vfsStream.php');
 if (!class_exists('vfsStreamWrapper')) {
-	exit("\nFLOW3 Bootstrap Error: The functional test bootstrap requires vfsStream to be installed (e.g. via PEAR). Please also make sure that it is accessible via the PHP include path.\n\n");
+	exit(PHP_EOL . 'FLOW3 Bootstrap Error: The functional test bootstrap requires vfsStream to be installed (e.g. via PEAR). Please also make sure that it is accessible via the PHP include path.' . PHP_EOL . PHP_EOL);
 }
 
-
-$_SERVER['FLOW3_ROOTPATH'] = dirname(__FILE__) . '/../../';
-$_SERVER['FLOW3_WEBPATH'] = dirname(__FILE__) . '/../../Web/';
+$_SERVER['FLOW3_ROOTPATH'] = dirname(__FILE__) . '/../../../';
+$_SERVER['FLOW3_WEBPATH'] = dirname(__FILE__) . '/../../../Web/';
 
 require_once($_SERVER['FLOW3_ROOTPATH'] . 'Packages/Framework/Testing/Classes/BaseTestCase.php');
 require_once($_SERVER['FLOW3_ROOTPATH'] . 'Packages/Framework/Testing/Classes/FunctionalTestCase.php');

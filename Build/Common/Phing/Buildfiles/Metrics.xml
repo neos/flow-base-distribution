@@ -1,8 +1,6 @@
-<?php
-declare(ENCODING = 'utf-8');
-
-/*                                                                        *
- * This script belongs to the FLOW3 project.                              *
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This script belongs to the FLOW3 build system.                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -19,58 +17,27 @@ declare(ENCODING = 'utf-8');
  * If not, see http://www.gnu.org/licenses/lgpl.html                      *
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+-->
+<project name="Metrics">
 
-require_once('phing/Task.php');
+	<target name="metrics" depends="metrics-phpcpd,metrics-phpmd" description="Run metrics collection on source files"/>
 
-/**
- * SetEnvironment task for Phing
- *
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
- */
-class SetEnvironmentTask extends Task {
 
-	/**
-	 * @var string
-	 */
-	protected $name;
+	<target name="metrics-phpcpd">
+		<mkdir dir="${project.reportsDirectory}" />
+		<phpcpd>
+			<fileset refid="files-php"/>
+			<fileset refid="files-js"/>
+			<formatter type="pmd" outfile="${project.reportsDirectory}/CopyPasteDetection.xml"/>
+		</phpcpd>
+	</target>
 
-	/**
-	 * @var string
-	 */
-	protected $value;
+	<target name="metrics-phpmd">
+		<mkdir dir="${project.reportsDirectory}" />
+		<phpmd rulesets="codesize,unusedcode,naming,design">
+			<fileset refid="files-php"/>
+			<formatter type="xml" outfile="${project.reportsDirectory}/ProjectMessDetection.xml"/>
+		</phpmd>
+	</target>
 
-	/**
-	 * @param string $name
-	 * @return void
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
-
-	/**
-	 * @param string $value
-	 * @return void
-	 */
-	public function setValue($value) {
-		$this->value = $value;
-	}
-
-	/**
-	 * Sets the environment variable specified by name and value.
-	 *
-	 * @return void
-	 * @author Robert Lemke <robert@typo3.org>
-	 */
-	public function main() {
-		$this->log('Calling SetEnvironment (' . $this->name .'=' . $this->value . ')');
-		putenv("$this->name=$this->value");
-
-		$_SERVER[$this->name] = $this->value;
-		$_ENV[$this->name] = $this->value;
-
-	}
-
-}
-
-?>
+</project>

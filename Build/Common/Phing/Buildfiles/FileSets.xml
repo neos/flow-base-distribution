@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-/*                                                                        *
- * This script belongs to the FLOW3 project.                              *
+ * This script belongs to the FLOW3 build system.                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -18,7 +17,6 @@
  * If not, see http://www.gnu.org/licenses/lgpl.html                      *
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
 -->
 <project name="FileSets">
 
@@ -39,12 +37,17 @@
 		<include name="flow3"/>
 	</fileset>
 
-	<fileset dir="." expandsymboliclinks="true" id="files-php">
-		<exclude name="Packages/Framework/Testing/**/*.php"/>
+	<fileset dir="${project.basedir}" expandsymboliclinks="true" id="files-php">
+		<exclude name="Packages/Framework/Testing/"/>
 		<include name="Packages/*/*/Classes/**/*.php"/>
 	</fileset>
 
-	<fileset dir="." id="files-temporary">
+	<fileset dir="${project.basedir}" expandsymboliclinks="true" id="files-js">
+		<exclude name="Packages/Framework/ExtJS/Resources/Public/JavaScript/"/>
+		<include name="Packages/*/*/Resources/**/*.js"/>
+	</fileset>
+
+	<fileset dir="${project.basedir}" id="files-temporary">
 		<exclude name="Data/Temporary"/>
 		<exclude name="Data/Logs"/>
 		<exclude name="Web/_Resources"/>
@@ -54,30 +57,23 @@
 		<include name="Data/Persistent/EncryptionKey"/>
 	</fileset>
 
-	<fileset dir="." expandsymboliclinks="true" id="files-unittests">
+	<fileset dir="${project.basedir}" expandsymboliclinks="true" id="files-unittests">
 		<include name="Packages/*/*/Tests/Unit/**/*Test.php"/>
 	</fileset>
 
-	<fileset dir="." expandsymboliclinks="true" id="files-functionaltests">
+	<fileset dir="${project.basedir}" expandsymboliclinks="true" id="files-functionaltests">
 		<include name="Packages/*/*/Tests/Functional/**/*Test.php"/>
 	</fileset>
 
-	<fileset dir="." expandsymboliclinks="true" id="paths-packages">
+	<fileset dir="${project.basedir}" expandsymboliclinks="true" id="paths-packages">
 		<exclude name="."/>
 		<exclude name=".."/>
 		<include name="Packages/*/*"/>
 		<type type="dir"/>
 	</fileset>
 
-	<fileset dir="./Packages/Framework/" expandsymboliclinks="true" id="packagekeys-framework">
-		<exclude name="."/>
-		<exclude name=".."/>
-		<include name="*"/>
-		<type type="dir"/>
-	</fileset>
-
-	<fileset dir="." expandsymboliclinks="true" id="files-docbook-xml">
-		<include name="Packages/Framework/*/Documentation/Manual/DocBook/**/*.xml"/>
+	<fileset dir="${project.basedir}" expandsymboliclinks="true" id="files-docbook-xml">
+		<include name="Packages/*/*/Documentation/Manual/DocBook/**/*.xml"/>
 		<type type="file"/>
 	</fileset>
 

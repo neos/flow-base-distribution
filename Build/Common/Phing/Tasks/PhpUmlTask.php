@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?php
+declare(ENCODING = 'utf-8');
+
 /*                                                                        *
- * This script belongs to the FLOW3 project.                              *
+ * This script belongs to the FLOW3 build system.                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -19,26 +20,71 @@
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
--->
-<project name="Metrics">
 
-	<target name="metrics" depends="metrics-phpcpd,metrics-phpmd" description="Run metrics collection on source files"/>
+require_once('phing/Task.php');
+require_once('PHP/UML.php');
 
+/**
+ * PHP_UML task for Phing
+ *
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ */
+class PhpUmlTask extends Task {
 
-	<target name="metrics-phpcpd">
-		<mkdir dir="${project.reportsDirectory}" />
-		<phpcpd>
-			<fileset refid="files-php"/>
-			<formatter type="pmd" outfile="${project.reportsDirectory}/cpd.xml"/>
-		</phpcpd>
-	</target>
+	/**
+	 * @var string
+	 */
+	protected $input;
 
-	<target name="metrics-phpmd">
-		<mkdir dir="${project.reportsDirectory}" />
-		<phpmd>
-			<fileset refid="files-php"/>
-			<formatter type="xml" outfile="${project.reportsDirectory}/pmd.xml"/>
-		</phpmd>
-	</target>
+	/**
+	 * @var string
+	 */
+	protected $output;
 
-</project>
+	/**
+	 * @var string
+	 */
+	protected $title;
+
+	/**
+	 * @param string $path
+	 * @return void
+	 */
+	public function setInput($path) {
+		$this->input = $path;
+	}
+
+	/**
+	 * @param string $output
+	 * @return void
+	 */
+	public function setOutput($output) {
+		$this->output = $output;
+	}
+
+	/**
+	 * @param string $title
+	 * @return void
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+	}
+
+	/**
+	 * @return void
+	 * @author Karsten Dambekalns <karsten@typo3.org>
+	 */
+	public function main() {
+		$this->log('Calling PHP_UML on ' . $this->input);
+		$renderer = new PHP_UML();
+		$renderer->deploymentView = FALSE;
+		$renderer->onlyApi = TRUE;
+		$renderer->setInput($this->input);
+		$renderer->parse($this->title);
+		$renderer->generateXMI(2.1, 'utf-8');
+		$renderer->export('html', $this->output);
+	}
+
+}
+
+?>

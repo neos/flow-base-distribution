@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?php
+declare(ENCODING = 'utf-8');
+
 /*                                                                        *
- * This script belongs to the FLOW3 project.                              *
+ * This script belongs to the FLOW3 build system.                         *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -19,27 +20,56 @@
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
--->
-<project name="Reports">
 
-	<target name="report-phpunit" description="Run unit tests (HTML output)">
-		<phingcall target="test-phpunit">
-			<property name="codecoverage" value="true"/>
-		</phingcall>
-		<delete dir="${project.reportsDirectory}/UnitTests" quiet="true"/>
-		<delete dir="${project.reportsDirectory}/CodeCoverage" quiet="true"/>
-		<mkdir dir="${project.reportsDirectory}/UnitTests" />
-		<mkdir dir="${project.reportsDirectory}/CodeCoverage" />
+require_once('phing/Task.php');
 
-		<phpunitreport infile="${project.reportsDirectory}/unittests.xml" format="frames" todir="${project.reportsDirectory}/UnitTests" styledir="${phing.styleDirectory}"/>
+/**
+ * SetEnvironment task for Phing
+ *
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ */
+class SetEnvironmentTask extends Task {
 
-		<!-- we need the class loader for the coverage report -->
-		<adhoc><![CDATA[
-		require_once('Packages/Framework/Testing/Scripts/Bootstrap.php');
-		]]></adhoc>
-		<coverage-report outfile="${project.reportsDirectory}/coverage.xml">
-			<report todir="${project.reportsDirectory}/CodeCoverage" styledir="${phing.styleDirectory}"/>
-		</coverage-report>
-	</target>
+	/**
+	 * @var string
+	 */
+	protected $name;
 
-</project>
+	/**
+	 * @var string
+	 */
+	protected $value;
+
+	/**
+	 * @param string $name
+	 * @return void
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 * @param string $value
+	 * @return void
+	 */
+	public function setValue($value) {
+		$this->value = $value;
+	}
+
+	/**
+	 * Sets the environment variable specified by name and value.
+	 *
+	 * @return void
+	 * @author Robert Lemke <robert@typo3.org>
+	 */
+	public function main() {
+		$this->log('Calling SetEnvironment (' . $this->name .'=' . $this->value . ')');
+		putenv("$this->name=$this->value");
+
+		$_SERVER[$this->name] = $this->value;
+		$_ENV[$this->name] = $this->value;
+	}
+
+}
+
+?>
