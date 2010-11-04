@@ -38,6 +38,12 @@
 		</jsllint>
 	</target>
 
+	<target name="lint-docbook">
+		<xmllint schema="${project.buildDirectory}/Resources/Manual/Xsd/docbook.xsd">
+			<fileset refid="files-docbook-xml"/>
+		</xmllint>
+	</target>
+
 
 	<target name="test-unit" description="Run unit tests">
 		<mkdir dir="${project.reportsDirectory}"/>
@@ -59,7 +65,7 @@
 
 	<target name="test-functional" description="Run functional tests">
 		<mkdir dir="${project.reportsDirectory}"/>
-		<exec command="phpunit -c ${project.commonBuildDirectory}PhpUnit/FunctionalTests.xml" passthru="true" returnProperty="phpUnitResult"/>
+		<exec command="phpunit -c &quot;${project.commonBuildDirectory}PhpUnit/FunctionalTests.xml&quot;" passthru="true" returnProperty="phpUnitResult"/>
 
 		<phingcall target="phpunit-report">
 			<property name="type" value="FunctionalTests"/>
