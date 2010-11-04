@@ -34,7 +34,7 @@
 
 	<target name="metrics-phpmd">
 		<mkdir dir="${project.reportsDirectory}" />
-		<phpmd rulesets="codesize,unusedcode,naming,design">
+		<phpmd rulesets="${project.commonBuildDirectory}/PhpMd/FLOW3.xml">
 			<fileset refid="files-php"/>
 			<formatter type="xml" outfile="${project.reportsDirectory}/ProjectMessDetection.xml"/>
 		</phpmd>
