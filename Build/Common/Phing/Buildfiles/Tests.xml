@@ -41,7 +41,15 @@
 
 	<target name="test-unit" description="Run unit tests">
 		<mkdir dir="${project.reportsDirectory}"/>
-		<exec command="phpunit -c &quot;${project.commonBuildDirectory}PhpUnit/UnitTests.xml&quot;" passthru="true" returnProperty="phpUnitResult"/>
+		<if>
+			<isset property="collectCodeCoverage"/>
+			<then>
+				<exec command="phpunit -c &quot;${project.commonBuildDirectory}PhpUnit/UnitTests.xml&quot; --coverage-clover &quot;${project.reportsDirectory}UnitTestsCodeCoverage.xml&quot;" passthru="true" returnProperty="phpUnitResult"/>
+			</then>
+			<else>
+				<exec command="phpunit -c &quot;${project.commonBuildDirectory}PhpUnit/UnitTests.xml&quot;" passthru="true" returnProperty="phpUnitResult"/>
+			</else>
+		</if>
 
 		<phingcall target="phpunit-report">
 			<property name="type" value="UnitTests"/>
