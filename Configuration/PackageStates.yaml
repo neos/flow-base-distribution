@@ -1,0 +1,18 @@
+
+---
+FLOW3:
+  state: active
+DocumentationBrowser:
+  state: active
+ExtJS:
+  state: active
+Fluid:
+  state: active
+Kickstart:
+  state: active
+Party:
+  state: active
+Testing:
+  state: inactive
+Welcome:
+  state: active
