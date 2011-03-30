@@ -26,11 +26,15 @@ if ($rootPath === FALSE && isset($_SERVER['REDIRECT_FLOW3_ROOTPATH'])) {
 	$rootPath = $_SERVER['REDIRECT_FLOW3_ROOTPATH'];
 }
 if ($rootPath === FALSE) {
- $rootPath = dirname(__FILE__) . '/../';
+	$rootPath = dirname(__FILE__) . '/../';
 } elseif (substr($rootPath, -1) !== '/') {
 	$rootPath .= '/';
 }
 
-require($rootPath . 'Packages/Framework/FLOW3/Scripts/FLOW3.php');
+require($rootPath . 'Packages/Framework/FLOW3/Classes/Core/Bootstrap.php');
+
+$context = getenv('FLOW3_CONTEXT') ?: (getenv('REDIRECT_FLOW3_CONTEXT') ?: 'Production');
+$bootstrap = new \F3\FLOW3\Core\Bootstrap($context);
+$bootstrap->run();
 
 ?>

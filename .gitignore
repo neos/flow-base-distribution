@@ -2,6 +2,7 @@
 /Build/Reports/
 /Build/Temporary/
 /Configuration/Production/IncludeCachedConfigurations.php
+/Configuration/PackageStates.php
 /Data/
 /Packages/Application/
 /Tests/
