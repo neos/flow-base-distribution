@@ -19,3 +19,6 @@
 [submodule "Packages/Framework/Welcome"]
 	path = Packages/Framework/Welcome
 	url = git://git.typo3.org/FLOW3/Packages/Welcome.git
+[submodule "Build/Common"]
+	path = Build/Common
+	url = git://git.typo3.org/FLOW3/BuildEssentials.git
