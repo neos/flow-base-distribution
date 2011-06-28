@@ -1,0 +1,86 @@
+UPGRADING INSTRUCTIONS
+----------------------
+
+This file contains instructions for upgrading your FLOW3 1.0 alpha 14 installation to FLOW3 1.0 beta 1.
+
+GIT SUBMODULES
+--------------
+
+The easy way, if you have no pending changes in submodules: pull or cherry-pick, then remove the old
+framework package folders (everything in Framework *except* Doctrine and TYPO3).
+
+The also easy way, if you have changes: pull or cherry-pick, and the move the old framework package
+folders down into Packages/Framework/TYPO3. Check if you are based on what's current and rebase any
+pending changes as needed.
+
+VENDOR NAMESPACES
+-----------------
+
+FLOW3 now uses a different namespacing scheme which makes FLOW3 code more compatible with third-party libraries. You
+will need to update all references to F3\* classes and use the new namespacing scheme. Packages provided by the FLOW3
+core team now use the "TYPO3" vendor namespace. Your own packages must use a different vendor namespace, for example
+your company website's domain name in reverse order: "Com\MyBusiness\MyPackageKey".
+
+This version of FLOW3 comes with a migration script which migrates your PHP code. You may run the script from the
+root directory of FLOW3 with the following command:
+
+   php ./Packages/Framework/TYPO3/FLOW3/Scripts/migrate.php
+
+The script replaces all occurences of F3\FLOW3 etc. by TYPO3\FLOW3, that includes references to all packages provided
+by the FLOW3 base distribution (all those in "Framework"). All occurences of F3\... in _other_ packages (for example
+your own packages in Application/) will be replaced by "YourCompanyName".
+
+You'll need to take the following manual steps after automatic migration:
+
+ - think of an own vendor namespace ("Com\MyBusiness") and globally replace "MyCompanyName" with "Com\MyBusiness"
+ - move your own packages from the second level (usually below "Application") to a directory structure reflecting your
+   new vendor namespace, for example "Application/Com/MyBusiness/MyPackageKey"
+ - update all your .yaml files to the new structure (see below)
+ - update all your Package.xml files to contain the new package key format (key and dependencies sections)
+ - delete Configuration/PackageStates.php (will be regenerated automatically)
+ - delete all directories below Data/Temporary/
+
+SETTINGS / YAML-FILES
+---------------------
+
+The introduction of vendor namespaces also had an impact on the YAML files. Package keys in Settings.yaml must now
+be converted into a correctly nested structure. Previously you had Settings.yaml files like these:
+
+YourPackageKey:
+  option1: "foo"
+
+Now you will need a structure like this:
+
+Com:
+  YourCompanyName:
+    YourPackageKey:
+      option1: "foo"
+
+Likewise all your settings files referring to FLOW3 settings must be updated too:
+
+TYPO3:
+  FLOW3:
+    security:
+      enable: y
+
+RESOURCES
+---------
+
+You will also need to update references to package resources if you use the stream wrapper. When you referred to a
+resource like this in your package:
+
+   resource://YourPackageKey/Private/Templates/MainTemplate.html
+
+You'll have to adjust it like to this:
+
+   resource://Com.YourCompanyName.YourPackageKey/Private/Templates/MainTemplate.html
+
+PACKAGE KEYS
+------------
+
+The format of package keys also had to be changed. The vendor namespace is now included in the package key and we're
+using the dot "." as a delimiter. The package key "FLOW3" is now "TYPO3.FLOW3". Another valid new package key would be
+"Com.YourCompanyName.YourPackageKey".
+
+Make sure to search your code for uses of package keys. Maybe you have PHP code using a package key for rendering a
+resource URI – that needs to be modified.

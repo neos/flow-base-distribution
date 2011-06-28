@@ -20,7 +20,7 @@
   uriPattern: '<WelcomeSubroutes>'
   subRoutes:
     WelcomeSubroutes:
-      package: Welcome
+      package: TYPO3.Welcome
 
 ##
 # Subroutes from the DocumentationBrowser package.
@@ -31,7 +31,7 @@
   uriPattern: '<DocumentationBrowserSubroutes>'
   subRoutes:
     DocumentationBrowserSubroutes:
-      package: DocumentationBrowser
+      package: TYPO3.DocumentationBrowser
 
 ##
 # FLOW3 subroutes
@@ -44,4 +44,4 @@
     '@format': 'html'
   subRoutes:
     FLOW3Subroutes:
-      package: FLOW3
+      package: TYPO3.FLOW3
