@@ -75,6 +75,8 @@ You'll have to adjust it like to this:
 
    resource://Com.YourCompanyName.YourPackageKey/Private/Templates/MainTemplate.html
 
+Also uri.resource ViewHelper calls need to be adjusted, if the package is specified.
+
 PACKAGE KEYS
 ------------
 
