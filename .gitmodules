@@ -1,23 +1,20 @@
-[submodule "Packages/Framework/TYPO3/DocumentationBrowser"]
-	path = Packages/Framework/TYPO3/DocumentationBrowser
+[submodule "Packages/Framework/TYPO3.DocumentationBrowser"]
+	path = Packages/Framework/TYPO3.DocumentationBrowser
 	url = git://git.typo3.org/FLOW3/Packages/DocumentationBrowser.git
-[submodule "Packages/Framework/TYPO3/ExtJS"]
-	path = Packages/Framework/TYPO3/ExtJS
-	url = git://git.typo3.org/FLOW3/Packages/ExtJS.git
-[submodule "Packages/Framework/TYPO3/FLOW3"]
-	path = Packages/Framework/TYPO3/FLOW3
+[submodule "Packages/Framework/TYPO3.FLOW3"]
+	path = Packages/Framework/TYPO3.FLOW3
 	url = git://git.typo3.org/FLOW3/Packages/FLOW3.git
-[submodule "Packages/Framework/TYPO3/Fluid"]
-	path = Packages/Framework/TYPO3/Fluid
+[submodule "Packages/Framework/TYPO3.Fluid"]
+	path = Packages/Framework/TYPO3.Fluid
 	url = git://git.typo3.org/FLOW3/Packages/Fluid.git
-[submodule "Packages/Framework/TYPO3/Kickstart"]
-	path = Packages/Framework/TYPO3/Kickstart
+[submodule "Packages/Framework/TYPO3.Kickstart"]
+	path = Packages/Framework/TYPO3.Kickstart
 	url = git://git.typo3.org/FLOW3/Packages/Kickstart.git
-[submodule "Packages/Framework/TYPO3/Party"]
-	path = Packages/Framework/TYPO3/Party
+[submodule "Packages/Framework/TYPO3.Party"]
+	path = Packages/Framework/TYPO3.Party
 	url = git://git.typo3.org/FLOW3/Packages/Party.git
-[submodule "Packages/Framework/TYPO3/Welcome"]
-	path = Packages/Framework/TYPO3/Welcome
+[submodule "Packages/Framework/TYPO3.Welcome"]
+	path = Packages/Framework/TYPO3.Welcome
 	url = git://git.typo3.org/FLOW3/Packages/Welcome.git
 [submodule "Build/Common"]
 	path = Build/Common
