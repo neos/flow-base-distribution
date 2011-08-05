@@ -21,19 +21,13 @@
 <project name="FLOW3">
 
 	<target name="release" depends="lint, test, polish, release-tag, doc-render, createarchives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
+
+		<!-- TODO: The "publish API" step should *not* upload the API, as this should be done by *jenkins*-->
 		<phingcall target="doc-publish-api">
-			<property name="packageKey" value="FLOW3"/>
+			<property name="packageKey" value="TYPO3.FLOW3"/>
 		</phingcall>
-		<phingcall target="doc-publish-manual">
-			<property name="packageKey" value="FLOW3"/>
-		</phingcall>
-		<phingcall target="doc-publish-manual">
-			<property name="packageKey" value="FLOW3"/>
-			<property name="manual.folder" value="CodingGuidelines"/>
-		</phingcall>
-		<phingcall target="doc-publish-manual">
-			<property name="packageKey" value="Fluid"/>
-		</phingcall>
+
+		<!-- TODO: The "publish archives" step should be done by *jenkins*-->
 		<phingcall target="release-publish-archives"/>
 		<phingcall target="release-publish-on-website"/>
 	</target>
