@@ -40,9 +40,6 @@
 			- tag everything (but do not push the tags)
 			- render API doc
 			- create archives
-
-		FOLLOWING JOB:
-			- do "publish-tags"
 		-->
 		<target name="release" depends="lint, test, polish, release-tag, doc-render, createarchives" description="Package FLOW3 to Build/Archives/">
 
@@ -56,13 +53,6 @@
 		<phingcall target="release-publish-on-website"/>-->
 	</target>
 
-	<target name="publish-tags" description="Publish the tagged code to git.typo3.org">
-		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
-
-		<property name="git.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
-		<exec logoutput="true" checkreturn="true" command="git push origin ${git.tagDistribution.tag}:refs/tags/${git.tagDistribution.tag}" />
-		<exec logoutput="true" checkreturn="true" command="git submodule foreach 'git push origin ${git.tagDistribution.tag}:refs/tags/${git.tagDistribution.tag}'" />
-	</target>
 	<target name="createarchives">
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
 		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
