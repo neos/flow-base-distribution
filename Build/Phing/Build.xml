@@ -20,18 +20,49 @@
 -->
 <project name="FLOW3">
 
-	<target name="release" depends="lint, test, polish, release-tag, doc-render, createarchives" description="Release FLOW3 to SourceForge and flow3.typo3.org">
+	<!--
+		the "release" target triggers the build, and builds zip files which can
+		be uploaded to sourceforge / flow3.typo3.org.
+
+		run as follows:
+
+		BUILD_NUMBER=17 RELEASE_VERSION="test" phing -f Build/Common/Phing/Master.xml release
+
+		you can optionally set -DskipLint=1 to skip the "lint" check (especially
+		helpful if you want to test the release process, as it is horribly slow)
+
+		and set -DskipTests=1 to skip the phpunit and functional tests - also
+		helpful for testing.
+
+		It does the following:
+			- syntax check & test
+			- cleanup
+			- tag everything (but do not push the tags)
+			- render API doc
+			- create archives
+
+		FOLLOWING JOB:
+			- do "publish-tags"
+		-->
+		<target name="release" depends="lint, test, polish, release-tag, doc-render, createarchives" description="Package FLOW3 to Build/Archives/">
 
 		<!-- TODO: The "publish API" step should *not* upload the API, as this should be done by *jenkins*-->
-		<phingcall target="doc-publish-api">
+		<phingcall target="doc-release-api">
 			<property name="packageKey" value="TYPO3.FLOW3"/>
 		</phingcall>
 
 		<!-- TODO: The "publish archives" step should be done by *jenkins*-->
-		<phingcall target="release-publish-archives"/>
-		<phingcall target="release-publish-on-website"/>
+		<!--<phingcall target="release-publish-archives"/>
+		<phingcall target="release-publish-on-website"/>-->
 	</target>
 
+	<target name="publish-tags" description="Publish the tagged code to git.typo3.org">
+		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
+
+		<property name="git.tagDistribution.tag" value="${env.RELEASE_VERSION}"/>
+		<exec logoutput="true" checkreturn="true" command="git push origin ${git.tagDistribution.tag}:refs/tags/${git.tagDistribution.tag}" />
+		<exec logoutput="true" checkreturn="true" command="git submodule foreach 'git push origin ${git.tagDistribution.tag}:refs/tags/${git.tagDistribution.tag}'" />
+	</target>
 	<target name="createarchives">
 		<fail unless="env.RELEASE_VERSION" message="You must set the environment variable RELEASE_VERSION for this task."/>
 		<fail unless="env.BUILD_NUMBER" message="You must set the environment variable BUILD_NUMBER for this task."/>
