@@ -1,6 +1,3 @@
-[submodule "Packages/Framework/TYPO3.DocumentationBrowser"]
-	path = Packages/Framework/TYPO3.DocumentationBrowser
-	url = git://git.typo3.org/FLOW3/Packages/DocumentationBrowser.git
 [submodule "Packages/Framework/TYPO3.FLOW3"]
 	path = Packages/Framework/TYPO3.FLOW3
 	url = git://git.typo3.org/FLOW3/Packages/FLOW3.git
