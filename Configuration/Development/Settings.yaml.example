@@ -12,7 +12,7 @@
 TYPO3:
   FLOW3:
     persistence:
-     backendOptions:
-      dbname: 'quickstart' # adjust to your database name
-      user: ''             # adjust to your database user
-      password: ''         # adjust to your database password
+      backendOptions:
+        dbname: 'quickstart' # adjust to your database name
+        user: ''             # adjust to your database user
+        password: ''         # adjust to your database password
