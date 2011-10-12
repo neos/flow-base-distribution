@@ -12,6 +12,10 @@
 TYPO3:
   FLOW3:
     persistence:
+
+      # It is good practice to not specify user name and password of the database
+      # connection in this global Settings.yaml file. Rather specify them in the
+      # settings of the respective context (Production / Development ...).
       backendOptions:
         host: '127.0.0.1'    # adjust to your database host
 
