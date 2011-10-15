@@ -12,7 +12,7 @@
 ##
 # Subroutes from the Welcome package.
 #
-# If the package "Welcome" is installed, its fallback route will point to an 
+# If the package "Welcome" is installed, its fallback route will point to an
 # informative welcome screen.
 
 -
@@ -21,17 +21,6 @@
   subRoutes:
     WelcomeSubroutes:
       package: TYPO3.Welcome
-
-##
-# Subroutes from the DocumentationBrowser package.
-#
-
--
-  name: 'Documentation Browser'
-  uriPattern: '<DocumentationBrowserSubroutes>'
-  subRoutes:
-    DocumentationBrowserSubroutes:
-      package: TYPO3.DocumentationBrowser
 
 ##
 # FLOW3 subroutes
