@@ -1,18 +1,18 @@
 [submodule "Packages/Framework/TYPO3.FLOW3"]
 	path = Packages/Framework/TYPO3.FLOW3
-	url = git://git.typo3.org/FLOW3/Packages/FLOW3.git
+	url = git://git.typo3.org/FLOW3/Packages/TYPO3.FLOW3.git
 [submodule "Packages/Framework/TYPO3.Fluid"]
 	path = Packages/Framework/TYPO3.Fluid
-	url = git://git.typo3.org/FLOW3/Packages/Fluid.git
+	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Fluid.git
 [submodule "Packages/Framework/TYPO3.Kickstart"]
 	path = Packages/Framework/TYPO3.Kickstart
-	url = git://git.typo3.org/FLOW3/Packages/Kickstart.git
+	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Kickstart.git
 [submodule "Packages/Framework/TYPO3.Party"]
 	path = Packages/Framework/TYPO3.Party
-	url = git://git.typo3.org/FLOW3/Packages/Party.git
+	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Party.git
 [submodule "Packages/Framework/TYPO3.Welcome"]
 	path = Packages/Framework/TYPO3.Welcome
-	url = git://git.typo3.org/FLOW3/Packages/Welcome.git
+	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Welcome.git
 [submodule "Build/Common"]
 	path = Build/Common
 	url = git://git.typo3.org/FLOW3/BuildEssentials.git
