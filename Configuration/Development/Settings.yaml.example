@@ -16,3 +16,7 @@ TYPO3:
         dbname: 'quickstart' # adjust to your database name
         user: ''             # adjust to your database user
         password: ''         # adjust to your database password
+
+       # if you want to log executed SQL queries, enable the next 2 lines
+#      doctrine:
+#        sqlLogger: 'TYPO3\FLOW3\Persistence\Doctrine\Logging\SqlLogger'
