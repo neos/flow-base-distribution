@@ -1,8 +1,7 @@
 <?php
-
-use \TYPO3\Deploy\Domain\Model\Workflow;
-use \TYPO3\Deploy\Domain\Model\Node;
-use \TYPO3\Deploy\Domain\Model\SimpleWorkflow;
+use TYPO3\Surf\Domain\Model\Workflow;
+use TYPO3\Surf\Domain\Model\Node;
+use TYPO3\Surf\Domain\Model\SimpleWorkflow;
 
 // Needs the following mandatory environment options:
 // - WORKSPACE: work-directory
@@ -14,6 +13,7 @@ use \TYPO3\Deploy\Domain\Model\SimpleWorkflow;
 // - tag the distribution and the submodules (but does not push them)
 
 // Has the following optional environment options:
+// - BRANCH -- the branch to check out as base for further actions, defaults to "master"
 // - SOURCEFORGE_USER -- username which should be used for sourceforge.net upload.
 //                       if set, and ENABLE_SOURCEFORGE_UPLOAD is NOT "false", will upload
 //                       the distribution to sourceforge
@@ -22,7 +22,7 @@ use \TYPO3\Deploy\Domain\Model\SimpleWorkflow;
 // - ENABLE_TESTS -- if set to string "false", unit and functional tests are disabled
 // - CREATE_TAGS -- if set to string "false", the distribution and submodules are not tagged
 
-$application = new \TYPO3\Deploy\Application\FLOW3Distribution();
+$application = new \TYPO3\Surf\Application\FLOW3Distribution();
 $application->setOption('repositoryUrl', 'git://git.typo3.org/FLOW3/Distributions/Base.git');
 
 $application->setOption('projectName', 'FLOW3');
@@ -32,7 +32,10 @@ $application->setOption('sourceforgePackageName', 'FLOW3');
 if (getenv('VERSION')) {
 	$application->setOption('version', getenv('VERSION'));
 } else {
-	throw new \Exception('version to be released must be set in the VERSION env variable. Example: VERSION=1.0.0-beta1');
+	throw new \Exception('version to be released must be set in the VERSION env variable. Example: VERSION=1.0-beta1 or VERSION=1.0.1');
+}
+if (getenv('BRANCH')) {
+	$application->setOption('branch', getenv('BRANCH'));
 }
 
 $application->setOption('enableTests', getenv('ENABLE_TESTS') !== 'false');
@@ -58,6 +61,5 @@ $node = new Node('localhost');
 $node->setHostname('localhost');
 $application->addNode($node);
 $deployment->addNode($node);
-
 
 ?>
