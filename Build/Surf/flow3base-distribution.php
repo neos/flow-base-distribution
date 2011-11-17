@@ -19,15 +19,17 @@ use TYPO3\Surf\Domain\Model\SimpleWorkflow;
 //                       the distribution to sourceforge
 // - ENABLE_SOURCEFORGE_UPLOAD -- if set to string "false", Sourceforge upload is disabled
 //                                no matter if SOURCEFORGE_USER is set or not.
+// - RELEASE_HOST -- the hostname on which to add the release to the TYPO3.Release. If not set
+//                   release creation will be skipped
+// - RELEASE_HOST_LOGIN -- the user to use for the login, optional
+// - RELEASE_HOST_SITE_PATH -- the path in which to run the release commands
 // - ENABLE_TESTS -- if set to string "false", unit and functional tests are disabled
 // - CREATE_TAGS -- if set to string "false", the distribution and submodules are not tagged
 
 $application = new \TYPO3\Surf\Application\FLOW3Distribution();
-$application->setOption('repositoryUrl', 'git://git.typo3.org/FLOW3/Distributions/Base.git');
 
 $application->setOption('projectName', 'FLOW3');
-$application->setOption('sourceforgeProjectName', 'flow3');
-$application->setOption('sourceforgePackageName', 'FLOW3');
+$application->setOption('repositoryUrl', 'git://git.typo3.org/FLOW3/Distributions/Base.git');
 
 if (getenv('VERSION')) {
 	$application->setOption('version', getenv('VERSION'));
@@ -44,8 +46,20 @@ $application->setOption('createTags', getenv('CREATE_TAGS') !== 'false');
 if (getenv('SOURCEFORGE_USER') && getenv('ENABLE_SOURCEFORGE_UPLOAD') !== 'false') {
 	$application->setOption('enableSourceforgeUpload', TRUE);
 	$application->setOption('sourceforgeUserName', getenv('SOURCEFORGE_USER'));
-}
+	$application->setOption('sourceforgeProjectName', 'flow3');
+	$application->setOption('sourceforgePackageName', 'FLOW3');
 
+}
+if (getenv('RELEASE_HOST')) {
+	$application->setOption('releaseHost', getenv('RELEASE_HOST'));
+	$application->setOption('releaseHostLogin', getenv('RELEASE_HOST_LOGIN'));
+	$application->setOption('releaseHostSitePath', getenv('RELEASE_HOST_SITE_PATH'));
+	$application->setOption('changeLogUri', '/documentation/guide/partv/changelogs/' . str_replace('.', '', getenv('VERSION')) . '.html');
+}
+if (getenv('RELEASE_HOST') && getenv('SOURCEFORGE_USER') && getenv('ENABLE_SOURCEFORGE_UPLOAD') !== 'false') {
+	$application->setOption('releaseDownloadLabel', 'Base Distribution');
+	$application->setOption('releaseDownloadUriPattern', sprintf('http://sourceforge.net/projects/flow3/files/FLOW3/%s/%%s/download', getenv('VERSION')));
+}
 if (getenv('WORKSPACE')) {
 	$application->setDeploymentPath(getenv('WORKSPACE'));
 } else {
