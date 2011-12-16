@@ -37,7 +37,7 @@ if (getenv('VERSION')) {
 	throw new \Exception('version to be released must be set in the VERSION env variable. Example: VERSION=1.0-beta1 or VERSION=1.0.1');
 }
 if (getenv('BRANCH')) {
-	$application->setOption('branch', getenv('BRANCH'));
+	$application->setOption('git-checkout-branch', getenv('BRANCH'));
 }
 
 $application->setOption('enableTests', getenv('ENABLE_TESTS') !== 'false');
@@ -48,8 +48,8 @@ if (getenv('SOURCEFORGE_USER') && getenv('ENABLE_SOURCEFORGE_UPLOAD') !== 'false
 	$application->setOption('sourceforgeUserName', getenv('SOURCEFORGE_USER'));
 	$application->setOption('sourceforgeProjectName', 'flow3');
 	$application->setOption('sourceforgePackageName', 'FLOW3');
-
 }
+
 if (getenv('RELEASE_HOST')) {
 	$application->setOption('releaseHost', getenv('RELEASE_HOST'));
 	$application->setOption('releaseHostLogin', getenv('RELEASE_HOST_LOGIN'));
