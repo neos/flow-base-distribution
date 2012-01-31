@@ -28,3 +28,14 @@ If your credentials look like …, you have the … strategy:
       -> BCrypt
    2f1861241e1951f8696f80cf71b43dee,029fc4310e
       -> salted MD5
+
+YAML SYNTAX
+-----------
+
+The YAML parser has been updated and now behaves different (albeit more correct).
+
+ * Boolean values must no longer be written as y, yes, n, no but as TRUE and
+   FALSE instead.
+ * When using backslashes in strings, those are now handled as escape characters
+   inside double quotes. So if you write class names, better wrap them in single
+   quotes.
