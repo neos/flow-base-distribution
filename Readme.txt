@@ -1,12 +1,12 @@
------------
-FLOW3 1.0.0
------------
+---------
+FLOW3 1.1
+---------
 
 Welcome to FLOW3!
 
 There are a few things you need to know to get started with FLOW3.
 All necessary steps are explained in the FLOW3 Getting Started tutorial
-which you find on http://flow3.typo3.org/documentation/tutorials
+which you find on http://flow3.typo3.org/documentation/quickstart.html
 
 In short here's what you need to do:
 
