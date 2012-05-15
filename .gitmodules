@@ -28,3 +28,6 @@
 [submodule "Packages/Framework/Symfony.Component.Yaml"]
 	path = Packages/Framework/Symfony.Component.Yaml
 	url = git://git.typo3.org/FLOW3/Packages/Symfony.Component.Yaml.git
+[submodule "Packages/Framework/Symfony.Component.DomCrawler"]
+	path = Packages/Framework/Symfony.Component.DomCrawler
+	url = git://git.typo3.org/FLOW3/Packages/Symfony.Component.DomCrawler.git
