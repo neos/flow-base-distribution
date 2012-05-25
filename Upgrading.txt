@@ -1,8 +1,60 @@
-Upgrading instructions
+Upgrading Instructions
 ======================
 
-This file contains instructions for upgrading your FLOW3 1.0 based
-applications to FLOW3 1.1.
+This following instructions contain the essential steps for upgrading your
+FLOW3 1.0 based applications to FLOW3 1.1.
+
+Full Changelog
+--------------
+
+If in doubt, you'll find many answers to possible questions still
+unanswered after reading this document by browsing
+through the `full changelogs <http://flow3.typo3.org/documentation/guide/partv/changelogs.html>`_.
+
+Frozen packages
+---------------
+
+FLOW3 1.1 contains new mechanisms which improve the development and production
+speed. An important feature is the ability to freeze packages.
+
+By default, all packages which are part of the FLOW3 distribution, are frozen.
+For performance reasons, the file monitor won't track modifications to files
+of frozen packages. After flushing the code caches with ``flow3:cache:flush``
+FLOW3 will not reflect classes contained in frozen packages but instead
+retrieve reflection data from a special cache file which is preserved even
+during the cache flush.
+
+If class files contained in frozen packages are modified, the whole application
+may behave rather unexpectedly. Therefore you need to make sure that the packages
+you are working on currently are not frozen.
+
+There are few easy to use commands to control the frozen state of packages::
+
+	./flow3 package:list
+
+will list all available packages and indicates which ones are currently frozen.
+
+::
+
+	./flow3 package:freeze TYPO3.FLOW3
+
+freezes the package ``TYPO3.FLOW3`` and
+
+::
+
+	./flow3 package:unfreeze TYPO3.FLOW3
+
+unfreezes it again so that modifications are detected. If a package should stay
+frozen but its reflection data should be updated once, you can simply run::
+
+	./flow3 package:refreeze TYPO3.FLOW3
+
+Instead of a package key you may also specify the magic keyword ``all``. If
+your application behaves strangely, possibly due to a prior fatal error,
+you can still use the new ``--force`` option which empties all existing
+caches and runs in a special "safe mode"::
+
+	./flow3 flow3:cache:flush --force
 
 Code migration
 --------------
@@ -52,7 +104,7 @@ to apply any pending migrations.
 
 This will take care of the schema updates for packages that supply their
 needed adjustments. For your own package you will most likely need to create
-(and adjust) a migration to accomodate it to new behavior in FLOW3 1.1. To do
+(and adjust) a migration to accommodate it to new behavior in FLOW3 1.1. To do
 that use::
 
  ./flow3 doctrine:migrationgenerate
@@ -60,8 +112,13 @@ that use::
 Here are the things that changed in FLOW3 that you should expect to see in
 a schema migration:
 
+* long table names get shortened
 * nullable column defaults and
 * unique keys for identity properties of entities.
+
+(Overly) long table names (more than 63 chars in most cases) are now shortened.
+Thus you should make sure that affected tables are renamed correctly in your
+generated schema migrations.
 
 NULL handling for columns has changed. FLOW3 1.1 now defaults to non-nullable
 columns to behave like Doctrine. This means any column for a literal property
@@ -86,6 +143,13 @@ Configuration
 
 * The previously shipped *DefaultProvider* authentication provider
   configuration has been removed, you must configure all providers yourself now.
+
+  .. note::
+
+   The authentication provider name (previously: "DefaultProvider") must match the
+   provider name which is stored with each account. Either configure your own
+   authentication provider with the name "DefaultProvider" or configure a new one
+   with a different name and update the accounts accordingly.
 * ``providerClass`` is deprecated, use ``provider`` instead. Provider
   options are now given in ``providerOptions``.
 * Authentication entrypoint configuration needs to be changed from::
@@ -154,7 +218,8 @@ Widget configuration in *Routes.yaml* has changed and needs to be adjusted. If
 you used e.g. ``@widget_0.currentPage`` in *Routes.yaml* you need to change that to
 use the correct widget identifier prefixed a double dash. By default the widget
 identifier is the lowercased fully qualified widget classname with dashes instead
-of backslashes. For the paginate viewhelper it would thus be ``typo3-fluid-viewhelpers-widget-paginateviewhelper``.
+of backslashes. For the paginate viewhelper it would thus be
+``typo3-fluid-viewhelpers-widget-paginateviewhelper``.
 
 To make things easier and more telling, you can also set a custom widget id in
 your template. On the widget tag simply set the "widgetId" attribute and use the
@@ -173,6 +238,35 @@ same in Routes.yaml. This way you can use e.g. "--paginate":
     '--paginate':
       '@controller':  ''
       '@package':     ''
+
+Custom Request Handling
+-----------------------
+
+If you created custom RequestHandler/-Builder you most probably need to adjust those:
+
+Custom RequestHandlers need to be registered in your
+*Package.php*::
+
+  public function boot(\TYPO3\FLOW3\Core\Bootstrap $bootstrap) {
+  	$bootstrap->registerRequestHandler(new Your\Package\Your\RequestHandler($bootstrap));
+  }
+
+In your RequestHandler you probably want to create an *HttpRequest* first::
+
+  $this->request = \TYPO3\FLOW3\Http\Request::createFromEnvironment();
+
+Then you can create an *ActionRequest* with::
+
+  $this->request->createActionRequest();
+
+Some more pitfalls:
+
+* RequestBuilders are not required anymore, instead you create request & response
+  in the RequestHandler
+* If you want to use the routing framework, have a look at
+  *\\TYPO3\\FLOW3\\Http\\RequestHandler::handleRequest()*
+* Some convenience methods were removed from *\\TYPO3\\FLOW3\\Utility\\Environment*.
+  You can use corresponding functions of the HttpRequest mostly
 
 Fluid
 -----
