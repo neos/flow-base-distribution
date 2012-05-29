@@ -71,9 +71,14 @@ $deployment->addApplication($application);
 $workflow = new SimpleWorkflow();
 $deployment->setWorkflow($workflow);
 
+		// Remove the setfilepermissions task because Surf doesn't use sudo ...
+$deployment->onInitialize(function() use ($workflow, $application) {
+	$workflow->removeTask('typo3.surf:flow3:setfilepermissions');
+});
+
+$workflow->setEnableRollback(FALSE);
 $node = new Node('localhost');
 $node->setHostname('localhost');
 $application->addNode($node);
-$deployment->addNode($node);
 
 ?>
