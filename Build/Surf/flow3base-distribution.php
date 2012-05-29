@@ -74,6 +74,8 @@ $deployment->setWorkflow($workflow);
 		// Remove the setfilepermissions task because Surf doesn't use sudo ...
 $deployment->onInitialize(function() use ($workflow, $application) {
 	$workflow->removeTask('typo3.surf:flow3:setfilepermissions');
+	$workflow->removeTask('typo3.surf:flow3:symlinkdata');
+	$workflow->removeTask('typo3.surf:flow3:symlinkconfiguration');
 });
 
 $workflow->setEnableRollback(FALSE);
