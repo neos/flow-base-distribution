@@ -248,7 +248,7 @@ Custom RequestHandlers need to be registered in your
 *Package.php*::
 
   public function boot(\TYPO3\FLOW3\Core\Bootstrap $bootstrap) {
-  	$bootstrap->registerRequestHandler(new Your\Package\Your\RequestHandler($bootstrap));
+  	$bootstrap->registerRequestHandler(new \Your\Package\Your\RequestHandler($bootstrap));
   }
 
 In your RequestHandler you probably want to create an *HttpRequest* first::
@@ -296,6 +296,8 @@ needs to be adjusted:
   * ``\MVC`` with ``\Mvc``
 
 * Use ``getMainRequest()`` instead of ``getRootRequest()``
+* Use ``getInternalArgument('__submittedArgumentValidationResults')`` instead of ``getOriginalRequestMappingResults()``
+* Use ``getInternalArgument('__submittedArguments')`` instead of ``getOriginalRequest()->getArguments()``
 * Use ``$this->controllerContext->getRequest()->getHttpRequest()->getBaseUri()`` instead of ``$this->controllerContext->getRequest()->getBaseUri()``
 * ``\TYPO3\FLOW3\MVC\Web\RequestBuilder`` does not exist anymore. If you need to
   create requests, do ``new ActionRequest($parentRequest)``.
