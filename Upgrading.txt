@@ -17,7 +17,6 @@ Frozen packages
 FLOW3 1.1 contains new mechanisms which improve the development and production
 speed. An important feature is the ability to freeze packages.
 
-By default, all packages which are part of the FLOW3 distribution, are frozen.
 For performance reasons, the file monitor won't track modifications to files
 of frozen packages. After flushing the code caches with ``flow3:cache:flush``
 FLOW3 will not reflect classes contained in frozen packages but instead
@@ -49,10 +48,10 @@ frozen but its reflection data should be updated once, you can simply run::
 
 	./flow3 package:refreeze TYPO3.FLOW3
 
-Instead of a package key you may also specify the magic keyword ``all``. If
-your application behaves strangely, possibly due to a prior fatal error,
-you can still use the new ``--force`` option which empties all existing
-caches and runs in a special "safe mode"::
+Instead of a package key you may also specify the magic keyword ``all`` or
+leave the package key out completely. If your application behaves strangely,
+possibly due to a prior fatal error, you can still use the new ``--force``
+option which empties all existing caches and runs in a special "safe mode"::
 
 	./flow3 flow3:cache:flush --force
 
