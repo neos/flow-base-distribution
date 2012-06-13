@@ -87,6 +87,13 @@ been split into three packages ``Doctrine.Common``, ``Doctrine.DBAL`` and
 remove the old ``Doctrine`` submodule and add the split Doctrine packages to
 your super project instead.
 
+Session configuration changes
+-----------------------------
+
+The configuration for the PhpSession is now read from a setting named
+``PhpSession`` instead of the former ``PHPSession``. You should adjust your
+settings accordingly.
+
 Database schema changes
 -----------------------
 
