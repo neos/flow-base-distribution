@@ -10,7 +10,8 @@ use TYPO3\Surf\Domain\Model\SimpleWorkflow;
 // By default, the script does the following:
 // - run tests
 // - build .tar.gz, .tar.bz2, .zip distribution
-// - tag the distribution and the submodules (but does not push them)
+// - tag the distribution and the submodules
+// - push the tags (if PUSH_TAGS is true)
 
 // Has the following optional environment options:
 // - BRANCH -- the branch to check out as base for further actions, defaults to "master"
@@ -42,6 +43,7 @@ if (getenv('BRANCH')) {
 
 $application->setOption('enableTests', getenv('ENABLE_TESTS') !== 'false');
 $application->setOption('createTags', getenv('CREATE_TAGS') !== 'false');
+$application->setOption('pushTags', getenv('PUSH_TAGS') !== 'false');
 
 if (getenv('SOURCEFORGE_USER') && getenv('ENABLE_SOURCEFORGE_UPLOAD') !== 'false') {
 	$application->setOption('enableSourceforgeUpload', TRUE);
@@ -63,7 +65,7 @@ if (getenv('RELEASE_HOST') && getenv('SOURCEFORGE_USER') && getenv('ENABLE_SOURC
 if (getenv('WORKSPACE')) {
 	$application->setDeploymentPath(getenv('WORKSPACE'));
 } else {
-	throw new \Exception('deployment path must be set in the WORKSPACE env variable');
+	throw new \Exception('Deployment path must be set in the WORKSPACE env variable');
 }
 
 $deployment->addApplication($application);
@@ -72,10 +74,13 @@ $workflow = new SimpleWorkflow();
 $deployment->setWorkflow($workflow);
 
 		// Remove the setfilepermissions task because Surf doesn't use sudo ...
+	// Remove the setfilepermissions task because Surf doesn't use sudo ...
+	// And we do not need any data or configuration in the release archives ...
 $deployment->onInitialize(function() use ($workflow, $application) {
 	$workflow->removeTask('typo3.surf:flow3:setfilepermissions');
 	$workflow->removeTask('typo3.surf:flow3:symlinkdata');
 	$workflow->removeTask('typo3.surf:flow3:symlinkconfiguration');
+	$workflow->removeTask('typo3.surf:flow3:copyconfiguration');
 });
 
 $workflow->setEnableRollback(FALSE);
