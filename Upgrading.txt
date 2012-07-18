@@ -141,6 +141,20 @@ marked with the ``Identity`` annotation are now transformed into an unique index
 the database. The needed index creation statements will also be part of the
 generated schema migration.
 
+Persistence - Repository interface
+----------------------------------
+
+You might need to adjust your code if you specifically extend the
+``Persistence\Doctrine\Repository`` class - the return values have changed to be
+in sync with the generic repository class. In most cases that should just fix unexpected
+behavior, but if you relied on specific return values, check your tests for failures.
+
+If you implemented ``RepositoryInterface`` from scratch, you must add the ``__call``
+method, it is now required by the interface to ensure consistency.
+
+If you already override ``__call`` in a repository of your's, you will need to adjust the
+name of the ``$methodName`` parameter to ``$method``.
+
 Security framework
 ------------------
 
