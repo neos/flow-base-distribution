@@ -2,7 +2,7 @@
 // See the following file for detailed usage explanations:
 include(__DIR__ . '/../Common/Surf/CommonJenkinsDistributionBuild.php');
 
-$application->setOption('projectName', 'TYPO3Phoenix');
+$application->setOption('projectName', 'TYPO3 Phoenix');
 $application->setOption('repositoryUrl', 'git://git.typo3.org/TYPO3v5/Distributions/Base.git');
 
 $application->setOption('sourceforgeProjectName', 'typo3');
