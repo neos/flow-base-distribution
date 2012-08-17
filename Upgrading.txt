@@ -5,11 +5,37 @@ This following instructions contain the essential steps for upgrading your
 FLOW3 1.0 based applications to FLOW3 1.1.
 
 Full Changelog
---------------
+^^^^^^^^^^^^^^
 
 If in doubt, you'll find many answers to possible questions still
 unanswered after reading this document by browsing
 through the `full changelogs <http://flow3.typo3.org/documentation/guide/partv/changelogs.html>`_.
+
+Automated Code Migration
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+A large part of the code changes you will need to do to your applications
+can be done automatically with the new code migration tool provided with
+FLOW3 1.1. If you have your packages under Git version control and the
+working copies are clean, a simple::
+
+ ./flow3 core:migrate
+
+will adjust your code as needed and commit the changes as a migration,
+recording the applied migration in the commit message.
+
+Feel free to amend the commit as needed, if further adjustments are needed.
+
+.. hint::
+	The migration tool will output a list of notes and warnings about things
+	that you might need to adjust manually - make sure to read those.
+
+Also, read the remainder of this document, it contains more details about the
+changes and possible solutions to problems. The code changes which are automatically
+applied by the migration tool are explained in detail at the end of this document.
+
+Conceptual Changes
+^^^^^^^^^^^^^^^^^^
 
 Frozen packages
 ---------------
@@ -17,11 +43,14 @@ Frozen packages
 FLOW3 1.1 contains new mechanisms which improve the development and production
 speed. An important feature is the ability to freeze packages.
 
-For performance reasons, the file monitor won't track modifications to files
-of frozen packages. After flushing the code caches with ``flow3:cache:flush``
-FLOW3 will not reflect classes contained in frozen packages but instead
-retrieve reflection data from a special cache file which is preserved even
-during the cache flush.
+By default, modifications to files in all packages are tracked by the file monitor.
+While you are developing an application, you may decide to switch off change
+detection for those packages you are not currently working on in order to improve
+performance. Those untracked packages are called "frozen" packages.
+
+After flushing the code caches with ``flow3:cache:flush`` FLOW3 will not reflect
+classes contained in frozen packages but instead retrieve reflection data from a
+special cache file which is preserved even during the cache flush.
 
 If class files contained in frozen packages are modified, the whole application
 may behave rather unexpectedly. Therefore you need to make sure that the packages
@@ -54,29 +83,6 @@ possibly due to a prior fatal error, you can still use the new ``--force``
 option which empties all existing caches and runs in a special "safe mode"::
 
 	./flow3 flow3:cache:flush --force
-
-Code migration
---------------
-
-The majority of code changes you will need to do to your applications
-can be done automatically with the new code migration tool provided with
-FLOW3 1.1. If you have your packages under Git version control and the
-working copies are clean a simple::
-
- ./flow3 core:migrate
-
-will adjust your code as needed and commit the changes as a migration,
-recording the applied migration in the commit message.
-
-Feel free to amend the commit as needed, if further adjustments are needed.
-
-.. hint::
- The migration tool will output a list of notes and warnings about things
- that you might need to adjust manually - make sure to read those.
-
-Also, read the remainder of this document, it contains more details about the
-changes and possible solutions to problems. The code changes automated with
-the migration tool are explained in detail at the end of this document.
 
 Package layout changes
 ----------------------
@@ -120,7 +126,7 @@ a schema migration:
 
 * long table names get shortened
 * nullable column defaults and
-* unique keys for identity properties of entities.
+* unique keys for identity properties of entities
 
 (Overly) long table names (more than 63 chars in most cases) are now shortened.
 Thus you should make sure that affected tables are renamed correctly in your
@@ -141,20 +147,6 @@ marked with the ``Identity`` annotation are now transformed into an unique index
 the database. The needed index creation statements will also be part of the
 generated schema migration.
 
-Persistence - Repository interface
-----------------------------------
-
-You might need to adjust your code if you specifically extend the
-``Persistence\Doctrine\Repository`` class - the return values have changed to be
-in sync with the generic repository class. In most cases that should just fix unexpected
-behavior, but if you relied on specific return values, check your tests for failures.
-
-If you implemented ``RepositoryInterface`` from scratch, you must add the ``__call``
-method, it is now required by the interface to ensure consistency.
-
-If you already override ``__call`` in a repository of your's, you will need to adjust the
-name of the ``$methodName`` parameter to ``$method``.
-
 Security framework
 ------------------
 
@@ -170,8 +162,10 @@ Configuration
    provider name which is stored with each account. Either configure your own
    authentication provider with the name "DefaultProvider" or configure a new one
    with a different name and update the accounts accordingly.
+
 * ``providerClass`` is deprecated, use ``provider`` instead. Provider
   options are now given in ``providerOptions``.
+
 * Authentication entrypoint configuration needs to be changed from::
 
    entryPoint:
@@ -183,6 +177,12 @@ Configuration
    entryPoint: 'WebRedirect'
    entryPointOptions:
      uri: 'login.html'
+
+*  Content security ACL logic was inversed. This realizes a whitelist approach for
+   content security ACLs. They now work with the same logic as method security.
+
+You'll find more information about the new configuration syntax in the updated
+Definitive Guide.
 
 Password hashing
 ~~~~~~~~~~~~~~~~
@@ -225,9 +225,9 @@ YAML syntax
 
 The YAML parser has been updated and now behaves stricter and more correct:
 
- * Boolean values must no longer be written as ``y``, ``yes``, ``n``, ``no`` but
+ * boolean values must no longer be written as ``y``, ``yes``, ``n``, ``no`` but
    as ``TRUE`` and ``FALSE`` instead.
- * When using backslashes in strings, those are now handled as escape characters
+ * when using backslashes in strings, those are now handled as escape characters
    inside double quotes. So if you write class names, better wrap them in single
    quotes.
 
@@ -259,13 +259,47 @@ same in Routes.yaml. This way you can use e.g. "--paginate":
       '@controller':  ''
       '@package':     ''
 
+Nested FLOW3 Application Contexts
+---------------------------------
+
+With this change, it is possible to use nested FLOW3 contexts like
+"Production/Live" or "Production/Staging/Server1". The main context,
+has to be one of "Production", "Development" or "Testing", whereas
+arbitrary sub contexts are supported.
+
+If you run in the context "Production/Staging/Server1", the configuration
+is inherited in the following way (from most specific to most general):
+
+- Production/Staging/Server1
+- Production/Staging
+- Production
+- as a fallback, the, non-context-specific configuration is used
+
+This change is breaking in the following cases:
+
+You called ``Bootstrap::getContext()`` or ``ObjectManagerInterface::getContext()``
+  In this case, not the context string is returned anymore, but instead
+  the ``\TYPO3\FLOW3\Core\ApplicationContext`` object. It can be cast to a string to
+  get the old behavior back; but usually you instead want to call
+  ``$context->isDevelopment()``, ``$context->isProduction()`` or ``$context->isTesting()``.
+
+You wrote your own cache backend.
+  The cache backend constructor now expects the $context object to be of type
+  TYPO3\FLOW3\Core\ApplicationContext.
+
+Code Changes
+^^^^^^^^^^^^
+
+This section details changes done to the code that will or could break your
+custom code and thus need your action. Most of this cannot be automated, and
+thus is not covered by the automated code migration.
+
 Custom Request Handling
 -----------------------
 
 If you created custom RequestHandler/-Builder you most probably need to adjust those:
 
-Custom RequestHandlers need to be registered in your
-*Package.php*::
+Custom RequestHandlers need to be registered in your *Package.php*::
 
   public function boot(\TYPO3\FLOW3\Core\Bootstrap $bootstrap) {
   	$bootstrap->registerRequestHandler(new \Your\Package\Your\RequestHandler($bootstrap));
@@ -284,20 +318,160 @@ Some more pitfalls:
 * RequestBuilders are not required anymore, instead you create request & response
   in the RequestHandler
 * If you want to use the routing framework, have a look at
-  *\\TYPO3\\FLOW3\\Http\\RequestHandler::handleRequest()*
-* Some convenience methods were removed from *\\TYPO3\\FLOW3\\Utility\\Environment*.
+  ``\\TYPO3\\FLOW3\\Http\\RequestHandler::handleRequest()``
+* Some convenience methods were removed from ``\\TYPO3\\FLOW3\\Utility\\Environment``.
   You can use corresponding functions of the HttpRequest mostly
 
-Fluid
------
+You can read more about the new request handling mechanism in the HTTP chapter of
+The Definitive Guide.
+
+Persistence - Repository interface
+----------------------------------
+
+You might need to adjust your code if you specifically extend the
+``Persistence\Doctrine\Repository`` class - the return values have changed to be
+in sync with the generic repository class. In most cases that should just fix unexpected
+behavior, but if you relied on specific return values, check your tests for failures.
+
+If you implemented ``RepositoryInterface`` from scratch, you must add the ``__call``
+method, it is now required by the interface to ensure consistency.
+
+If you already override ``__call`` in a repository of your's, you will need to adjust the
+name of the ``$methodName`` parameter to ``$method``.
+
+Fluid Templates
+---------------
 
 The ``form.textbox`` tag has been renamed to ``form.textfield``.
 
+Content Negotiation for Media Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The way to define the supported formats of a controller has changed: previously
+a class property ``$supportedFormats`` contained a list of filename extensions
+which would be supported. This property is not supported anymore. Instead,
+controllers may now specify a list of IANA Internet Media Types in a property
+``$supportedMediaTypes``.
+
+The default setting for these supported media types in ActionController is
+``text/html``. You'll need to adjust your controllers accordingly if you relied
+on the ``$supportedFormats`` feature.
+
+Also note that the format in ActionRequest is now ``NULL`` by default. The
+ActionController makes sure to set the correct format, but if you created your
+own ActionRequest for a special purpose, you need to take care of setting it yourself.
+
+Session handling changes
+------------------------
+
+With FLOW3 1.0 a session was always started, 1.1 only starts a session if needed.
+To start a session when a certain method is called, use the ``Session`` annotation
+with the ``autoStart`` argument.
+
+For authentication the session annotation is set at the providers, not at the
+authentication manager. By this every provider can decide on its own, if a
+session is needed or not.
+
+A previously missing parameter was added to the ``destroy()`` method signature of
+the ``SessionInterface``. If you implemented your own session handler, you need to
+adjust the ``destroy()`` method accordingly.
+
+Validation behavior
+-------------------
+
+Most of the provided validators in FLOW3 1.0 did not accept empty values.
+This made it impossible to have an optional email address property for
+example (without using the disjunction validator).
+
+FLOW3 1.1 adjusts all Validators to consider empty values (``NULL`` or an
+empty string) valid.
+
+This is a breaking change if you expected the previous behavior. In order
+to make a property required you now need to add the ``NotEmptyValidator``
+explicitly!
+
+Float and Integer converters now correctly handle errors and empty values.
+Empty strings are now correctly converted as NULL values. This is a breaking
+change if you relied upon the old behavior that empty values are converted
+to the number 0.
+
+Whitelist-based Property Mapping Configuration
+----------------------------------------------
+
+Up to now, property mapping always allowed to modify all properties of a given
+object. Especially in the MVC stack, this functionality was relied upon for
+all update and create actions. However, for nested objects, the user needed
+to configure whether updates and creations should be allowed.
+
+This was an inconsistent behavior, especially because for read-only actions the
+object could be also modified.
+
+The behavior is now changed to be more predictive:
+
+* the default ``PropertyMappingConfiguration`` used in the MVC stack is changed
+  to be very restrictive: we do neither allow creation of any new objects nor
+  modification of existing ones; and all properties which should be modified
+  must be explicitly configured.
+
+* For each form, Fluid now generates a list of trusted properties, based upon
+  which the ``PropertyMappingConfiguration`` is set correctly. This means only
+  properties which have been rendered by fluid are allowed to be modified,
+  and creation / insertion is only permitted if needed.
+
+The changes in a nutshell:
+
+* If you used Fluid forms, everything will still work as expected.
+* If you used Fluid forms and needed to adjust the property mapping configuration
+  manually, you can remove these manual adjustments.
+* If you manually called the Property Mapper and passed a custom Property Mapping
+  Configuration, you probably need to call ``…->allowAllProperties()`` on the property
+  mapping configuration.
+* If you did not used Fluid forms but relied upon the old behavior of the Property
+  Mapper (e.g. in a web service), you need to configure the Property Mapper
+  inside your initializeAction correctly now.
+* PropertyMappingConfiguration::doNotMapProperty (no public API) was removed.
+  Instead, use ::allowAllPropertiesExcept(…).
+* Furthermore, an exception is now thrown if a property is not allowed to be
+  mapped. Before, the property was just ignored silently. You should either
+  write your own TypeConverter to deal with that or filter the input data
+  correctly before property mapping.
+
+Cache backends
+--------------
+
+A new interface ``TaggableBackendInterface`` and a new ``SimpleFileBackend`` have
+been added. The latter does not support tagging but is faster in certain cases
+(where with a lot of tags/entries flushing everything is faster than flushing
+by tag).
+
+If you have implemented a cache backend and support tagging, you must
+add the ``TaggableBackendInterface`` to the list of interfaces implemented
+by your backend.
+
+Internationalization
+--------------------
+
+To control the behavior of the i18n component a way to configure the "current"
+locale, fallback rules for resolving of translations and possible more was
+needed. Thus a Configuration object was added to the i18n code which
+encapsulates the configurable parts. Check the i18n documentation for details.
+
+For early adopters this change means the calls to ``getDefaultLocale()`` and
+``getCurrentLocale()`` on ``I18n\Service`` need to be routed to ``Service->getConfiguration()->…``
+instead.
+
+File Monitoring
+---------------
+
+The "ChangeDetectionStrategyInterface" contains the two new methods
+"setFileMonitor" and "shutdownObject" now, so if you implemented your
+own change detection strategy, you need to implement those.
+
 Manual code migration
-=====================
+^^^^^^^^^^^^^^^^^^^^^
 
 In case you do not want or cannot use the automated code migration, this is what
-needs to be adjusted:
+needs to be adjusted (in addition to most of the above!):
 
 * Replace
 
