@@ -1,8 +1,8 @@
 UPGRADING INSTRUCTIONS
 ----------------------
 
-This file contains instructions for upgrading your FLOW3 1.0.4 installation
-to FLOW3 1.0.5.
+This file contains instructions for upgrading your FLOW3 1.0.5 installation
+to FLOW3 1.0.6.
 
 USING RELEASE ARCHIVES
 ----------------------
@@ -14,7 +14,7 @@ code should be sufficient. Make sure to clean the caches afterwards using
 USING GIT
 ---------
 
-If you live on the bleeding edge, you probably are ahead of 1.0.5 by now.
+If you live on the bleeding edge, you probably are ahead of 1.0.6 by now.
 
 How you best update the codebase depends on how you tied the FLOW3 code into
 your local repository, so we cannot give advice that fits all.
