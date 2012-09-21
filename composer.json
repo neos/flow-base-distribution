@@ -1,0 +1,29 @@
+{
+    "name": "typo3/flow3-base-distribution",
+    "description" : "FLOW3 Base Distribution",
+    "license": "LGPL-3.0+",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://ci.typo3.robertlemke.net/job/composer-packages/ws/repository/"
+        }
+    ],
+    "config": {
+        "vendor-dir": "Packages/Vendor",
+        "bin-dir": "bin"
+    },
+    "require": {
+        "typo3/flow3": "dev-master",
+        "typo3/welcome": "dev-master"
+    },
+    "require-dev": {
+        "typo3/kickstart": "dev-master",
+        "typo3/buildessentials": "dev-master",
+        "mikey179/vfsstream": "1.1.*"
+    },
+    "minimum-stability": "dev",
+    "scripts": {
+        "post-update-cmd": "TYPO3\\FLOW3\\Composer\\InstallerScripts::postUpdateAndInstall",
+        "post-install-cmd": "TYPO3\\FLOW3\\Composer\\InstallerScripts::postUpdateAndInstall"
+    }
+}
