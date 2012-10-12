@@ -9,7 +9,7 @@
         }
     ],
     "config": {
-        "vendor-dir": "Packages/Vendor",
+        "vendor-dir": "Packages/Libraries",
         "bin-dir": "bin"
     },
     "require": {
