@@ -2,12 +2,6 @@
     "name": "typo3/flow-base-distribution",
     "description" : "TYPO3 Flow Base Distribution",
     "license": "LGPL-3.0+",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://ci.typo3.robertlemke.net/job/composer-packages/ws/repository/"
-        }
-    ],
     "config": {
         "vendor-dir": "Packages/Libraries",
         "bin-dir": "bin"
