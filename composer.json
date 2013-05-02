@@ -8,14 +8,16 @@
     },
     "require": {
         "typo3/flow": "dev-master",
-        "typo3/welcome": "dev-master"
+        "typo3/welcome": "dev-master",
+        "typo3/fluid": "@dev",
+        "typo3/party": "@dev",
+        "doctrine/migrations": "@dev"
     },
     "require-dev": {
         "typo3/kickstart": "dev-master",
         "typo3/buildessentials": "dev-master",
         "mikey179/vfsstream": "1.1.*"
     },
-    "minimum-stability": "dev",
     "scripts": {
         "post-update-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-install-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall"
