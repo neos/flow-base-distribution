@@ -7,15 +7,13 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "2.0.*@beta",
-        "typo3/welcome": "2.0.*@beta",
-        "typo3/fluid": "@beta",
-        "typo3/party": "@beta",
+        "typo3/flow": "2.0.*",
+        "typo3/welcome": "2.0.*",
         "doctrine/migrations": "@dev"
     },
     "require-dev": {
-        "typo3/kickstart": "2.0.*@beta",
-        "typo3/buildessentials": "2.0.*@beta",
+        "typo3/kickstart": "2.0.*",
+        "typo3/buildessentials": "2.0.*",
         "mikey179/vfsstream": "1.1.*"
     },
     "scripts": {
