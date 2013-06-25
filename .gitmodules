@@ -1,24 +1,24 @@
 [submodule "Packages/Framework/TYPO3.FLOW3"]
 	path = Packages/Framework/TYPO3.FLOW3
-	url = git://git.typo3.org/FLOW3/Packages/TYPO3.FLOW3.git
+	url = git://git.typo3.org/Packages/TYPO3.Flow.git
 [submodule "Packages/Framework/TYPO3.Fluid"]
 	path = Packages/Framework/TYPO3.Fluid
-	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Fluid.git
+	url = git://git.typo3.org/Packages/TYPO3.Fluid.git
 [submodule "Packages/Framework/TYPO3.Kickstart"]
 	path = Packages/Framework/TYPO3.Kickstart
-	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Kickstart.git
+	url = git://git.typo3.org/Packages/TYPO3.Kickstart.git
 [submodule "Packages/Framework/TYPO3.Party"]
 	path = Packages/Framework/TYPO3.Party
-	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Party.git
+	url = git://git.typo3.org/Packages/TYPO3.Party.git
 [submodule "Packages/Framework/TYPO3.Welcome"]
 	path = Packages/Framework/TYPO3.Welcome
-	url = git://git.typo3.org/FLOW3/Packages/TYPO3.Welcome.git
+	url = git://git.typo3.org/Packages/TYPO3.Welcome.git
 [submodule "Build/Common"]
 	path = Build/Common
-	url = git://git.typo3.org/FLOW3/BuildEssentials.git
+	url = git://git.typo3.org/Flow/BuildEssentials.git
 [submodule "Packages/Framework/Doctrine"]
 	path = Packages/Framework/Doctrine
-	url = git://git.typo3.org/FLOW3/Packages/Doctrine.git
+	url = git://git.typo3.org/Packages/Doctrine.git
 [submodule "Packages/Framework/Symfony.Component.Yaml"]
 	path = Packages/Framework/Symfony.Component.Yaml
-	url = git://git.typo3.org/FLOW3/Packages/Symfony.Component.Yaml.git
+	url = git://git.typo3.org/Packages/Symfony.Component.Yaml.git
