@@ -11,6 +11,7 @@
         "typo3/welcome": "dev-master",
         "typo3/fluid": "@dev",
         "typo3/party": "@dev",
+        "typo3/eel": "@dev",
         "doctrine/migrations": "@dev"
     },
     "require-dev": {
