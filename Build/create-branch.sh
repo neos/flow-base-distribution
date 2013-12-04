@@ -34,7 +34,7 @@ for PACKAGE in `ls Packages/Framework` ; do
 	git --git-dir "Packages/Framework/${PACKAGE}/.git" --work-tree "Packages/Framework/${PACKAGE}" checkout -b ${BRANCH} origin/master
 done
 
-$(dirname ${BASH_SOURCE[0]})/set-dependencies.sh dev-${BRANCH} ${BRANCH} "${BUILD_URL}"
+$(dirname ${BASH_SOURCE[0]})/set-dependencies.sh "${BRANCH}.*@dev" ${BRANCH} "${BUILD_URL}"
 
 push_branch ${BRANCH}
 push_branch ${BRANCH} "Build/BuildEssentials"
