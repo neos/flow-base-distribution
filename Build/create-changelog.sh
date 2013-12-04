@@ -49,6 +49,7 @@ perl -p -i -e 's|^Migration?:.*$||g' "${TARGET}"
 # Link issues to Forge
 perl -p -i -e 's/(Fixes|Resolves|Related|Relates|Extbase Issue): #([0-9]+)/* $1: `#$2 <http:\/\/forge.typo3.org\/issues\/$2>`_/g' "${TARGET}"
 perl -p -i -e 's/Security-Bulletin: (FLOW3-SA-[0-9]{4}-[0-9]+)/* Security-Bulletin: `$1 <http:\/\/typo3.org\/teams\/security\/security-bulletins\/flow3\/$1\/>`_/g' "${TARGET}"
+perl -p -i -e 's/Security-Bulletin: (FLOW-SA-[0-9]{4}-[0-9]+)/* Security-Bulletin: `$1 <http:\/\/typo3.org\/teams\/security\/security-bulletins\/flow\/$1\/>`_/g' "${TARGET}"
 
 # escape backslashes
 perl -p -i -e 's/\\/\\\\/g' "${TARGET}"
