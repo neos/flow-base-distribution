@@ -24,7 +24,7 @@ git log --pretty=format:"%s
 
 %b
 
-* Commit: \`%h <http://git.typo3.org/Flow/Distributions/Base.git?a=commit;h=%H>\`_
+* Commit: \`%h <https://git.typo3.org/Flow/Distributions/Base.git/commit/%H>\`_
 
 " --no-merges ${PREVIOUS_VERSION}.. >> "${TARGET}"
 
@@ -36,7 +36,7 @@ for PACKAGE in `ls Packages/Framework` ; do
 
 %b
 
-* Commit: \`%h <http://git.typo3.org/Packages/${PACKAGE}.git?a=commit;h=%H>\`_
+* Commit: \`%h <https://git.typo3.org/Packages/${PACKAGE}.git/commit/%H>\`_
 
 " --no-merges ${PREVIOUS_VERSION}.. >> "${TARGET}"
 done;
