@@ -32,7 +32,7 @@ if [ -z "$3" ] ; then
 fi
 BUILD_URL=$3
 
-$(dirname ${BASH_SOURCE[0]})/set-dependencies.sh ${VERSION} ${BRANCH} "${BUILD_URL}"
+$(dirname ${BASH_SOURCE[0]})/set-dependencies.sh ${VERSION} ${BRANCH} "${BUILD_URL}" || exit 1
 
 tag_version ${VERSION} ${BRANCH} "${BUILD_URL}"
 push_branch ${BRANCH}

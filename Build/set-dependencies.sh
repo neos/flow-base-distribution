@@ -23,7 +23,7 @@ if [ -z "$1" ] ; then
 	echo >&2 "No version specified (e.g. 2.1.*) as first parameter."
 	exit 1
 else
-	if [[ $1 =~ (dev)-.+ || $1 =~ (alpha|beta)[0-9]+ ]] ; then
+	if [[ $1 =~ (dev)-.+ || $1 =~ .+@(dev) || $1 =~ (alpha|beta|RC)[0-9]+ ]] ; then
 		VERSION=$1
 		STABILITY_FLAG=${BASH_REMATCH[1]}
 	else
