@@ -7,16 +7,16 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "2.1.*@dev",
-        "typo3/welcome": "2.1.*@dev",
-        "typo3/fluid": "@dev",
-        "typo3/party": "@dev",
-        "typo3/eel": "@dev",
+        "typo3/flow": "2.1.0-RC1",
+        "typo3/welcome": "2.1.0-RC1",
+        "typo3/fluid": "@RC",
+        "typo3/party": "@RC",
+        "typo3/eel": "@RC",
         "doctrine/migrations": "@dev"
     },
     "require-dev": {
-        "typo3/kickstart": "2.1.*@dev",
-        "typo3/buildessentials": "2.1.*@dev",
+        "typo3/kickstart": "2.1.0-RC1",
+        "typo3/buildessentials": "2.1.0-RC1",
         "mikey179/vfsstream": "1.2.*"
     },
     "suggest": {
