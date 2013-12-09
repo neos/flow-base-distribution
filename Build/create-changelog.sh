@@ -38,13 +38,16 @@ for PACKAGE in `ls Packages/Framework` ; do
 
 * Commit: \`%h <https://git.typo3.org/Packages/${PACKAGE}.git/commit/%H>\`_
 
-" --no-merges ${PREVIOUS_VERSION}.. >> "${TARGET}"
+" --no-merges ${PREVIOUS_VERSION}.. >> "${TARGET}" || true
 done;
 
 # Drop some footer lines from commit messages
 perl -p -i -e 's|^Change-Id: (I[a-f0-9]+)$||g' "${TARGET}"
 perl -p -i -e 's|^Releases?:.*$||g' "${TARGET}"
 perl -p -i -e 's|^Migration?:.*$||g' "${TARGET}"
+perl -p -i -e 's|^Reviewed-by?:.*$||g' "${TARGET}"
+perl -p -i -e 's|^Reviewed-on?:.*$||g' "${TARGET}"
+perl -p -i -e 's|^Tested-by?:.*$||g' "${TARGET}"
 
 # Link issues to Forge
 perl -p -i -e 's/(Fixes|Resolves|Related|Relates|Extbase Issue): #([0-9]+)/* $1: `#$2 <http:\/\/forge.typo3.org\/issues\/$2>`_/g' "${TARGET}"
