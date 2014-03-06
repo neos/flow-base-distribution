@@ -7,16 +7,16 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "dev-master",
-        "typo3/welcome": "dev-master",
+        "typo3/flow": "2.2.*@dev",
+        "typo3/welcome": "2.2.*@dev",
         "typo3/fluid": "@dev",
         "typo3/party": "@dev",
         "typo3/eel": "@dev",
         "doctrine/migrations": "@dev"
     },
     "require-dev": {
-        "typo3/kickstart": "dev-master",
-        "typo3/buildessentials": "dev-master",
+        "typo3/kickstart": "2.2.*@dev",
+        "typo3/buildessentials": "2.2.*@dev",
         "phpunit/phpunit": "3.7.*",
         "mikey179/vfsstream": "1.2.*"
     },
