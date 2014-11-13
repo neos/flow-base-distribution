@@ -17,8 +17,8 @@
     "require-dev": {
         "typo3/kickstart": "dev-master",
         "typo3/buildessentials": "dev-master",
-        "phpunit/phpunit": "4.0.*",
-        "mikey179/vfsstream": "1.2.*"
+        "phpunit/phpunit": "4.3.*",
+        "mikey179/vfsstream": "1.4.*"
     },
     "suggest": {
         "ext-pdo_sqlite": "For running functional tests out-of-the-box this is required"
