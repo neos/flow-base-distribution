@@ -10,7 +10,6 @@
         "typo3/flow": "3.0.*@dev",
         "typo3/welcome": "3.0.*@dev",
         "typo3/fluid": "@dev",
-        "typo3/party": "@dev",
         "typo3/eel": "@dev",
         "doctrine/migrations": "@dev"
     },
