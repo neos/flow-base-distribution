@@ -51,7 +51,6 @@ BUILD_URL="$3"
 if [[ ${STABILITY_FLAG} ]] ; then
 	php "${COMPOSER_PHAR}" require --no-update "typo3/eel:@${STABILITY_FLAG}"
 	php "${COMPOSER_PHAR}" require --no-update "typo3/fluid:@${STABILITY_FLAG}"
-	php "${COMPOSER_PHAR}" require --no-update "typo3/party:@${STABILITY_FLAG}"
 else
 	php $(dirname ${BASH_SOURCE[0]})/BuildEssentials/FilterStabilityFlags.php
 fi
@@ -63,7 +62,6 @@ commit_manifest_update ${BRANCH} "${BUILD_URL}"
 
 php "${COMPOSER_PHAR}" --working-dir=Packages/Framework/TYPO3.Flow require --no-update "typo3/eel:${VERSION}"
 php "${COMPOSER_PHAR}" --working-dir=Packages/Framework/TYPO3.Flow require --no-update "typo3/fluid:${VERSION}"
-php "${COMPOSER_PHAR}" --working-dir=Packages/Framework/TYPO3.Flow require --no-update "typo3/party:${VERSION}"
 commit_manifest_update ${BRANCH} "${BUILD_URL}" "Packages/Framework/TYPO3.Flow"
 
 for PACKAGE in `ls Packages/Framework` ; do
