@@ -58,15 +58,15 @@ php "${COMPOSER_PHAR}" require --no-update "typo3/flow:${VERSION}"
 php "${COMPOSER_PHAR}" require --no-update "typo3/welcome:${VERSION}"
 php "${COMPOSER_PHAR}" require --dev --no-update "typo3/kickstart:${VERSION}"
 php "${COMPOSER_PHAR}" require --dev --no-update "typo3/buildessentials:${VERSION}"
-commit_manifest_update ${BRANCH} "${BUILD_URL}"
+commit_manifest_update ${BRANCH} "${BUILD_URL}" ${VERSION}
 
 php "${COMPOSER_PHAR}" --working-dir=Packages/Framework/TYPO3.Flow require --no-update "typo3/eel:${VERSION}"
 php "${COMPOSER_PHAR}" --working-dir=Packages/Framework/TYPO3.Flow require --no-update "typo3/fluid:${VERSION}"
-commit_manifest_update ${BRANCH} "${BUILD_URL}" "Packages/Framework/TYPO3.Flow"
+commit_manifest_update ${BRANCH} "${BUILD_URL}" ${VERSION} "Packages/Framework/TYPO3.Flow"
 
 for PACKAGE in `ls Packages/Framework` ; do
 	if [ ${PACKAGE} != "TYPO3.Flow" ] ; then
 		php "${COMPOSER_PHAR}" --working-dir=Packages/Framework/${PACKAGE} require --no-update "typo3/flow:${VERSION}"
-		commit_manifest_update ${BRANCH} "${BUILD_URL}" "Packages/Framework/${PACKAGE}"
+		commit_manifest_update ${BRANCH} "${BUILD_URL}" ${VERSION} "Packages/Framework/${PACKAGE}"
 	fi
 done
