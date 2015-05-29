@@ -11,7 +11,7 @@
         "typo3/welcome": "3.0.0-beta2",
         "typo3/fluid": "@beta",
         "typo3/eel": "@beta",
-        "doctrine/migrations": "dev-master"
+        "doctrine/migrations": "@dev"
     },
     "require-dev": {
         "typo3/kickstart": "3.0.0-beta2",
