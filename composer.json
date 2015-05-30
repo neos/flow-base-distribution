@@ -9,7 +9,7 @@
     "require": {
         "typo3/flow": "2.1.*",
         "typo3/welcome": "2.1.*",
-        "doctrine/migrations": "1.0.x-dev#f623eff82515f55d18199706851895ced831cba0"
+        "doctrine/migrations": "1.0.0-alpha3"
     },
     "require-dev": {
         "typo3/kickstart": "2.1.*",
