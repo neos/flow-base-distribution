@@ -17,7 +17,8 @@
         "typo3/kickstart": "3.0.0-beta3",
         "typo3/buildessentials": "3.0.0-beta3",
         "phpunit/phpunit": "4.6.*",
-        "mikey179/vfsstream": "1.5.*"
+        "mikey179/vfsstream": "1.5.*",
+        "flowpack/behat": "dev-master"
     },
     "suggest": {
         "ext-pdo_sqlite": "For running functional tests out-of-the-box this is required"
