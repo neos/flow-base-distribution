@@ -7,15 +7,13 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "3.0.0-rc1",
-        "typo3/welcome": "3.0.0-rc1",
-        "typo3/fluid": "@rc",
-        "typo3/eel": "@rc",
+        "typo3/flow": "3.0.*",
+        "typo3/welcome": "3.0.*",
         "doctrine/migrations": "@rc"
     },
     "require-dev": {
-        "typo3/kickstart": "3.0.0-rc1",
-        "typo3/buildessentials": "3.0.0-rc1",
+        "typo3/kickstart": "3.0.*",
+        "typo3/buildessentials": "3.0.*",
         "phpunit/phpunit": "4.6.*",
         "mikey179/vfsstream": "1.5.*",
         "flowpack/behat": "dev-master"
