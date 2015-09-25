@@ -13,7 +13,7 @@
     },
     "require-dev": {
         "typo3/kickstart": "3.0.*",
-        "typo3/buildessentials": "3.0.*",
+        "typo3/buildessentials": "3.0.x-dev",
         "phpunit/phpunit": "4.6.*",
         "mikey179/vfsstream": "1.5.*",
         "flowpack/behat": "dev-master"
