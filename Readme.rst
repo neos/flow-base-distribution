@@ -9,4 +9,4 @@ It is best practice is to fork this repository, then clone it locally and adjust
 After running `composer update`, check in the generated `composer.lock` file and push the result to your fork or a new repository.
 
 Learn more about the Flow application framework on http://www.neos.io/.
-You'll find the installation instructions and more at http://flowframework.readthedocs.org/en/stable/
+You'll find the installation instructions and more at http://flowframework.readthedocs.org/
