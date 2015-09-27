@@ -1,7 +1,7 @@
 {
     "name": "typo3/flow-base-distribution",
-    "description": "TYPO3 Flow Base Distribution",
-    "license": "LGPL-3.0+",
+    "description": "Flow Base Distribution",
+    "license": "MIT",
     "config": {
         "vendor-dir": "Packages/Libraries",
         "bin-dir": "bin"
