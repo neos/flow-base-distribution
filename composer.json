@@ -16,11 +16,11 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "3.0.*",
-        "typo3/welcome": "3.0.*"
+        "typo3/flow": "~3.0.0",
+        "typo3/welcome": "~3.0.0"
     },
     "require-dev": {
-        "typo3/kickstart": "3.0.*",
+        "typo3/kickstart": "~3.0.0",
         "typo3/buildessentials": "3.0.x-dev",
         "phpunit/phpunit": "4.6.*",
         "mikey179/vfsstream": "1.5.*",
