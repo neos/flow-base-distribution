@@ -24,6 +24,8 @@
         "typo3/buildessentials": "3.0.x-dev",
         "phpunit/phpunit": "4.6.*",
         "mikey179/vfsstream": "1.5.*",
+        "phpunit/phpunit": "~4.8",
+        "mikey179/vfsstream": "~1.6",
         "flowpack/behat": "dev-master"
     },
     "suggest": {
