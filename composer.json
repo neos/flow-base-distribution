@@ -23,7 +23,7 @@
     "require-dev": {
         "typo3/kickstart": "~2.3.0",
         "typo3/buildessentials": "2.3.x-dev",
-        "phpunit/phpunit": "~4.8",
+        "phpunit/phpunit": "~4.8 || ~5.0",
         "mikey179/vfsstream": "~1.6"
     },
     "suggest": {
