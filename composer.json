@@ -16,14 +16,14 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "dev-master",
-        "typo3/welcome": "dev-master",
-        "typo3/fluid": "@dev",
-        "typo3/eel": "@dev"
+        "typo3/flow": "3.1.x-dev",
+        "typo3/welcome": "3.1.x-dev",
+        "typo3/fluid": "3.1.x-dev",
+        "typo3/eel": "3.1.x-dev"
     },
     "require-dev": {
-        "typo3/kickstart": "dev-master",
-        "typo3/buildessentials": "dev-master",
+        "typo3/kickstart": "3.1.x-dev",
+        "typo3/buildessentials": "3.1.x-dev",
         "phpunit/phpunit": "~4.8 || ~5.0",
         "mikey179/vfsstream": "~1.6",
         "flowpack/behat": "dev-master"
