@@ -1,5 +1,5 @@
 {
-    "name": "typo3/flow-base-distribution",
+    "name": "neos/flow-base-distribution",
     "description": "Flow Base Distribution",
     "license": "MIT",
     "support": {
@@ -36,6 +36,9 @@
         "flowpack/behat": "dev-master",
         "phpunit/phpunit": "~4.8 || ~5.2.0",
         "mikey179/vfsstream": "~1.6"
+    },
+    "replace": {
+        "typo3/flow-base-distribution": "self.version"
     },
     "suggest": {
         "ext-pdo_sqlite": "For running functional tests out-of-the-box this is required"
