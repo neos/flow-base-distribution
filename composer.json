@@ -20,6 +20,7 @@
         "typo3/welcome": "dev-master",
         "typo3/fluid": "@dev",
         "typo3/eel": "@dev",
+        "neos/error-messages": "@dev",
         "neos/utility-arrays": "@dev",
         "neos/utility-files": "@dev",
         "neos/utility-lock": "@dev",
