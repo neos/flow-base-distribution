@@ -23,7 +23,7 @@
         "typo3/kickstart": "~3.0.0",
         "typo3/buildessentials": "3.0.x-dev",
         "flowpack/behat": "dev-master",
-        "phpunit/phpunit": "~4.8 || ~5.4",
+        "phpunit/phpunit": "~4.8 || ~5.4.0",
         "mikey179/vfsstream": "~1.6"
     },
     "suggest": {
