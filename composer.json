@@ -29,14 +29,20 @@
         "neos/utility-opcodecache": "@dev",
         "neos/utility-pdo": "@dev",
         "neos/utility-schema": "@dev",
-        "neos/utility-unicode": "@dev"
+        "neos/utility-unicode": "@dev",
+        "neos/flow": "4.0.x-dev",
+        "neos/welcome": "4.0.x-dev",
+        "neos/cache": "4.0.x-dev",
+        "neos/eel": "4.0.x-dev",
+        "neos/fluid-adaptor": "4.0.x-dev"
     },
     "require-dev": {
         "typo3/kickstart": "dev-master",
         "typo3/buildessentials": "dev-master",
         "flowpack/behat": "dev-master",
         "phpunit/phpunit": "~4.8 || ~5.4.0",
-        "mikey179/vfsstream": "~1.6"
+        "mikey179/vfsstream": "~1.6",
+        "neos/kickstarter": "4.0.x-dev"
     },
     "replace": {
         "typo3/flow-base-distribution": "self.version"
