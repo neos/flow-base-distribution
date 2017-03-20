@@ -7,8 +7,8 @@
         "slack": "http://slack.neos.io/",
         "forum": "https://discuss.neos.io/",
         "wiki": "https://discuss.neos.io/c/the-neos-project/project-documentation",
-        "issues": "https://jira.neos.io/browse/FLOW",
-        "docs": "http://flowframework.readthedocs.org/",
+        "issues": "https://github.com/neos/flow-development-collection/issues",
+        "docs": "https://flowframework.readthedocs.io/",
         "source": "https://github.com/neos/flow-base-distribution"
     },
     "config": {
@@ -16,10 +16,10 @@
         "bin-dir": "bin"
     },
     "require": {
-        "typo3/flow": "dev-master",
-        "typo3/welcome": "dev-master",
-        "typo3/fluid": "@dev",
-        "typo3/eel": "@dev",
+        "neos/flow": "dev-master",
+        "neos/welcome": "dev-master",
+        "neos/fluid-adaptor": "@dev",
+        "neos/eel": "@dev",
         "neos/error-messages": "@dev",
         "neos/utility-arrays": "@dev",
         "neos/utility-files": "@dev",
@@ -32,10 +32,10 @@
         "neos/utility-unicode": "@dev"
     },
     "require-dev": {
-        "typo3/kickstart": "dev-master",
-        "typo3/buildessentials": "dev-master",
-        "flowpack/behat": "dev-master",
-        "phpunit/phpunit": "~4.8 || ~5.4.0",
+        "neos/kickstarter": "dev-master",
+        "neos/buildessentials": "dev-master",
+        "neos/behat": "dev-master",
+        "phpunit/phpunit": "~5.4.0",
         "mikey179/vfsstream": "~1.6"
     },
     "replace": {
@@ -45,9 +45,9 @@
         "ext-pdo_sqlite": "For running functional tests out-of-the-box this is required"
     },
     "scripts": {
-        "post-update-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
-        "post-install-cmd": "TYPO3\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
-        "post-package-update": "TYPO3\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
-        "post-package-install": "TYPO3\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall"
+        "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
+        "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
+        "post-package-update": "Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
+        "post-package-install": "Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall"
     }
 }
