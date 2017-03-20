@@ -7,8 +7,8 @@
         "slack": "http://slack.neos.io/",
         "forum": "https://discuss.neos.io/",
         "wiki": "https://discuss.neos.io/c/the-neos-project/project-documentation",
-        "issues": "https://jira.neos.io/browse/FLOW",
-        "docs": "http://flowframework.readthedocs.org/",
+        "issues": "https://github.com/neos/flow-development-collection/issues",
+        "docs": "https://flowframework.readthedocs.io/",
         "source": "https://github.com/neos/flow-base-distribution"
     },
     "config": {
