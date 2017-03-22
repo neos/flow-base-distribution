@@ -35,7 +35,7 @@
         "neos/kickstarter": "dev-master",
         "neos/buildessentials": "dev-master",
         "neos/behat": "dev-master",
-        "phpunit/phpunit": "~5.4.0",
+        "phpunit/phpunit": "~6.0.0",
         "mikey179/vfsstream": "~1.6"
     },
     "replace": {
