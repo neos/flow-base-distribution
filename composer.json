@@ -22,7 +22,7 @@
     "require-dev": {
         "neos/kickstarter": "~4.0.0",
         "neos/buildessentials": "~4.0.0",
-        "neos/behat": "dev-master",
+        "neos/behat": "^4.0",
         "phpunit/phpunit": "~5.4.0",
         "mikey179/vfsstream": "~1.6"
     },
