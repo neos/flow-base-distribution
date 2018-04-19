@@ -22,7 +22,7 @@
     "require-dev": {
         "typo3/kickstart": "~3.3.0",
         "typo3/buildessentials": "3.3.x-dev",
-        "flowpack/behat": "dev-master",
+        "neos/behat": "3.3.x-dev",
         "phpunit/phpunit": "~4.8 || ~5.4.0",
         "mikey179/vfsstream": "~1.6"
     },
