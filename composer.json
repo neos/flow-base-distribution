@@ -16,15 +16,21 @@
         "bin-dir": "bin"
     },
     "require": {
-        "neos/flow": "~5.1.0",
-        "neos/welcome": "~5.1.0"
+        "neos/flow": "dev-master",
+        "neos/welcome": "dev-master"
     },
     "require-dev": {
-        "neos/kickstarter": "~5.1.0",
-        "neos/buildessentials": "~5.1.0",
+        "neos/kickstarter": "dev-master",
+        "neos/buildessentials": "dev-master",
         "neos/behat": "dev-master",
         "phpunit/phpunit": "~6.0.0",
         "mikey179/vfsstream": "~1.6"
+    },
+    "repositories": {
+        "distributionPackages": {
+            "type": "path",
+            "url": "./DistributionPackages/*"
+        }
     },
     "replace": {
         "typo3/flow-base-distribution": "self.version"
