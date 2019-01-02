@@ -26,6 +26,12 @@
         "phpunit/phpunit": "~6.0.0",
         "mikey179/vfsstream": "~1.6"
     },
+    "repositories": {
+        "distributionPackages": {
+            "type": "path",
+            "url": "./DistributionPackages/*"
+        }
+    },
     "replace": {
         "typo3/flow-base-distribution": "self.version"
     },
