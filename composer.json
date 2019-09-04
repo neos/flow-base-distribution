@@ -16,12 +16,26 @@
         "bin-dir": "bin"
     },
     "require": {
-        "neos/flow": "dev-master",
-        "neos/welcome": "dev-master"
+        "neos/flow": "6.0.x-dev",
+        "neos/welcome": "6.0.x-dev",
+        "neos/cache": "6.0.x-dev",
+        "neos/eel": "6.0.x-dev",
+        "neos/error-messages": "6.0.x-dev",
+        "neos/flow-log": "6.0.x-dev",
+        "neos/fluid-adaptor": "6.0.x-dev",
+        "neos/utility-arrays": "6.0.x-dev",
+        "neos/utility-files": "6.0.x-dev",
+        "neos/utility-lock": "6.0.x-dev",
+        "neos/utility-mediatypes": "6.0.x-dev",
+        "neos/utility-objecthandling": "6.0.x-dev",
+        "neos/utility-opcodecache": "6.0.x-dev",
+        "neos/utility-pdo": "6.0.x-dev",
+        "neos/utility-schema": "6.0.x-dev",
+        "neos/utility-unicode": "6.0.x-dev"
     },
     "require-dev": {
-        "neos/kickstarter": "dev-master",
-        "neos/buildessentials": "dev-master",
+        "neos/kickstarter": "6.0.x-dev",
+        "neos/buildessentials": "6.0.x-dev",
         "neos/behat": "dev-master",
         "phpunit/phpunit": "~8.1",
         "mikey179/vfsstream": "~1.6"
