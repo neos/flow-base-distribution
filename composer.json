@@ -31,7 +31,8 @@
         "neos/utility-opcodecache": "6.0.x-dev",
         "neos/utility-pdo": "6.0.x-dev",
         "neos/utility-schema": "6.0.x-dev",
-        "neos/utility-unicode": "6.0.x-dev"
+        "neos/utility-unicode": "6.0.x-dev",
+        "neos/http-factories": "6.0.x-dev"
     },
     "require-dev": {
         "neos/kickstarter": "6.0.x-dev",
