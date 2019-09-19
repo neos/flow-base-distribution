@@ -17,8 +17,7 @@
     },
     "require": {
         "neos/flow": "~6.0.0",
-        "neos/welcome": "~6.0.0",
-        "neos/utility-lock": "6.0.x-dev"
+        "neos/welcome": "~6.0.0"
     },
     "require-dev": {
         "neos/kickstarter": "~6.0.0",
