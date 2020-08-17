@@ -16,12 +16,12 @@
         "bin-dir": "bin"
     },
     "require": {
-        "neos/flow": "~6.1.0",
-        "neos/welcome": "~6.1.0"
+        "neos/flow": "~6.3.0",
+        "neos/welcome": "~6.3.0"
     },
     "require-dev": {
-        "neos/kickstarter": "~6.1.0",
-        "neos/buildessentials": "~6.1.0",
+        "neos/kickstarter": "~6.3.0",
+        "neos/buildessentials": "~6.3.0",
         "neos/behat": "dev-master",
         "phpunit/phpunit": "~8.1",
         "mikey179/vfsstream": "~1.6"
