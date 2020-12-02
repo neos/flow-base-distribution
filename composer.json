@@ -23,7 +23,7 @@
         "neos/kickstarter": "~6.1.0",
         "neos/buildessentials": "~6.1.0",
         "neos/behat": "dev-master",
-        "phpunit/phpunit": "~8.1",
+        "phpunit/phpunit": "~9.0",
         "mikey179/vfsstream": "~1.6"
     },
     "repositories": {
