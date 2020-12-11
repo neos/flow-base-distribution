@@ -17,8 +17,7 @@
     },
     "require": {
         "neos/flow": "~7.0.0",
-        "neos/welcome": "~7.0.0",
-        "neos/fluid-adaptor": "7.0.x-dev"
+        "neos/welcome": "~7.0.0"
     },
     "require-dev": {
         "neos/kickstarter": "~7.0.0",
