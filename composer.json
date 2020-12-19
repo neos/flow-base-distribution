@@ -16,12 +16,12 @@
         "bin-dir": "bin"
     },
     "require": {
-        "neos/flow": "~6.1.0",
-        "neos/welcome": "~6.1.0"
+        "neos/flow": "~7.0.0",
+        "neos/welcome": "~7.0.0"
     },
     "require-dev": {
-        "neos/kickstarter": "~6.1.0",
-        "neos/buildessentials": "~6.1.0",
+        "neos/kickstarter": "~7.0.0",
+        "neos/buildessentials": "~7.0.0",
         "neos/behat": "dev-master",
         "phpunit/phpunit": "~9.0",
         "mikey179/vfsstream": "~1.6"
@@ -32,11 +32,9 @@
             "url": "./DistributionPackages/*"
         }
     },
-    "replace": {
-        "typo3/flow-base-distribution": "self.version"
-    },
     "suggest": {
-        "ext-pdo_sqlite": "For running functional tests out-of-the-box this is required"
+        "ext-pdo_sqlite": "For running functional tests out-of-the-box this is required",
+        "neos/fluid-adaptor": "For rendering templates with TYPO3.Fluid"
     },
     "scripts": {
         "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
