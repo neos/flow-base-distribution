@@ -23,9 +23,9 @@
         "neos/welcome": "dev-master"
     },
     "require-dev": {
-        "neos/kickstarter": "dev-master",
-        "neos/buildessentials": "dev-master",
-        "neos/behat": "dev-master",
+        "neos/kickstarter": "8.2.x-dev",
+        "neos/buildessentials": "8.2.x-dev",
+        "neos/behat": "dev-main",
         "phpunit/phpunit": "~9.0",
         "mikey179/vfsstream": "~1.6"
     },
