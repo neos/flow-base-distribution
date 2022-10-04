@@ -19,8 +19,8 @@
         }
     },
     "require": {
-        "neos/flow": "dev-master",
-        "neos/welcome": "dev-master"
+        "neos/flow": "8.2.x-dev",
+        "neos/welcome": "8.2.x-dev"
     },
     "require-dev": {
         "neos/kickstarter": "8.2.x-dev",
