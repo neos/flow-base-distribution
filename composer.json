@@ -13,7 +13,10 @@
     },
     "config": {
         "vendor-dir": "Packages/Libraries",
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "neos/composer-plugin": true
+        }
     },
     "require": {
         "neos/flow": "~7.0.0",
@@ -22,7 +25,7 @@
     "require-dev": {
         "neos/kickstarter": "~7.0.0",
         "neos/buildessentials": "~7.0.0",
-        "neos/behat": "dev-master",
+        "neos/behat": "7.0.x-dev",
         "phpunit/phpunit": "~9.0",
         "mikey179/vfsstream": "~1.6"
     },
