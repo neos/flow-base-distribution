@@ -19,27 +19,13 @@
         }
     },
     "require": {
-        "neos/flow": "8.3.x-dev",
-        "neos/welcome": "8.3.x-dev",
-        "neos/cache": "8.3.x-dev",
-        "neos/eel": "8.3.x-dev",
-        "neos/error-messages": "8.3.x-dev",
-        "neos/flow-log": "8.3.x-dev",
-        "neos/utility-arrays": "8.3.x-dev",
-        "neos/utility-files": "8.3.x-dev",
-        "neos/utility-mediatypes": "8.3.x-dev",
-        "neos/utility-objecthandling": "8.3.x-dev",
-        "neos/utility-opcodecache": "8.3.x-dev",
-        "neos/utility-pdo": "8.3.x-dev",
-        "neos/utility-schema": "8.3.x-dev",
-        "neos/utility-unicode": "8.3.x-dev",
-        "neos/http-factories": "8.3.x-dev",
-        "neos/fluid-adaptor": "8.3.x-dev"
+        "neos/flow": "~8.3.0",
+        "neos/welcome": "~8.3.0"
     },
     "require-dev": {
-        "neos/kickstarter": "8.3.x-dev",
-        "neos/buildessentials": "8.3.x-dev",
-        "neos/behat": "8.3.x-dev",
+        "neos/kickstarter": "~8.3.0",
+        "neos/buildessentials": "~8.3.0",
+        "neos/behat": "~8.3.0",
         "phpunit/phpunit": "~9.0",
         "mikey179/vfsstream": "~1.6"
     },
