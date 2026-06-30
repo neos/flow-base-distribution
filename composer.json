@@ -19,13 +19,13 @@
         }
     },
     "require": {
-        "neos/flow": "~9.1.0",
-        "neos/welcome": "~9.1.0"
+        "neos/flow": "~9.2.0",
+        "neos/welcome": "~9.2.0"
     },
     "require-dev": {
-        "neos/kickstarter": "~9.1.0",
-        "neos/buildessentials": "~9.1.0",
-        "neos/behat": "~9.1.0",
+        "neos/kickstarter": "~9.2.0",
+        "neos/buildessentials": "~9.2.0",
+        "neos/behat": "~9.2.0",
         "phpunit/phpunit": "~9.0",
         "mikey179/vfsstream": "~1.6"
     },
