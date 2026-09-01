@@ -40,8 +40,8 @@
         "neos/kickstarter": "9.2.0-beta3",
         "neos/buildessentials": "9.2.x-dev",
         "neos/behat": "9.2.x-dev",
-        "phpunit/phpunit": "~9.0",
-        "mikey179/vfsstream": "~1.6"
+        "phpunit/phpunit": "~11.5",
+        "mikey179/vfsstream": "^1.6.12"
     },
     "repositories": {
         "distributionPackages": {
