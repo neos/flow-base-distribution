@@ -40,8 +40,8 @@
         "neos/kickstarter": "10.0.x-dev",
         "neos/buildessentials": "10.0.x-dev",
         "neos/behat": "10.0.x-dev",
-        "phpunit/phpunit": "~9.0",
-        "mikey179/vfsstream": "~1.6"
+        "phpunit/phpunit": "~11.5",
+        "mikey179/vfsstream": "^1.6.12"
     },
     "repositories": {
         "distributionPackages": {
@@ -58,5 +58,7 @@
         "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
         "post-package-update": "Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
         "post-package-install": "Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall"
-    }
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true
 }
